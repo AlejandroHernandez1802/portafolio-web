@@ -1,0 +1,22 @@
+// Cloudflare Worker for the portfolio (docs/03 §6, docs/10 §6).
+// Commit this file BEFORE connecting Workers Builds: without it, Cloudflare auto-configures
+// the project with vinext and opens a PR.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portafolio",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page", // serves out/404.html with status 404
+    "html_handling": "auto-trailing-slash", // /en → en.html
+    // Only these paths run the Worker (and count toward the 100,000 daily invocations).
+    // v1.1: add "/api/*" for the contact form.
+    "run_worker_first": ["/", "/call", "/llamada"],
+  },
+  // Custom Domain: Cloudflare creates the DNS record and the certificate (docs/10 §6).
+  "routes": [{ "pattern": "alejandrodeveloper.com", "custom_domain": true }],
+  "workers_dev": false, // the production workers.dev URL does not send noindex
+  "preview_urls": true, // branch previews on workers.dev send X-Robots-Tag: noindex
+}

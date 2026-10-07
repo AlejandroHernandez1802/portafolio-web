@@ -1,0 +1,31 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+.pnpm-debug.log*
+
+# env files and Wrangler local secrets
+.env*
+.dev.vars*
+!.dev.vars.example
+
+# cloudflare
+.wrangler/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

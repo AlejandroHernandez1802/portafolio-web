@@ -1,0 +1,8 @@
+docs/
+out/
+.next/
+.wrangler/
+pnpm-lock.yaml
+worker/worker-configuration.d.ts
+AGENTS.md
+CLAUDE.md

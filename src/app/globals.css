@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+/* Design tokens (docs/06 §3). Contrast ratios are computed against white. */
+@theme {
+  --color-bg: #ffffff;
+  --color-fg: #111827;
+  --color-muted: #4b5563;
+  --color-surface: #f3f4f6;
+  --color-border: #9ca3af;
+  --color-accent: #1d4ed8;
+  --color-success: #047857;
+  --color-focus: #1d4ed8;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+}
+
+/* Market (docs/04 §8.2): the HTML carries both currencies and CSS shows the active one.
+   The attribute is data-only-market, never data-market, or the selector would hide the page. */
+[data-only-market='co'] {
+  display: none;
+}
+html[data-market='co'] [data-only-market='co'] {
+  display: inline;
+}
+html[data-market='co'] [data-only-market='us'] {
+  display: none;
+}

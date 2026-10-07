@@ -1,0 +1,37 @@
+{
+  "name": "portafolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "preview": "next build && wrangler dev",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit && tsc -p worker --noEmit",
+    "format": "prettier --write .",
+    "cf-typegen": "wrangler types worker/worker-configuration.d.ts"
+  },
+  "dependencies": {
+    "next": "16.3.8",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.19.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.8",
+    "prettier": "3.9.9",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "schema-dts": "2.1.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "wrangler": "4.147.0"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "packageManager": "pnpm@12.9.1"
+}
