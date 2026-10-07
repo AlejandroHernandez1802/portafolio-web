@@ -3,7 +3,7 @@
 // the project with vinext and opens a PR.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "portafolio",
+  "name": "web-portfolio",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": {

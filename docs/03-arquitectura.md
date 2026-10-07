@@ -283,7 +283,7 @@ const nextConfig: NextConfig = {
 // Cloudflare autoconfigura el proyecto con vinext y abre un PR
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "portafolio",
+  "name": "web-portfolio",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": {

@@ -127,7 +127,7 @@ Los requisitos extra (DMARC alineado y baja con un clic) son para remitentes mas
 
 | Ajuste | Valor |
 |---|---|
-| Worker | `portafolio`, importado desde GitHub con Workers Builds. Directorio raíz: `/` (la raíz del repositorio es `Code/`) |
+| Worker | `web-portfolio`, importado desde GitHub con Workers Builds. Directorio raíz: `/` (la raíz del repositorio es `Code/`) |
 | Rama de producción | `main` |
 | Comandos | Build: `pnpm build`. Deploy: `npx wrangler deploy`. Preview: `npx wrangler preview`, con *Enable Preview Builds* activado ([Cloudflare](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/)) |
 | Variables de build | `PNPM_VERSION` = la versión exacta de pnpm 12 instalada (la imagen trae 10.11.1). Node sale de `.nvmrc` (24); también se puede fijar con `NODE_VERSION` ([imagen de build](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/)) |
@@ -150,7 +150,7 @@ Los requisitos extra (DMARC alineado y baja con un clic) son para remitentes mas
 | Preview | Cada push a una rama distinta de `main` | `*.workers.dev`, pública; el enlace llega al PR | Confirmar en V11-02 si hereda los secretos de producción. Si los hereda, el formulario de una preview envía a `hola@` | `noindex` (header de Cloudflare, reforzado en `_headers`) |
 | Producción | Merge a `main` | `alejandrodeveloper.com` | Secretos y variables del Worker | Indexable, salvo `/p/*` |
 
-**Rollback:** Cloudflare → *Workers & Pages* → `portafolio` → *Deployments* → elegir una versión anterior → *Rollback*, o `npx wrangler rollback`. Cloudflare guarda las últimas 100 versiones ([Cloudflare](https://developers.cloudflare.com/workers/versions-and-deployments/rollbacks/), [11 §6](./11-calidad-rendimiento-y-accesibilidad.md#6-rollback-e-incidentes)).
+**Rollback:** Cloudflare → *Workers & Pages* → `web-portfolio` → *Deployments* → elegir una versión anterior → *Rollback*, o `npx wrangler rollback`. Cloudflare guarda las últimas 100 versiones ([Cloudflare](https://developers.cloudflare.com/workers/versions-and-deployments/rollbacks/), [11 §6](./11-calidad-rendimiento-y-accesibilidad.md#6-rollback-e-incidentes)).
 
 ## 8. Variables de entorno
 

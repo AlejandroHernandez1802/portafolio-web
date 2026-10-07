@@ -177,7 +177,7 @@ jobs:
 
 | Incidente | Respuesta |
 |---|---|
-| Un despliegue rompe algo | Cloudflare → *Workers & Pages* → `portafolio` → *Deployments* → la versión buena → **Rollback** (o `npx wrangler rollback`), en menos de 1 minuto. Luego `git revert` del commit |
+| Un despliegue rompe algo | Cloudflare → *Workers & Pages* → `web-portfolio` → *Deployments* → la versión buena → **Rollback** (o `npx wrangler rollback`), en menos de 1 minuto. Luego `git revert` del commit |
 | `/` o los enlaces cortos responden 429 o error 1027 | El Worker pasó de 100.000 invocaciones en el día. `/en` y `/es` siguen funcionando, y los correos enlazan directo ahí. Se normaliza a la medianoche UTC; si se repite, revisar el tráfico o pasar a Workers Paid (US$5) |
 | Cal.com caído o el popup no abre | El enlace de respaldo lleva a `cal.com`; en el peor caso, se usan WhatsApp y el correo, que siempre están visibles |
 | PSI por debajo de 90 tras un cambio | Revisar el elemento LCP, los terceros en *Network* y el tamaño del JS; revertir si no se resuelve en 30 minutos |
