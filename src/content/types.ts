@@ -16,7 +16,7 @@ export type PriceByMarket = { us: PriceSpec; co: PriceSpec } // USD and COP
 
 export type SiteContent = {
   meta: { title: string; description: string; ogImageAlt: string }
-  nav: { bookCall: string; switchLanguage: string; skipToContent: string }
+  nav: { tagline: string; bookCall: string; switchLanguage: string; skipToContent: string }
   hero: {
     headlines: Record<HeadlineVariant, string>
     subtitle: string
@@ -48,6 +48,7 @@ export type SiteContent = {
     summary: Record<Disclosure, string>
     before: { label: string; points: string[]; images: Record<Disclosure, ImageRef[]> }
     after: { label: string; points: string[]; images: Record<Disclosure, ImageRef[]> }
+    builtLabel: string // "What we built"
     built: string[] // catalog, OEM part-number search, three languages, quote system
     result?: { metric: string; note: string } // only with permission
     testimonial?: { quote: string; author: string; role: string } // only with permission
@@ -63,6 +64,7 @@ export type SiteContent = {
     title: string
     note: string // "Starting prices; final quote depends on scope"
     currencyToggle: { label: string; usd: string; cop: string }
+    priceLabels: { from: string; perMonth: string; free: string } // "From", "/ month", "Free"
     plans: Array<{ name: string; description: string; price: PriceByMarket; features: string[] }>
   }
   faq: { title: string; items: Array<{ q: string; a: string }> } // 8 at most
@@ -77,4 +79,12 @@ export type SiteContent = {
   contactForm: Record<string, never> // v1.1: labels, consent and states (sending, success, error)
   footer: { addressLabel: string; privacy: string; rights: string }
   notFound: { title: string; body: string; backHome: string }
+  privacy: {
+    meta: { title: string; description: string }
+    title: string
+    effectiveLabel: string // "Effective date"
+    // Paragraphs may use {name}, {email}, {address} and {whatsapp}, filled from site.ts at render
+    sections: Array<{ heading: string; paragraphs: string[] }>
+    backHome: string
+  }
 }

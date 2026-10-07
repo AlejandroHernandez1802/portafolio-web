@@ -27,3 +27,20 @@ html[data-market='co'] [data-only-market='co'] {
 html[data-market='co'] [data-only-market='us'] {
   display: none;
 }
+html[data-market='co'] [data-market-order='first'] {
+  order: 1; /* WhatsApp before email in Colombia (docs/06 §5) */
+}
+
+/* Fixed 48 px header: anchors and focus are never hidden under it (WCAG 2.4.11) */
+html {
+  scroll-padding-top: 64px;
+}
+
+/* 2 px focus ring with a 2 px offset (docs/06 §3); white on the dark closing section */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.bg-fg :focus-visible {
+  outline-color: var(--color-bg);
+}

@@ -4,15 +4,20 @@ import type { SiteContent } from './types'
 // REVIEW(F0-10) are facts to confirm before launch.
 export const es = {
   meta: {
-    title: 'Alejandro Hernández · Tiendas y catálogos en línea con cotizador',
+    title: 'Tiendas y catálogos con cotizador | Alejandro Hernández',
     description:
-      'Construyo tiendas y catálogos con cotizador para negocios que venden productos. Ves un prototipo funcionando en 5 días, antes de comprometerte con el proyecto completo.',
-    ogImageAlt: 'De "precio por interno" a "agregar al carrito" · Alejandro Hernández',
+      'Construyo tiendas y catálogos con cotizador para negocios que venden productos. Ve un prototipo funcionando en 5 días.',
+    ogImageAlt: 'De “precio por interno” a “agregar al carrito” · Alejandro Hernández',
   },
-  nav: { bookCall: 'Agenda', switchLanguage: 'English', skipToContent: 'Saltar al contenido' },
+  nav: {
+    tagline: 'Tiendas y catálogos en línea',
+    bookCall: 'Agenda',
+    switchLanguage: 'English',
+    skipToContent: 'Saltar al contenido',
+  },
   hero: {
     headlines: {
-      a: 'De "precio por interno" a "agregar al carrito".',
+      a: 'De “precio por interno” a “agregar al carrito”.',
       b: 'Tu sitio debería recibir pedidos, no solo verse bien.',
       c: 'Ve tu nueva tienda funcionando en 5 días.',
     },
@@ -30,11 +35,12 @@ export const es = {
     },
     stage: {
       linkTitle: 'Ver el caso',
-      customerMessage: 'Hola, ¿precio del bulto de…?',
+      customerMessage: 'Hola, ¿precio de 20 correas B48?',
       businessReply: 'Precio por interno',
       product: {
-        brand: 'TODO(F0-12)',
-        name: 'TODO(F0-12)',
+        // REVIEW(F0-12): verify the fictitious brand doesn't exist (Google, USPTO, SIC)
+        brand: 'Norvale Supply',
+        name: 'Correa en V B48',
         price: { us: 'US$ 14,90', co: 'COP 62.000' },
         unit: '/ unidad',
         qtyLabel: 'Cant.',
@@ -93,6 +99,7 @@ export const es = {
       ],
       images: { named: [], anonymized: [] },
     },
+    builtLabel: 'Qué se construyó',
     built: ['Catálogo de productos', 'Buscador por referencia OEM', 'Tres idiomas', 'Cotizador'],
     link: { label: 'Visitar malonebelt.com', href: 'https://malonebelt.com' },
   },
@@ -122,6 +129,7 @@ export const es = {
     title: 'Servicios y precios de referencia',
     note: 'Precios de referencia; el valor final depende del alcance.',
     currencyToggle: { label: 'Moneda', usd: 'USD', cop: 'COP' },
+    priceLabels: { from: 'Desde', perMonth: '/ mes', free: 'Gratis' },
     plans: [
       {
         name: 'Prototipo navegable en 5 días hábiles',
@@ -233,5 +241,92 @@ export const es = {
     title: 'Página no encontrada',
     body: 'La página que buscas no existe o cambió de dirección.',
     backHome: 'Ir al sitio en español',
+  },
+  // REVIEW(F0-14): draft based on docs/09 §6; confirm before launch
+  privacy: {
+    meta: {
+      title: 'Política de privacidad | Alejandro Hernández',
+      description: 'Cómo este sitio recoge, usa y protege los datos personales.',
+    },
+    title: 'Política de privacidad',
+    effectiveLabel: 'Fecha de vigencia',
+    sections: [
+      {
+        heading: 'Responsable del tratamiento',
+        paragraphs: [
+          '{name} es el responsable de los datos personales que se recogen en este sitio. Dirección postal: {address}. Correo: {email}. WhatsApp: {whatsapp}.',
+        ],
+      },
+      {
+        heading: 'Datos que se recogen',
+        paragraphs: [
+          'Al agendar una llamada: tu nombre, correo, sitio web de la empresa, notas y autorización, a través de Cal.com.',
+          'Por WhatsApp y correo: tu número o dirección y los mensajes que envías.',
+          'Analítica: páginas visitadas, clics en botones, país, navegador y etiquetas de campaña, a través de Umami. Umami no usa cookies ni guarda datos personales.',
+          'Hosting: Cloudflare procesa datos técnicos de cada solicitud, como la dirección IP y el navegador, para servir y proteger el sitio.',
+        ],
+      },
+      {
+        heading: 'Finalidades',
+        paragraphs: [
+          'Agendar y preparar llamadas, responder tus mensajes, enviarte las propuestas que pidas y medir cómo se usa el sitio. Tus datos no se venden ni se usan para publicidad.',
+        ],
+      },
+      {
+        heading: 'Autorización',
+        paragraphs: [
+          'Al agendar una llamada autorizas el tratamiento de tus datos marcando una casilla que no viene marcada. Puedes revocar la autorización en cualquier momento escribiendo a {email}.',
+        ],
+      },
+      {
+        heading: 'Encargados y transmisión internacional',
+        paragraphs: [
+          'Cloudflare (hosting), Umami (analítica), Cal.com (agenda), Google (calendario, videollamadas y correo) y Meta (WhatsApp) tratan datos por cuenta mía, principalmente en Estados Unidos. Tu autorización cubre esta transmisión.',
+        ],
+      },
+      {
+        heading: 'Conservación',
+        paragraphs: [
+          'Datos de reservas y contacto: hasta 24 meses, o hasta que pidas su supresión. Datos de analítica: 6 meses.',
+        ],
+      },
+      {
+        heading: 'Tus derechos',
+        paragraphs: [
+          'Puedes conocer, actualizar, rectificar y suprimir tus datos, pedir prueba de la autorización, saber cómo se usan y revocar la autorización, de forma gratuita, escribiendo a {email}.',
+          'Las consultas se responden en 10 días hábiles y los reclamos en 15 días hábiles. También puedes presentar una queja ante la Superintendencia de Industria y Comercio (SIC).',
+        ],
+      },
+      {
+        heading: 'Cookies, almacenamiento local y "Do Not Track"',
+        paragraphs: [
+          'Este sitio no usa cookies. Guarda la moneda que elijas en el almacenamiento local de tu navegador y las etiquetas de campaña de tu visita en el almacenamiento de sesión. Ninguna sale de tu navegador, salvo la etiqueta de campaña en los eventos de analítica.',
+          'El sitio no te rastrea en otros sitios, así que trata igual cada visita, envíe o no tu navegador la señal "Do Not Track".',
+        ],
+      },
+      {
+        heading: 'Seguridad',
+        paragraphs: [
+          'El sitio se sirve solo por HTTPS, y las cuentas que guardan tus datos están protegidas con verificación en dos pasos.',
+        ],
+      },
+      {
+        heading: 'Menores de edad',
+        paragraphs: [
+          'Este sitio no está dirigido a menores de edad y no recoge sus datos a sabiendas.',
+        ],
+      },
+      {
+        heading: 'Cambios a esta política',
+        paragraphs: [
+          'Si esta política cambia, la nueva versión y su fecha de vigencia se publican en esta página.',
+        ],
+      },
+      {
+        heading: 'Contacto',
+        paragraphs: ['Para cualquier pregunta sobre esta política, escribe a {email}.'],
+      },
+    ],
+    backHome: 'Volver al inicio',
   },
 } satisfies SiteContent

@@ -4,15 +4,20 @@ import type { SiteContent } from './types'
 // REVIEW(F0-10) are facts to confirm before launch.
 export const en = {
   meta: {
-    title: 'Alejandro Hernández · Online stores and catalogs with quote systems',
+    title: 'Online stores & quote systems | Alejandro Hernández',
     description:
-      'I build online stores and quote systems for businesses that sell products. You see a working prototype in 5 days, before you commit to the full build.',
-    ogImageAlt: 'From "call for pricing" to "add to cart" · Alejandro Hernández',
+      'I build online stores and quote systems for businesses that sell products. See a working prototype in 5 days before committing.',
+    ogImageAlt: 'From “call for pricing” to “add to cart” · Alejandro Hernández',
   },
-  nav: { bookCall: 'Book a call', switchLanguage: 'Español', skipToContent: 'Skip to content' },
+  nav: {
+    tagline: 'Online stores & quote systems',
+    bookCall: 'Book a call',
+    switchLanguage: 'Español',
+    skipToContent: 'Skip to content',
+  },
   hero: {
     headlines: {
-      a: 'From "call for pricing" to "add to cart".',
+      a: 'From “call for pricing” to “add to cart”.',
       b: 'Your website should take orders, not just look nice.',
       c: 'See your new store working in 5 days.',
     },
@@ -30,11 +35,12 @@ export const en = {
     },
     stage: {
       linkTitle: 'See the case',
-      customerMessage: 'Hi, how much for…?',
+      customerMessage: 'Hi, how much for 20 V-belts?',
       businessReply: 'Call for pricing',
       product: {
-        brand: 'TODO(F0-12)',
-        name: 'TODO(F0-12)',
+        // REVIEW(F0-12): verify the fictitious brand doesn't exist (Google, USPTO, SIC)
+        brand: 'Norvale Supply',
+        name: 'V-belt B48',
         price: { us: '$14.90', co: 'COP 62,000' },
         unit: '/ unit',
         qtyLabel: 'Qty',
@@ -93,6 +99,7 @@ export const en = {
       ],
       images: { named: [], anonymized: [] },
     },
+    builtLabel: 'What we built',
     built: [
       'Product catalog',
       'Search by OEM part number',
@@ -124,6 +131,7 @@ export const en = {
     title: 'Services and starting prices',
     note: 'Starting prices; final quote depends on scope.',
     currencyToggle: { label: 'Currency', usd: 'USD', cop: 'COP' },
+    priceLabels: { from: 'From', perMonth: '/ month', free: 'Free' },
     plans: [
       {
         name: 'Clickable prototype in 5 business days',
@@ -236,5 +244,92 @@ export const en = {
     title: 'Page not found',
     body: 'The page you are looking for does not exist or was moved.',
     backHome: 'Go to the English site',
+  },
+  // REVIEW(F0-14): draft based on docs/09 §6; confirm before launch
+  privacy: {
+    meta: {
+      title: 'Privacy policy | Alejandro Hernández',
+      description: 'How this website collects, uses and protects personal data.',
+    },
+    title: 'Privacy policy',
+    effectiveLabel: 'Effective date',
+    sections: [
+      {
+        heading: 'Who is responsible',
+        paragraphs: [
+          '{name} is responsible for the personal data collected through this website. Mailing address: {address}. Email: {email}. WhatsApp: {whatsapp}.',
+        ],
+      },
+      {
+        heading: 'What data is collected',
+        paragraphs: [
+          'Booking a call: your name, email, company website, notes and consent, through Cal.com.',
+          'WhatsApp and email: your number or address and the messages you send.',
+          'Analytics: pages visited, clicks on buttons, country, browser and campaign tags, through Umami. Umami does not use cookies or store personal data.',
+          'Hosting: Cloudflare processes technical data of each request, such as the IP address and browser, to serve and protect the site.',
+        ],
+      },
+      {
+        heading: 'Why it is used',
+        paragraphs: [
+          'To schedule and prepare calls, answer your messages, send the proposals you ask for and measure how the site is used. Your data is not sold or used for advertising.',
+        ],
+      },
+      {
+        heading: 'Your consent',
+        paragraphs: [
+          'When you book a call you authorize the processing of your data by checking a box that is not checked in advance. You can withdraw your consent at any time by writing to {email}.',
+        ],
+      },
+      {
+        heading: 'Service providers and international transfers',
+        paragraphs: [
+          'Cloudflare (hosting), Umami (analytics), Cal.com (scheduling), Google (calendar, video calls and email) and Meta (WhatsApp) process data on my behalf, mainly in the United States. Your consent covers this transfer.',
+        ],
+      },
+      {
+        heading: 'How long it is kept',
+        paragraphs: [
+          'Booking and contact data: up to 24 months, or until you ask for its deletion. Analytics data: 6 months.',
+        ],
+      },
+      {
+        heading: 'Your rights',
+        paragraphs: [
+          'You can know, update, correct and delete your data, ask for proof of your consent, learn how it is used and withdraw your consent, free of charge, by writing to {email}.',
+          'Questions are answered within 10 business days and complaints within 15 business days. In Colombia you can also file a complaint with the Superintendencia de Industria y Comercio (SIC).',
+        ],
+      },
+      {
+        heading: 'Cookies, local storage and Do Not Track',
+        paragraphs: [
+          'This site does not use cookies. It saves your currency choice in your browser’s local storage and the campaign tags of your visit in session storage. Neither leaves your browser, except the campaign tag in analytics events.',
+          'The site does not track you across other websites, so every visit is treated the same way whether or not your browser sends a Do Not Track signal.',
+        ],
+      },
+      {
+        heading: 'Security',
+        paragraphs: [
+          'The site is served only over HTTPS, and the accounts that hold your data are protected with two-step verification.',
+        ],
+      },
+      {
+        heading: 'Children',
+        paragraphs: [
+          'This site is not directed to minors and does not knowingly collect their data.',
+        ],
+      },
+      {
+        heading: 'Changes to this policy',
+        paragraphs: [
+          'If this policy changes, the new version and its effective date are published on this page.',
+        ],
+      },
+      {
+        heading: 'Contact',
+        paragraphs: ['For any question about this policy, write to {email}.'],
+      },
+    ],
+    backHome: 'Back to the home page',
   },
 } satisfies SiteContent

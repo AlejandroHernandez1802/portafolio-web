@@ -1,0 +1,285 @@
+/* Hook A animation (docs/05). CSS only, 0 KB of JS. The base styles ARE the final state:
+   every animation only declares its starting point (or ends where the base is), so with
+   reduced motion, a failed load or an old browser the finished scene is what you see. */
+
+.hook {
+  position: relative;
+  display: block;
+  height: 200px; /* mobile: ≤ 200 px (docs/05 §8) */
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--color-surface);
+  contain: layout paint;
+}
+
+/* The scene is drawn at 400 × 300 and scaled with transform, never by changing sizes */
+.hook__scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 300px;
+  transform: translate(-50%, -50%) scale(0.6667);
+}
+@media (min-width: 1024px) {
+  .hook {
+    height: 360px;
+  }
+  .hook__scene {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+.hook__scene > * {
+  position: absolute; /* nothing pushes anything */
+}
+
+/* Chat bubbles: hidden in the final state */
+.hook__msg {
+  max-width: 250px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.35;
+  opacity: 0;
+}
+.hook__msg--in {
+  top: 28px;
+  left: 24px;
+  border-bottom-left-radius: 4px;
+  background: #dbeafe;
+  color: var(--color-fg);
+}
+.hook__msg--out {
+  top: 92px;
+  right: 24px;
+  border-bottom-right-radius: 4px;
+  background: #ffffff;
+  color: var(--color-muted);
+}
+
+/* Product card: visible in the final state */
+.hook__card {
+  top: 20px;
+  left: 24px;
+  width: 268px;
+  height: 196px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgb(17 24 39 / 0.12);
+}
+.hook__card > * {
+  position: absolute;
+  margin: 0;
+}
+.hook__img {
+  top: 14px;
+  left: 14px;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  background: var(--color-surface);
+  color: var(--color-muted);
+}
+.hook__brand {
+  top: 16px;
+  left: 98px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+.hook__name {
+  top: 34px;
+  left: 98px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.hook__price {
+  top: 60px;
+  left: 98px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.hook__unit {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+.hook__qty {
+  top: 104px;
+  left: 14px;
+  padding: 4px 10px;
+  border: 1px solid var(--color-muted);
+  border-radius: 8px;
+  font-size: 14px;
+}
+.hook__btn {
+  top: 140px;
+  left: 14px;
+  right: 14px;
+  padding: 9px 0;
+  border-radius: 10px;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Cart with its badge: "1" in the final state */
+.hook__cart {
+  top: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  padding: 13px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-fg);
+}
+.hook__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Cursor: gone in the final state */
+.hook__cursor {
+  top: 166px;
+  left: 150px;
+  width: 26px;
+  height: 26px;
+  color: var(--color-fg);
+  opacity: 0;
+}
+
+/* Order toast: visible in the final state */
+.hook__toast {
+  bottom: 22px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--color-success);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgb(17 24 39 / 0.12);
+}
+
+/* ---- Timeline (docs/05 §3): delays and durations come from --t and --d in the JSX ---- */
+.hook [data-anim] {
+  animation-duration: var(--d, 300ms);
+  animation-delay: var(--t, 0ms);
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes hook-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.hook__price,
+.hook__qty,
+.hook__toast {
+  animation-name: hook-in;
+}
+
+/* Bubbles appear, hold and leave: they end hidden, like the base */
+@keyframes hook-chat {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  15%,
+  80% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+.hook__msg {
+  animation-name: hook-chat;
+}
+
+@keyframes hook-card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+    clip-path: inset(30% 20% 40% 20% round 16px);
+  }
+}
+.hook__card {
+  animation-name: hook-card-in;
+}
+
+/* The cursor travels to the button, presses and fades: ends hidden, like the base */
+@keyframes hook-cursor {
+  0% {
+    opacity: 0;
+    transform: translate(150px, 70px);
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: none;
+  }
+  75% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.hook__cursor {
+  animation-name: hook-cursor;
+}
+
+@keyframes hook-press {
+  50% {
+    transform: scale(0.96);
+  }
+}
+.hook__btn {
+  animation-name: hook-press;
+}
+
+@keyframes hook-pop {
+  from {
+    transform: scale(0);
+  }
+}
+.hook__badge {
+  animation-name: hook-pop;
+}
+
+/* Reduced motion: no animations, the base (final state) shows */
+@media (prefers-reduced-motion: reduce) {
+  .hook,
+  .hook * {
+    animation: none !important;
+  }
+}
