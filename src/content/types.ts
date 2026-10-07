@@ -11,6 +11,7 @@ export type ImageRef = { src: string; width: number; height: number; alt: string
 export type PriceSpec =
   | { kind: 'from'; amount: number; period?: 'month' } // "From US$3,000"
   | { kind: 'range'; min: number; max: number; period?: 'month' } // "US$350–500"
+  | { kind: 'free' } // "Free"
 export type PriceByMarket = { us: PriceSpec; co: PriceSpec } // USD and COP
 
 export type SiteContent = {

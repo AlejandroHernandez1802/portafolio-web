@@ -73,7 +73,7 @@ Una línea aparte: "Actualización cada viernes" / "Every Friday you get an upda
 - El selector USD / COP.
 - Un CTA de agenda.
 
-El prototipo se presenta como **descontable del proyecto**.
+El prototipo se presenta como **gratis y sin compromiso** (decisión del 6-oct; antes era pagado y descontable del proyecto).
 
 **7. Preguntas frecuentes.** Máximo 8. *Sugerencia de preguntas*; las respuestas son tuyas:
 

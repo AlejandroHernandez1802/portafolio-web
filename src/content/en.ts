@@ -1,7 +1,7 @@
 import type { SiteContent } from './types'
 
-// Base texts from the roadmap (§4–§5) and docs/06 §2. Everything else is a draft to review in
-// F0-10; answers and lines marked TODO(F0-10) need your input before launch.
+// Base texts from the roadmap (§4–§5) and docs/06 §2, plus F0-10 drafts. Lines marked
+// REVIEW(F0-10) are facts to confirm before launch.
 export const en = {
   meta: {
     title: 'Alejandro Hernández · Online stores and catalogs with quote systems',
@@ -68,19 +68,29 @@ export const en = {
       named: 'Malone Road Belt: from phone quotes to online requests',
       anonymized: 'An industrial supplier: from phone quotes to online requests',
     },
+    // REVIEW(F0-10): confirm the before/after facts with the real project
     summary: {
-      named: 'TODO(F0-10): one or two lines about the Malone Road Belt project.',
+      named:
+        'Malone Road Belt sells industrial belts in the U.S. Buyers had to call or email to get a price. Now they find the part and request a quote online.',
       anonymized:
-        'TODO(F0-10): one or two lines about the project, without identifying the client.',
+        'A U.S. industrial supplier whose buyers had to call or email to get a price. Now they find the part and request a quote online.',
     },
     before: {
       label: 'Before',
-      points: ['TODO(F0-10): what buyers ran into before the new site.'],
+      points: [
+        'Buyers had to call or email to learn the price and availability of a part.',
+        'There was no way to search by the part number buyers already had.',
+        'The site was in one language only.',
+      ],
       images: { named: [], anonymized: [] },
     },
     after: {
       label: 'After',
-      points: ['TODO(F0-10): what buyers can do now.'],
+      points: [
+        'Buyers find the part by its OEM number in seconds.',
+        'They request a quote online, at any time, with the exact parts listed.',
+        'The catalog is available in three languages.',
+      ],
       images: { named: [], anonymized: [] },
     },
     built: [
@@ -102,7 +112,7 @@ export const en = {
     steps: [
       {
         title: 'Prototype in 5 business days',
-        body: 'A clickable version of your site, credited toward the project.',
+        body: 'A clickable version of your site, free and with no commitment.',
       },
       { title: 'Build in phases', body: 'Short phases you approve one at a time.' },
       { title: 'Launch', body: 'Your store goes live on your own domain and hosting.' },
@@ -117,49 +127,86 @@ export const en = {
     plans: [
       {
         name: 'Clickable prototype in 5 business days',
-        description: 'See your site working before you commit. Credited toward the project.',
-        price: {
-          us: { kind: 'range', min: 350, max: 500 },
-          co: { kind: 'range', min: 800_000, max: 1_200_000 },
-        },
-        features: ['TODO(F0-10): what the prototype includes'],
+        description: 'See your site working before you commit. No cost, no obligation.',
+        price: { us: { kind: 'free' }, co: { kind: 'free' } },
+        features: [
+          'Home page and one catalog or product page',
+          'Your real products, logo and colors',
+          'Works on phone and desktop',
+          'A walkthrough call to review it together',
+        ],
       },
       {
         name: 'Online store or catalog with quote system',
-        description: 'TODO(F0-10): who it is for.',
+        description: 'For businesses that sell products and still quote by phone or email.',
         price: { us: { kind: 'from', amount: 3_000 }, co: { kind: 'from', amount: 3_000_000 } },
-        features: ['TODO(F0-10): what the build includes'],
+        features: [
+          'Catalog with search and filters, including by part number',
+          'Cart or quote request, delivered to your email',
+          'Fast pages that Google understands',
+          'Domain, hosting and accounts in your name',
+        ],
       },
       {
         name: 'Monthly care and visibility plan',
-        description: 'TODO(F0-10): who it is for.',
+        description: 'For stores that want to keep improving after launch.',
         price: {
           us: { kind: 'range', min: 150, max: 300, period: 'month' },
           co: { kind: 'range', min: 250_000, max: 500_000, period: 'month' },
         },
-        features: ['TODO(F0-10): what the plan includes'],
+        features: [
+          'Updates, backups and security fixes',
+          'Small content changes every month',
+          'Monthly report on visits, quotes and orders',
+          'Google Business Profile and review requests',
+        ],
       },
     ],
   },
   faq: {
     title: 'Frequently asked questions',
     items: [
-      { q: 'Will the domain and hosting be in my name?', a: 'TODO(F0-10)' },
-      { q: 'How long does the project take?', a: 'TODO(F0-10)' },
-      { q: 'How do payments work?', a: 'TODO(F0-10)' },
-      { q: 'How many rounds of changes are included?', a: 'TODO(F0-10)' },
-      { q: 'What happens if we don’t continue after the prototype?', a: 'TODO(F0-10)' },
-      { q: 'Do you work with my current platform (Shopify, WooCommerce, Wix)?', a: 'TODO(F0-10)' },
-      { q: 'How do we communicate, and during which hours?', a: 'TODO(F0-10)' },
-      { q: 'What do I need to have ready (catalog, photos, prices)?', a: 'TODO(F0-10)' },
+      {
+        q: 'Will the domain and hosting be in my name?',
+        a: 'Yes. The domain, hosting and every account are created in your name, and I work with the access you give me. If we stop working together, you keep everything.',
+      },
+      {
+        // REVIEW(F0-10): confirm the 3–6 week range
+        q: 'How long does the project take?',
+        a: 'The prototype takes 5 business days. A typical store or catalog takes 3 to 6 weeks after you approve the prototype, depending on the number of products and features.',
+      },
+      {
+        q: 'How do payments work?',
+        a: '40% to start the build, 40% when you approve the first milestone and 20% at launch. The prototype is free.',
+      },
+      {
+        q: 'How many rounds of changes are included?',
+        a: 'Three rounds of changes per phase. Anything beyond that, or a new feature, is quoted before I do it.',
+      },
+      {
+        q: 'What happens if we don’t continue after the prototype?',
+        a: 'Nothing. The prototype is free and there is no commitment: if it isn’t a fit, you don’t owe anything.',
+      },
+      {
+        q: 'Do you work with my current platform (Shopify, WooCommerce, Wix)?',
+        a: 'I build your new site on my own stack, which is fast and cheap to run. If you are on Shopify, WooCommerce or Wix, I move your catalog and content to the new site.',
+      },
+      {
+        q: 'How do we communicate, and during which hours?',
+        a: 'By WhatsApp or email, plus a short video call when it helps. I’m in Colombia (UTC−5) and I reply within one business day.',
+      },
+      {
+        q: 'What do I need to have ready (catalog, photos, prices)?',
+        a: 'Your product list (a spreadsheet is fine), photos if you have them, and your prices or how you quote. If something is missing, we start with what you have.',
+      },
     ],
   },
   about: {
     title: 'About me',
     lines: [
       'Software engineer and project lead with more than 4 years of experience.',
-      'TODO(F0-10): second line.',
-      'TODO(F0-10): third line.',
+      'I design and build online stores, catalogs and quote systems for businesses that sell products.',
+      'I work from Colombia with clients in the U.S. and Latin America, in English and Spanish.',
     ],
     photo: {
       src: '/images/about/portrait.webp',

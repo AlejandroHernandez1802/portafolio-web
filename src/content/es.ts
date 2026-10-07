@@ -1,7 +1,7 @@
 import type { SiteContent } from './types'
 
-// Base texts from the roadmap (§4–§5) and docs/06 §2. Everything else is a draft to review in
-// F0-10; answers and lines marked TODO(F0-10) need your input before launch.
+// Base texts from the roadmap (§4–§5) and docs/06 §2, plus F0-10 drafts. Lines marked
+// REVIEW(F0-10) are facts to confirm before launch.
 export const es = {
   meta: {
     title: 'Alejandro Hernández · Tiendas y catálogos en línea con cotizador',
@@ -68,18 +68,29 @@ export const es = {
       named: 'Malone Road Belt: de cotizar por teléfono a recibir solicitudes en línea',
       anonymized: 'Un proveedor industrial: de cotizar por teléfono a recibir solicitudes en línea',
     },
+    // REVIEW(F0-10): confirm the before/after facts with the real project
     summary: {
-      named: 'TODO(F0-10): una o dos líneas sobre el proyecto de Malone Road Belt.',
-      anonymized: 'TODO(F0-10): una o dos líneas sobre el proyecto, sin identificar al cliente.',
+      named:
+        'Malone Road Belt vende correas industriales en EE. UU. Sus compradores tenían que llamar o escribir para conocer un precio. Ahora encuentran la pieza y piden la cotización en línea.',
+      anonymized:
+        'Un proveedor industrial de EE. UU. cuyos compradores tenían que llamar o escribir para conocer un precio. Ahora encuentran la pieza y piden la cotización en línea.',
     },
     before: {
       label: 'Antes',
-      points: ['TODO(F0-10): con qué se encontraban los compradores antes del sitio nuevo.'],
+      points: [
+        'Para saber el precio y la disponibilidad de una pieza había que llamar o escribir.',
+        'No se podía buscar por la referencia que el comprador ya tenía.',
+        'El sitio estaba en un solo idioma.',
+      ],
       images: { named: [], anonymized: [] },
     },
     after: {
       label: 'Después',
-      points: ['TODO(F0-10): qué pueden hacer ahora.'],
+      points: [
+        'El comprador encuentra la pieza por su referencia OEM en segundos.',
+        'Pide la cotización en línea, a cualquier hora, con las piezas exactas.',
+        'El catálogo está disponible en tres idiomas.',
+      ],
       images: { named: [], anonymized: [] },
     },
     built: ['Catálogo de productos', 'Buscador por referencia OEM', 'Tres idiomas', 'Cotizador'],
@@ -96,7 +107,7 @@ export const es = {
     steps: [
       {
         title: 'Prototipo en 5 días hábiles',
-        body: 'Una versión navegable de tu sitio, descontable del proyecto.',
+        body: 'Una versión navegable de tu sitio, gratis y sin compromiso.',
       },
       { title: 'Construcción por fases', body: 'Fases cortas que apruebas una por una.' },
       { title: 'Lanzamiento', body: 'Tu tienda sale al aire con tu propio dominio y hosting.' },
@@ -114,50 +125,86 @@ export const es = {
     plans: [
       {
         name: 'Prototipo navegable en 5 días hábiles',
-        description:
-          'Ves tu sitio funcionando antes de comprometerte. Es descontable del proyecto.',
-        price: {
-          us: { kind: 'range', min: 350, max: 500 },
-          co: { kind: 'range', min: 800_000, max: 1_200_000 },
-        },
-        features: ['TODO(F0-10): qué incluye el prototipo'],
+        description: 'Ves tu sitio funcionando antes de comprometerte. Sin costo ni compromiso.',
+        price: { us: { kind: 'free' }, co: { kind: 'free' } },
+        features: [
+          'Página de inicio y una página de catálogo o producto',
+          'Tus productos reales, tu logo y tus colores',
+          'Funciona en celular y computador',
+          'Una llamada para revisarlo juntos',
+        ],
       },
       {
         name: 'Tienda o catálogo con cotizador',
-        description: 'TODO(F0-10): para quién es.',
+        description: 'Para negocios que venden productos y todavía cotizan por teléfono o correo.',
         price: { us: { kind: 'from', amount: 3_000 }, co: { kind: 'from', amount: 3_000_000 } },
-        features: ['TODO(F0-10): qué incluye la construcción'],
+        features: [
+          'Catálogo con buscador y filtros, también por referencia',
+          'Carrito o cotizador, con las solicitudes en tu correo',
+          'Páginas rápidas que Google entiende',
+          'Dominio, hosting y cuentas a tu nombre',
+        ],
       },
       {
         name: 'Plan mensual de cuidado y visibilidad',
-        description: 'TODO(F0-10): para quién es.',
+        description: 'Para tiendas que quieren seguir mejorando después del lanzamiento.',
         price: {
           us: { kind: 'range', min: 150, max: 300, period: 'month' },
           co: { kind: 'range', min: 250_000, max: 500_000, period: 'month' },
         },
-        features: ['TODO(F0-10): qué incluye el plan'],
+        features: [
+          'Actualizaciones, copias de seguridad y parches de seguridad',
+          'Cambios pequeños de contenido cada mes',
+          'Informe mensual de visitas, cotizaciones y pedidos',
+          'Perfil de Google Business y solicitud de reseñas',
+        ],
       },
     ],
   },
   faq: {
     title: 'Preguntas frecuentes',
     items: [
-      { q: '¿El dominio y el hosting quedan a mi nombre?', a: 'TODO(F0-10)' },
-      { q: '¿Cuánto tarda el proyecto?', a: 'TODO(F0-10)' },
-      { q: '¿Cómo son los pagos?', a: 'TODO(F0-10)' },
-      { q: '¿Cuántas rondas de cambios incluye?', a: 'TODO(F0-10)' },
-      { q: '¿Qué pasa si después del prototipo no seguimos?', a: 'TODO(F0-10)' },
-      { q: '¿Trabajas con mi plataforma actual (Shopify, WooCommerce, Wix)?', a: 'TODO(F0-10)' },
-      { q: '¿Cómo nos comunicamos y en qué horario?', a: 'TODO(F0-10)' },
-      { q: '¿Qué necesito tener listo (catálogo, fotos, precios)?', a: 'TODO(F0-10)' },
+      {
+        q: '¿El dominio y el hosting quedan a mi nombre?',
+        a: 'Sí. El dominio, el hosting y todas las cuentas se crean a tu nombre, y yo trabajo con los accesos que me des. Si dejamos de trabajar juntos, todo sigue siendo tuyo.',
+      },
+      {
+        // REVIEW(F0-10): confirm the 3–6 week range
+        q: '¿Cuánto tarda el proyecto?',
+        a: 'El prototipo toma 5 días hábiles. Una tienda o catálogo típico toma de 3 a 6 semanas después de que apruebas el prototipo, según la cantidad de productos y funciones.',
+      },
+      {
+        q: '¿Cómo son los pagos?',
+        a: '40 % al iniciar la construcción, 40 % cuando apruebas el primer avance y 20 % al publicar. El prototipo es gratis.',
+      },
+      {
+        q: '¿Cuántas rondas de cambios incluye?',
+        a: 'Tres rondas de cambios por fase. Lo que pase de ahí, o una función nueva, se cotiza antes de hacerlo.',
+      },
+      {
+        q: '¿Qué pasa si después del prototipo no seguimos?',
+        a: 'Nada. El prototipo es gratis y no te compromete: si no es lo que buscas, no me debes nada.',
+      },
+      {
+        q: '¿Trabajas con mi plataforma actual (Shopify, WooCommerce, Wix)?',
+        a: 'Construyo tu sitio nuevo con mis propias herramientas, que son rápidas y baratas de mantener. Si hoy usas Shopify, WooCommerce o Wix, paso tu catálogo y tu contenido al sitio nuevo.',
+      },
+      {
+        q: '¿Cómo nos comunicamos y en qué horario?',
+        a: 'Por WhatsApp o correo, y con una videollamada corta cuando sirve. Estoy en Colombia y respondo en máximo un día hábil.',
+      },
+      {
+        q: '¿Qué necesito tener listo (catálogo, fotos, precios)?',
+        a: 'La lista de productos (una hoja de cálculo sirve), fotos si las tienes y tus precios o la forma en que cotizas. Si falta algo, empezamos con lo que haya.',
+      },
     ],
   },
   about: {
     title: 'Sobre mí',
     lines: [
       'Ingeniero de software y líder de proyectos con más de 4 años de experiencia.',
-      'TODO(F0-10): segunda línea.',
-      'TODO(F0-10): tercera línea.',
+      'Diseño y construyo tiendas, catálogos y cotizadores para negocios que venden productos.',
+      'Trabajo desde Colombia con clientes en EE. UU. y Latinoamérica, en inglés y en español.',
     ],
     photo: {
       src: '/images/about/portrait.webp',

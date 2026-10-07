@@ -291,7 +291,7 @@ Con `currencyDisplay: 'code'`, el peso nunca se confunde con el dólar (ambos us
 
 | Servicio | `us` | `co` |
 |---|---|---|
-| Prototipo navegable en 5 días hábiles, descontable del proyecto | `range` 350–500 | `range` 800.000–1.200.000 |
+| Prototipo navegable en 5 días hábiles, gratis y sin compromiso (decisión del 6-oct) | `free` | `free` |
 | Tienda o catálogo con cotizador | `from` 3.000 | `from` 3.000.000 |
 | Plan mensual de cuidado y visibilidad | `range` 150–300 / mes | `range` 250.000–500.000 / mes |
 
