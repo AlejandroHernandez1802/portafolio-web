@@ -11,13 +11,13 @@ Las pruebas automáticas (Playwright, axe y Lighthouse CI) llegan en la v1.1. Li
 | Métrica | Objetivo | Herramienta | Momento |
 |---|---|---|---|
 | Lighthouse Performance (móvil) | **≥ 90** | PSI sobre producción, `/en` y `/es`, mediana de 3 | Antes de publicar y en cada versión |
-| LCP (laboratorio, móvil) | **< 2,5 s**; el elemento LCP es el `<h1>` | PSI y DevTools → Performance | Ídem |
+| LCP (laboratorio, móvil) | **< 2,5 s**; el elemento LCP es texto estático del hero, pintado en el primer fotograma: el `<h1>` o, en teléfonos, el subtítulo, que ocupa más área ([05 §6](./05-hero-animacion.md#6-guardas-de-rendimiento)). Ninguno de los dos se anima. Al 24-oct: 2,3 s en Lighthouse móvil | PSI y DevTools → Performance | Ídem |
 | CLS | < 0,1 (objetivo ≤ 0,02) | PSI; en campo, Cloudflare Web Analytics si se activa | Ídem |
 | TBT (laboratorio) / INP (campo) | ≤ 200 ms | PSI / Cloudflare Web Analytics (opcional) | Ídem / cuando haya tráfico |
 | JS de primera carga | ≤ 150 KB comprimidos, incluida la base de React y Next. Se registra la línea base en el primer build | Reporte de `next build` y pestaña *Network* | En cada PR |
 | CSS | ≤ 30 KB comprimidos | *Network* | En cada PR |
 | Animación del hero | 0 KB de JS; CSS + SVG ≤ 15 KB | Inspección del build | F1-02 |
-| Fuentes | 1 archivo variable `woff2`, subconjunto `latin`, ≤ 50 KB | *Network* | F1-03 |
+| Fuentes | 2 familias, subconjunto `latin`, ≤ 120 KB en total (hoy ~70 KB). Archivo variable recortada a ancho 62–100 % y pesos 400–800: 1 `woff2` de ~60 KB, precargado. IBM Plex Mono 500: 1 `woff2` de ~10 KB, sin precarga. Antes era 1 archivo de ≤ 50 KB; subió con [ADR-019](./14-decisiones.md#adr-019) | *Network* y `out/_next/static/media/` | F1-03, F1-12 |
 | Terceros al cargar | **1**: el script de Umami (`defer`, ~2,3 KB). Cal.com solo carga con la primera intención | *Network*, filtrando por otros dominios | En cada PR |
 
 ## 2. Técnicas de rendimiento
@@ -25,7 +25,11 @@ Las pruebas automáticas (Playwright, axe y Lighthouse CI) llegan en la v1.1. Li
 - **Todo SSG en la CDN de Cloudflare.** Las páginas se sirven como archivos estáticos, sin pasar por el Worker, que solo atiende `/`, `/call` y `/llamada`. No hay `proxy.ts`.
 - **Server Components por defecto.** Solo 4 islas de cliente pequeñas ([03 §5](./03-arquitectura.md#5-componentes-de-servidor-y-de-cliente)).
 - **Hook en CSS** con estado final primero; sin imágenes en el escenario ([05 §6](./05-hero-animacion.md#6-guardas-de-rendimiento)).
-- **`next/font` autoalojada**, con `adjustFontFallback`.
+- **Fuentes autoalojadas con `next/font`:**
+  - **Archivo** sale de un archivo propio servido con `next/font/local`, recortado a ancho 62–100 % y pesos 400–800: 60 KB en vez de los 90 KB del archivo completo de Google ([06 §3.2](./06-secciones-y-ui.md#32-tipografía)). Va precargada y con `display: 'swap'`. Cada rol angosto tiene un respaldo ajustado con `size-adjust`, así que el H1 no cambia de líneas cuando llega la fuente ([05 §6](./05-hero-animacion.md#6-guardas-de-rendimiento)).
+  - **Plex Mono** va en un solo peso (500), sin precarga y con `swap`. Aun sin precarga compite con Archivo: el escenario la usa en la primera pantalla, así que Chrome la pide con prioridad muy alta antes del primer pintado. Por eso es un solo archivo de 10 KB.
+  - **Medido el 24-oct** con Lighthouse 12.8 en móvil (export servido con brotli, 3 corridas por idioma, todas iguales): LCP 2,3 s, FCP 1,2 s, Performance 98 y CLS 0. Con Archivo completa y los tres pesos de Plex Mono daba LCP 2,6 s y Performance 97.
+  - **Si el LCP vuelve a pasar de 2,5 s por las fuentes,** las opciones que quedan son estrechar más el rango de pesos de Archivo o recortar Plex Mono a los caracteres que usa.
 - **Imágenes ya optimizadas** (WebP o AVIF, con las medidas de [06 §4](./06-secciones-y-ui.md#4-imágenes)), con dimensiones fijas y carga diferida; ninguna en el primer pliegue. El export no tiene optimizador.
 - **Caché larga para `/_next/static/*`** (archivos con hash), declarada en `_headers` ([09 §2](./09-seguridad-y-privacidad.md#2-encabezados-http)).
 - **Enlaces internos con `<a>`**, para evitar las solicitudes de prefetch que fallan en el export de Next 16 ([03 §7](./03-arquitectura.md#7-convenciones-de-código)).
@@ -40,14 +44,14 @@ Las pruebas automáticas (Playwright, axe y Lighthouse CI) llegan en la v1.1. Li
 | 1.1.1 Contenido no textual | `alt` obligatorio en el tipo `ImageRef`; íconos con `aria-hidden`; escenario del hook `aria-hidden` (decorativo, su mensaje está en el H1) | Compilación + axe |
 | 1.3.1 Información y relaciones | Landmarks (`header`, `main`, `footer`, `nav`); un único `<h1>`; H2 por sección; listas reales; `<details>` en las preguntas frecuentes | axe + lector de pantalla |
 | 1.3.2 / 2.4.3 Orden | Orden del DOM = orden de lectura; el escenario no es enfocable ([05 §8](./05-hero-animacion.md#8-responsive-y-orden-visual)) | Recorrido con Tab |
-| 1.4.3 Contraste mínimo | Paleta calculada: texto ≥ 4,5:1 y texto grande ≥ 3:1 ([06 §3](./06-secciones-y-ui.md#3-sistema-visual)) | axe + revisión de tokens |
+| 1.4.3 Contraste mínimo | Paleta calculada ([06 §3.1](./06-secciones-y-ui.md#31-color)): `ink-1` 16:1 y `ink-2` 7,4:1 sobre papel; blanco sobre cobalto 8,2:1; tinta sobre sol 12,2:1; `on-ink-2` 7,5:1 sobre azul profundo. `ink-3` (4,5:1) solo se usa sobre `paper-0` y `paper-1`, porque sobre arena baja a 4:1 | axe + revisión de tokens |
 | 1.4.4 / 1.4.10 Zoom y reflow | Funciona al 200 % y a 320 px sin scroll horizontal | Prueba manual |
-| 1.4.11 Contraste no textual | Bordes de campos y anillo de foco ≥ 3:1 | Revisión manual |
+| 1.4.11 Contraste no textual | Anillo de foco de tinta (16:1), o sol en las bandas azules (≥ 5,8:1); bordes de campos en `ink-2` (7,4:1); marco del selector de moneda en cobalto (7,6:1) | Revisión manual |
 | 2.1.1 Teclado | Todo es operable con teclado: enlaces, `<details>`, selector de moneda, formulario | Recorrido con Tab |
 | 2.2.2 Pausar | La animación dura 4,2 s y no se repite: queda exenta (el límite es 5 s) | — |
 | 2.4.1 Saltar bloques | Enlace "Saltar al contenido" al inicio | Tab desde la carga |
-| 2.4.7 / 2.4.11 Foco visible y no oculto | Anillo de 2 px con separación; `scroll-padding-top: 64px` por el header fijo | Recorrido con Tab |
-| 2.5.8 Tamaño del objetivo | Áreas táctiles ≥ 44 × 44 px (el mínimo es 24 × 24) | Revisión en móvil |
+| 2.4.7 / 2.4.11 Foco visible y no oculto | Anillo de 2 px con separación, de tinta o sol según la banda; `scroll-padding-top: 64px` por el header fijo | Recorrido con Tab |
+| 2.5.8 Tamaño del objetivo | El mínimo es 24 × 24 px.<ul><li>Botones de 48 px de alto; enlaces con flecha (`secondary`) de 44 px.</li><li>El botón compacto del header, el enlace de idioma y las opciones del selector de moneda miden 36 px.</li><li>Los enlaces del pie, de texto pequeño, se revisan con la excepción de espaciado de 2.5.8.</li></ul> | Revisión en móvil |
 | 3.1.1 / 3.1.2 Idioma | `<html lang>` por página; el enlace "Español"/"English" lleva su propio `lang` | Inspección |
 | 3.3.1 / 3.3.2 Formularios (v1.1) | Etiquetas visibles, errores junto al campo con `aria-describedby`, `aria-invalid`, región `aria-live` | axe + lector de pantalla |
 | 4.1.2 Nombre, función, valor | Elementos nativos (`a`, `button`, `details`, `input`) | axe |
@@ -60,10 +64,11 @@ Las pruebas automáticas (Playwright, axe y Lighthouse CI) llegan en la v1.1. Li
 
 - [ ] `pnpm lint` y `pnpm build` sin errores. Next 16 ya no ejecuta ESLint en el build, así que el lint se corre aparte.
 - [ ] `pnpm preview` (export + Worker en `localhost:8787`): sin errores en la consola, sin 404 de archivos `.txt` de RSC en *Network*, y `/en` responde sin barra final.
-- [ ] PSI ×3 en `/en` y `/es` sobre producción: Performance ≥ 90, LCP < 2,5 s, y el elemento LCP es el `<h1>`.
+- [ ] PSI ×3 en `/en` y `/es` sobre producción: Performance ≥ 90, LCP < 2,5 s, y el elemento LCP es el `<h1>` o, en teléfonos, el subtítulo del hero (texto estático, sin animación).
 - [ ] iPhone real (Safari y el navegador interno de Gmail) y Android (Chrome).
 - [ ] Recorrido completo con teclado, extensión axe DevTools y una pasada rápida con VoiceOver.
-- [ ] Reducir movimiento emulado: se ve el estado final.
+- [ ] Reducir movimiento emulado: se ve el estado final, con el tachado y el marcador del H1 completos.
+- [ ] Fuentes bloqueadas (DevTools → *Network* → *Block request URL* con `woff2`): el H1 conserva sus líneas con el respaldo ajustado, sin romper el layout ni tapar el escenario.
 - [ ] `?mkt=co`, `?mkt=us` y la zona horaria `America/Bogota` emulada (DevTools → *Sensors*).
 - [ ] Reserva de prueba de punta a punta: popup, hora local, preguntas y consentimiento, correo de confirmación, evento en Calendar, UTM en el detalle de la reserva, y `booking_completed` en Umami.
 - [ ] Un enlace con UTM desde otro dispositivo: aparece `landing` tras interactuar.
@@ -103,7 +108,7 @@ jobs:
 
 1. `/?utm_source=x` con `Accept-Language: es-CO` → `/es?utm_source=x`; con `en-US` → `/en?utm_source=x`.
 2. `/en` y `/es`: `<html lang>` correcto y `<h1>` visible en el primer fotograma (sin `opacity: 0`).
-3. Reducir movimiento: la captura con `reducedMotion: 'reduce'` es igual a la captura con movimiento después de 5 s.
+3. Reducir movimiento: la captura con `reducedMotion: 'reduce'` coincide con la captura con movimiento después de 5 s, con una tolerancia pequeña por el antialiasing del H1 (por ejemplo, `maxDiffPixels: 50`; [05 §10](./05-hero-animacion.md#10-pruebas)).
 4. Mercado:
    - `timezoneId: 'America/Bogota'` → COP visible y USD oculto.
    - `America/New_York` → USD.

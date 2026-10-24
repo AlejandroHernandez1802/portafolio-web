@@ -198,21 +198,21 @@ Code/
 ├── src/
 │   ├── app/
 │   │   ├── [locale]/
-│   │   │   ├── layout.tsx         # root layout: <html lang>, fuente, script de mercado, analítica, TrackingListener
+│   │   │   ├── layout.tsx         # root layout: <html lang>, fuentes, script de mercado, analítica, TrackingListener
 │   │   │   ├── page.tsx           # la página única: compone las secciones
 │   │   │   ├── privacy/page.tsx   # política por idioma
 │   │   │   └── p/[slug]/          # propuestas (v1.1)
 │   │   │       ├── page.tsx
 │   │   │       └── opengraph-image.tsx
 │   │   ├── global-not-found.tsx   # 404 bilingüe → out/404.html
-│   │   ├── globals.css            # Tailwind + tokens (@theme)
+│   │   ├── globals.css            # Tailwind + tokens del sistema visual (@theme), utilidades stretch-* y label-mono, reglas de mercado y foco
 │   │   ├── sitemap.ts
 │   │   ├── robots.ts
 │   │   └── icon.svg
 │   ├── components/
 │   │   ├── sections/              # Header, Hero, Solves, CaseMrb, DemoTeaser (v2), Process, Pricing, Faq, About, Closing, Footer
-│   │   ├── hero/                  # HookStage.tsx + hook.css
-│   │   ├── ui/                    # ButtonLink, Container, SectionHeading, Price, Icon
+│   │   ├── hero/                  # HookStage.tsx + hook.css (escenario); HeroHeadline.tsx + headline.css (H1); timeline.ts (tiempos de los dos)
+│   │   ├── ui/                    # ButtonLink, Container (+ Section), SectionHeading (+ SectionIndex), Price, Chip, Icon; section.css (fondo de plano)
 │   │   ├── booking/               # BookCallLink (servidor) + CalLoader (cliente)
 │   │   ├── analytics/             # TrackingListener (cliente)
 │   │   ├── market/                # MarketToggle (cliente)
@@ -222,10 +222,12 @@ Code/
 │   │   ├── en.ts / es.ts          # todos los textos visibles
 │   │   ├── site.ts                # configuración: flags, enlaces, datos de contacto, ID de Umami
 │   │   └── proposals/             # un archivo .ts por propuesta (v1.1)
+│   ├── fonts/                     # Archivo recortada (woff2) y su licencia OFL; cómo regenerarla en 06 §3.2
 │   └── lib/
 │       ├── i18n.ts                # locales, currentLocale() y getContent() (next/root-params; solo servidor)
-│       ├── fonts.ts               # fuente con next/font, compartida por el layout y el 404
-│       ├── market.ts              # script inline y formato de moneda
+│       ├── fonts.ts               # Archivo (next/font/local, de src/fonts/) e IBM Plex Mono 500 (next/font/google); compartido por el layout y el 404
+│       ├── format.ts              # pad2(): la numeración 01, 02… de índices, planes, pasos y preguntas
+│       ├── market.ts              # script inline y formato de moneda (priceParts)
 │       ├── analytics.ts           # nombres de eventos (tipo unión) y track() sobre Umami
 │       ├── utm.ts                 # captura y lectura de UTM
 │       └── jsonld.ts              # constructores tipados con schema-dts
@@ -307,7 +309,11 @@ const nextConfig: NextConfig = {
 
 - **Idioma:** código, identificadores, commits y comentarios en inglés; docs en español; textos visibles solo en `src/content/{en,es}.ts`.
 - **Nombres:** componentes en `PascalCase.tsx`; utilidades en `kebab-case.ts`; alias de import `@/` hacia `src/`.
-- **Estilos:** utilidades de Tailwind. Las únicas excepciones son `hero/hook.css` (keyframes) y los tokens de `globals.css`. Nada de estilos inline salvo las variables CSS del hook (`--t`, `--d`).
+- **Estilos:** utilidades de Tailwind con los tokens de `globals.css` ([06 §3](./06-secciones-y-ui.md#3-sistema-visual)).
+  - Hay CSS propio, junto a su componente, solo para lo que las utilidades no expresan bien: `hero/hook.css` (escenario y keyframes), `hero/headline.css` (decoraciones del H1) y `ui/section.css` (fondo de plano).
+  - En esos archivos, las clases van en BEM con prefijo por componente (`hook__*`, `headline__*`, `section--grid`).
+  - Nada de estilos inline, salvo las variables CSS de tiempo del hook y del H1 (`--t`, `--d`).
+  - El design system de `Design system/` es la referencia visual: sus clases `ah-*` no se copian.
 - **Enlaces internos con `<a>`, no con `next/link`.** En el export de Next 16, el prefetch de `next/link` pide los payloads RSC en rutas equivocadas y da 404 ([issue #85374](https://github.com/vercel/next.js/issues/85374)). Entre páginas estáticas, un `<a>` es igual de rápido. Por eso la regla de ESLint `@next/next/no-html-link-for-pages` está desactivada en `eslint.config.mjs`.
 - **Datos de seguimiento:** toda CTA lleva `data-track` y `data-track-location`, con valores de la unión de tipos en `lib/analytics.ts`, para evitar errores de tipeo.
 - **Commits:** [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`…). Ramas cortas y un PR por tarea del [plan](./13-plan-de-implementacion.md), para tener una preview de Cloudflare por cada una.

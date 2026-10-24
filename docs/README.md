@@ -39,6 +39,7 @@ Sitio de una página, en inglés y español, que vende "tiendas y catálogos con
 | Idiomas | i18n nativo de Next.js y contenido tipado en `content/{en,es}.ts` | Si falta un texto, la compilación falla. No requiere librerías | [04](./04-i18n-contenido-y-precios.md), [ADR-003](./14-decisiones.md#adr-003) |
 | Precios | COP solo para visitantes de Colombia y USD para el resto, en ambos idiomas | Decisión tuya. Se detecta con la zona horaria del dispositivo, sin servidor | [04](./04-i18n-contenido-y-precios.md#8-precios-por-país-del-visitante), [ADR-005](./14-decisiones.md#adr-005) |
 | Hook A | CSS keyframes sobre HTML y SVG; el estado final es la base | 0 KB de JS. Si la animación falla o el visitante pide reducir movimiento, se ve el estado final | [05](./05-hero-animacion.md), [ADR-006](./14-decisiones.md#adr-006) |
+| Sistema visual | "Plano técnico" del design system de `Design system/`: papel crema, tinta, cobalto y marcador sol; Archivo e IBM Plex Mono | La página se veía demasiado sobria. Tokens en Tailwind 4 y componentes propios, sin librerías | [06 §3](./06-secciones-y-ui.md#3-sistema-visual), [ADR-019](./14-decisiones.md#adr-019) |
 | Agenda | Cal.com (gratis) en popup, con enlace de respaldo | Muestra la hora del visitante, guarda los UTM y no carga nada hasta que hay intención | [07](./07-integraciones.md#2-agenda-con-calcom), [ADR-007](./14-decisiones.md#adr-007) |
 | Analítica | Umami Cloud Hobby (gratis): eventos con `{location, campaign}` | Sin cookies ni banner, ~2,3 KB y reporte de UTM incluido. Límites: 1 sitio y 6 meses de retención | [12](./12-medicion-y-analitica.md), [ADR-018](./14-decisiones.md#adr-018) |
 | Formulario | v1.1: `POST /api/contact` en el Worker + Resend | El roadmap (§10) pide para el 18 de octubre solo el hook, el caso y la agenda | [07](./07-integraciones.md#5-formulario-de-contacto-v11), [ADR-009](./14-decisiones.md#adr-009) |
@@ -54,7 +55,7 @@ Sitio de una página, en inglés y español, que vende "tiendas y catálogos con
 | 03 | [Arquitectura](./03-arquitectura.md) | Diagramas, rutas, estructura del repositorio y convenciones |
 | 04 | [i18n, contenido y precios](./04-i18n-contenido-y-precios.md) | Idiomas, modelo de contenido tipado, flags, precios por país y propuestas web |
 | 05 | [Hero y animación](./05-hero-animacion.md) | Especificación del hook A, con sus guardas de rendimiento y accesibilidad |
-| 06 | [Secciones y UI](./06-secciones-y-ui.md) | Cada sección, sus componentes, tokens visuales e imágenes |
+| 06 | [Secciones y UI](./06-secciones-y-ui.md) | Cada sección, sus componentes, el sistema visual "plano técnico" e imágenes |
 | 07 | [Integraciones](./07-integraciones.md) | Cal.com, WhatsApp, correo, formulario, contrato de la demo y esbozo de la v3 |
 | 08 | [SEO](./08-seo.md) | Metadata, hreflang, Open Graph, JSON-LD, sitemap y noindex |
 | 09 | [Seguridad y privacidad](./09-seguridad-y-privacidad.md) | Headers, antispam, secretos, Ley 1581, CAN-SPAM y CalOPPA |

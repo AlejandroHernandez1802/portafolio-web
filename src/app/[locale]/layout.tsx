@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { site } from '@/content/site'
 import { CalLoader } from '@/components/booking/CalLoader'
 import { TrackingListener } from '@/components/analytics/TrackingListener'
-import { inter } from '@/lib/fonts'
+import { fontVariables } from '@/lib/fonts'
 import { currentLocale, locales } from '@/lib/i18n'
 import { MARKET_SCRIPT } from '@/lib/market'
 import '../globals.css'
@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: LayoutProps<'/[locale]'>)
   const productionHost = new URL(site.url).hostname
   return (
     // suppressHydrationWarning: the market script sets data-market before hydration
-    <html lang={lang} className={inter.variable} suppressHydrationWarning>
+    <html lang={lang} className={fontVariables} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: MARKET_SCRIPT }} />
         {site.analytics.umamiWebsiteId && (
@@ -38,7 +38,8 @@ export default async function RootLayout({ children }: LayoutProps<'/[locale]'>)
           />
         )}
       </head>
-      <body className="bg-bg font-sans text-fg antialiased">
+      {/* Paper, ink, Archivo and 1.6 leading come from the base layer in globals.css */}
+      <body>
         {children}
         <TrackingListener />
         <CalLoader />

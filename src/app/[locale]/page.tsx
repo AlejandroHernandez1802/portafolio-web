@@ -51,9 +51,10 @@ export default async function Home() {
 
   return (
     <>
+      {/* Parked above the viewport until focused; sits over the fixed header (z-50) */}
       <a
         href="#main"
-        className="sr-only z-[60] focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:rounded-lg focus:bg-bg focus:p-3"
+        className="fixed top-2 left-2 z-60 -translate-y-[200%] border border-ink-1 bg-paper-0 px-3.5 py-3 font-semibold underline focus:translate-y-0"
       >
         {content.nav.skipToContent}
       </a>

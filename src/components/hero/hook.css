@@ -1,15 +1,56 @@
 /* Hook A animation (docs/05). CSS only, 0 KB of JS. The base styles ARE the final state:
    every animation only declares its starting point (or ends where the base is), so with
-   reduced motion, a failed load or an old browser the finished scene is what you see. */
+   reduced motion, a failed load or an old browser the finished scene is what you see.
+   Looks from the design system (components/hero/hero.css): a spec-sheet panel with a 24 px
+   cobalt grid, an ink frame and corner marks; only the UI drawn inside it is rounded. */
 
 .hook {
   position: relative;
   display: block;
   height: 200px; /* mobile: ≤ 200 px (docs/05 §8) */
   overflow: hidden;
-  border-radius: 16px;
-  background: var(--color-surface);
+  border: 1px solid var(--ink-1);
+  /* Gradients, not images: they never compete with the H1 for LCP */
+  background-color: var(--accent-50);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: -1px -1px;
+  color: var(--ink-1);
   contain: layout paint;
+}
+
+/* Registration marks in the four corners, like a print sheet */
+.hook__corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--ink-1);
+}
+.hook__corner--tl {
+  top: 9px;
+  left: 9px;
+  border-top-width: 1.5px;
+  border-left-width: 1.5px;
+}
+.hook__corner--tr {
+  top: 9px;
+  right: 9px;
+  border-top-width: 1.5px;
+  border-right-width: 1.5px;
+}
+.hook__corner--bl {
+  bottom: 9px;
+  left: 9px;
+  border-bottom-width: 1.5px;
+  border-left-width: 1.5px;
+}
+.hook__corner--br {
+  right: 9px;
+  bottom: 9px;
+  border-right-width: 1.5px;
+  border-bottom-width: 1.5px;
 }
 
 /* The scene is drawn at 400 × 300 and scaled with transform, never by changing sizes */
@@ -20,6 +61,15 @@
   width: 400px;
   height: 300px;
   transform: translate(-50%, -50%) scale(0.6667);
+}
+/* Tablets get the scene at 1:1 instead of a small strip across a wide column */
+@media (min-width: 640px) {
+  .hook {
+    height: 300px;
+  }
+  .hook__scene {
+    transform: translate(-50%, -50%);
+  }
 }
 @media (min-width: 1024px) {
   .hook {
@@ -32,9 +82,11 @@
 
 .hook__scene > * {
   position: absolute; /* nothing pushes anything */
+  white-space: nowrap;
 }
 
-/* Chat bubbles: hidden in the final state */
+/* Chat bubbles: hidden in the final state. The customer's floats (shadow-1); the reply is
+   the flat gray "call for pricing" (ink-2 on paper-3: 5.6:1, docs/05 §7) */
 .hook__msg {
   max-width: 250px;
   margin: 0;
@@ -42,21 +94,24 @@
   border-radius: 16px;
   font-size: 15px;
   line-height: 1.35;
+  white-space: normal;
   opacity: 0;
 }
 .hook__msg--in {
   top: 28px;
   left: 24px;
+  border: 1px solid var(--paper-3);
   border-bottom-left-radius: 4px;
-  background: #dbeafe;
-  color: var(--color-fg);
+  background: var(--paper-0);
+  color: var(--ink-1);
+  box-shadow: var(--shadow-1);
 }
 .hook__msg--out {
   top: 92px;
   right: 24px;
   border-bottom-right-radius: 4px;
-  background: #ffffff;
-  color: var(--color-muted);
+  background: var(--paper-3);
+  color: var(--ink-2);
 }
 
 /* Product card: visible in the final state */
@@ -66,9 +121,10 @@
   width: 268px;
   height: 196px;
   padding: 14px;
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgb(17 24 39 / 0.12);
+  border: 1px solid var(--paper-3);
+  border-radius: 8px;
+  background: var(--paper-0);
+  box-shadow: var(--shadow-2);
 }
 .hook__card > * {
   position: absolute;
@@ -79,49 +135,59 @@
   left: 14px;
   width: 72px;
   height: 72px;
-  border-radius: 10px;
-  background: var(--color-surface);
-  color: var(--color-muted);
+  border-radius: 4px;
+  background: var(--paper-2);
+  color: var(--ink-1);
 }
 .hook__brand {
   top: 16px;
   left: 98px;
-  font-size: 12px;
-  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 .hook__name {
-  top: 34px;
-  left: 98px;
-  font-size: 16px;
-  font-weight: 600;
-}
-.hook__price {
-  top: 60px;
+  top: 32px;
   left: 98px;
   font-size: 16px;
   font-weight: 700;
 }
+.hook__price {
+  top: 56px;
+  left: 98px;
+  font-size: 21px;
+  font-weight: 800;
+  font-stretch: var(--stretch-heading);
+  font-variant-numeric: tabular-nums;
+}
 .hook__unit {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500; /* the only Plex Mono weight loaded (src/lib/fonts.ts) */
+  font-stretch: var(--stretch-body);
+  color: var(--ink-3);
 }
 .hook__qty {
   top: 104px;
   left: 14px;
   padding: 4px 10px;
-  border: 1px solid var(--color-muted);
-  border-radius: 8px;
-  font-size: 14px;
+  border: 1px solid var(--ink-2);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
 }
 .hook__btn {
   top: 140px;
-  left: 14px;
   right: 14px;
+  left: 14px;
   padding: 9px 0;
-  border-radius: 10px;
-  background: var(--color-accent);
-  color: #ffffff;
+  border-radius: 4px;
+  background: var(--accent-500);
+  color: var(--on-accent);
   font-size: 15px;
   font-weight: 600;
   text-align: center;
@@ -134,9 +200,10 @@
   width: 52px;
   height: 52px;
   padding: 13px;
+  border: 1px solid var(--paper-3);
   border-radius: 999px;
-  background: #ffffff;
-  color: var(--color-fg);
+  background: var(--paper-0);
+  color: var(--ink-1);
 }
 .hook__badge {
   position: absolute;
@@ -147,10 +214,11 @@
   height: 22px;
   place-items: center;
   border-radius: 999px;
-  background: var(--color-accent);
-  color: #ffffff;
+  background: var(--accent-500);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 /* Cursor: gone in the final state */
@@ -159,33 +227,46 @@
   left: 150px;
   width: 26px;
   height: 26px;
-  color: var(--color-fg);
+  color: var(--ink-1);
   opacity: 0;
 }
 
-/* Order toast: visible in the final state */
+/* Order toast: visible in the final state, ink with a green check */
 .hook__toast {
+  right: 24px;
   bottom: 22px;
   left: 24px;
-  right: 24px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin: 0;
   padding: 12px 14px;
-  border-radius: 12px;
-  background: #ffffff;
-  color: var(--color-success);
+  border-radius: 6px;
+  background: var(--ink-1);
+  color: var(--on-ink-1);
   font-size: 15px;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgb(17 24 39 / 0.12);
+  box-shadow: var(--shadow-2);
+}
+.hook__ok {
+  display: grid;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--ok-600);
+  color: var(--paper-0);
+}
+.hook__ok > svg {
+  stroke-width: 2.5; /* the 14 px check needs a heavier line than the 24 px icon set */
 }
 
 /* ---- Timeline (docs/05 §3): delays and durations come from --t and --d in the JSX ---- */
 .hook [data-anim] {
   animation-duration: var(--d, 300ms);
   animation-delay: var(--t, 0ms);
-  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+  animation-timing-function: var(--ease-out);
   animation-fill-mode: both;
 }
 

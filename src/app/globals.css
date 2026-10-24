@@ -1,19 +1,240 @@
 @import 'tailwindcss';
 
-/* Design tokens (docs/06 §3). Contrast ratios are computed against white. */
-@theme {
-  --color-bg: #ffffff;
-  --color-fg: #111827;
-  --color-muted: #4b5563;
-  --color-surface: #f3f4f6;
-  --color-border: #9ca3af;
-  --color-accent: #1d4ed8;
-  --color-success: #047857;
-  --color-focus: #1d4ed8;
+/* Design tokens: "el plano técnico" (docs/06 §3, Design system/tokens). Cream paper, navy ink,
+   cobalt for every action, a sun-yellow marker. Contrast ratios are against --paper-1 unless
+   stated. Plain :root so co-located CSS files (hook.css, section.css…) can always read them. */
+:root {
+  /* Paper: cream stock */
+  --paper-0: #fffdf8; /* raised cards, stage product card */
+  --paper-1: #faf6ee; /* page */
+  --paper-2: #f2e7cf; /* sand: top of sunken bands, glow */
+  --paper-3: #e1d7c3; /* hairlines */
+  --sand-50: #f8f1e1; /* tail of the sunken gradient */
+  /* Ink: navy black */
+  --ink-1: #15192b; /* text and rules · 16:1 */
+  --ink-2: #4a5069; /* secondary text · 7.3:1 (6.5:1 on paper-2, 6.2:1 on accent-100) */
+  --ink-3: #687090; /* labels on paper-0/1 only · 4.5:1 */
+  --ink-4: #232a4a; /* hover of ink buttons */
+  /* On deep navy */
+  --on-ink-1: #eef0fa;
+  --on-ink-2: #a9b0d6; /* 7.5:1 on --deep */
+  --on-ink-line: #2a3570;
+  /* Cobalt, the action color: white text on it (8.2:1) */
+  --accent-50: #eef1fb; /* tint band, hero stage */
+  --accent-100: #dce3fa; /* chips, hero glow, outline hover */
+  --accent-500: #2742b8; /* actions · 7.6:1 as text */
+  --accent-600: #1f3597; /* hover */
+  --accent-700: #182a78; /* cobalt as text on paper · 11.9:1 */
+  --on-accent: #ffffff; /* text on cobalt */
+  --deep: #141c4f; /* inverse surface: process band, footer, "Después" panel */
+  /* Sun, the marker: ink text on it (12.2:1), never text itself */
+  --sun-300: #ffe37a; /* hover */
+  --sun-400: #ffd43b;
+  /* Success: checks, "order received" */
+  --ok-100: #dbf1e6;
+  --ok-600: #176b4b; /* 6:1 */
+
+  /* Width axis of Archivo (font-stretch) */
+  --stretch-display: 62%; /* H1, giant numerals, prices */
+  --stretch-heading: 75%; /* H2 */
+  --stretch-title: 87.5%; /* plan names, quotes, brand */
+  --stretch-body: 100%;
+
+  /* Blueprint motif and header glass */
+  --grid-line: rgb(39 66 184 / 0.1);
+  --grid-size: 24px; /* hero stage */
+  --grid-size-lg: 32px; /* page backdrop */
+  --header-h: 48px;
+  --header-bg: rgb(250 246 238 / 0.9);
+  --header-blur: 8px;
 }
 
+/* Tailwind palette = the design system only (no grays, reds or oranges): bg-paper-1,
+   text-ink-2, border-ink-1, bg-accent-500, text-sun-400… Inline so utilities read :root. */
+@theme {
+  --color-*: initial;
+}
 @theme inline {
-  --font-sans: var(--font-inter);
+  --color-white: var(--on-accent);
+  --color-paper-0: var(--paper-0);
+  --color-paper-1: var(--paper-1);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-sand-50: var(--sand-50);
+  --color-ink-1: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-on-ink-1: var(--on-ink-1);
+  --color-on-ink-2: var(--on-ink-2);
+  --color-on-ink-line: var(--on-ink-line);
+  --color-accent-50: var(--accent-50);
+  --color-accent-100: var(--accent-100);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-accent-700: var(--accent-700);
+  --color-deep: var(--deep);
+  --color-sun-300: var(--sun-300);
+  --color-sun-400: var(--sun-400);
+  --color-ok-100: var(--ok-100);
+  --color-ok-600: var(--ok-600);
+}
+
+/* Archivo (variable, with the wdth axis) and IBM Plex Mono from next/font, whose variables
+   are set on <html> (src/lib/fonts.ts). Static so var(--font-mono) works in any CSS file. */
+@theme inline static {
+  --font-sans: var(--font-archivo), 'Archivo Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Type scale, leading, tracking, shadows and the motion curve. Static: always emitted, so
+   co-located CSS can use var(--text-display), var(--shadow-2), var(--ease-out)… */
+@theme static {
+  /* text-display etc. also set line-height, letter-spacing and weight; leading-*, tracking-*
+     and font-* utilities still override them */
+  --text-display: clamp(2.5rem, 9.2vw, 8.5rem); /* H1: two lines across the container */
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 800;
+  --text-h2-xl: clamp(2.75rem, 8vw, 6.5rem); /* closing title */
+  --text-h2-xl--line-height: 0.95;
+  --text-h2-xl--letter-spacing: -0.02em;
+  --text-h2-xl--font-weight: 800;
+  --text-h2: clamp(2rem, 4.6vw, 3.5rem);
+  --text-h2--line-height: 0.98;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 800;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.2;
+  --text-h3--font-weight: 700;
+  --text-numeral: clamp(3.5rem, 7vw, 5.5rem); /* step numbers */
+  --text-numeral--line-height: 0.85;
+  --text-numeral--letter-spacing: -0.02em;
+  --text-numeral--font-weight: 800;
+  --text-price: clamp(2rem, 3.2vw, 2.75rem);
+  --text-price--line-height: 1;
+  --text-price--letter-spacing: -0.01em;
+  --text-price--font-weight: 800;
+  --text-lead: clamp(1.0625rem, 1.5vw, 1.25rem);
+  --text-lead--line-height: 1.5;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1;
+
+  --leading-display: 0.95;
+  --leading-heading: 0.98;
+  --leading-title: 1.2;
+  --leading-lead: 1.5;
+  --leading-body: 1.6;
+
+  --tracking-display: -0.02em;
+  --tracking-heading: -0.01em;
+  --tracking-label: 0.08em;
+
+  /* The page is flat: shadows only for what floats inside the hero stage, and pressed buttons */
+  --shadow-1: 0 1px 2px rgb(21 25 43 / 0.08);
+  --shadow-2: 0 1px 2px rgb(21 25 43 / 0.06), 0 14px 32px -14px rgb(21 25 43 / 0.32);
+  --shadow-press: inset 0 2px 0 rgb(21 25 43 / 0.18);
+
+  /* Hook curve (docs/05): no bounces or springs */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Fallbacks for Archivo while it loads (docs/05 §6). No system font is condensed, so the narrow
+   roles get Arial (Roboto on Android, within 1.5 % of its width) scaled down to Archivo's width
+   at 62 % and 75 %: the H1 keeps its line count and the swap moves nothing. 76.5 % and 88 % were
+   measured on the H1, H2s and page titles at 280–1440 px, in both languages; the H1 matches at
+   every width tested but 304 px (en). The ascent and descent overrides are divided by
+   size-adjust so the text keeps its baseline. The body one is what next/font computes for
+   Archivo at 100 %. */
+@font-face {
+  font-family: 'Archivo Fallback';
+  src: local('Arial'), local('ArialMT'), local('Roboto'), local('Roboto-Regular');
+  size-adjust: 98.7%;
+  ascent-override: 88.96%;
+  descent-override: 21.28%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo Display Fallback';
+  src: local('Arial'), local('ArialMT'), local('Roboto'), local('Roboto-Regular');
+  size-adjust: 76.5%;
+  ascent-override: 114.78%;
+  descent-override: 27.46%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo Heading Fallback';
+  src: local('Arial'), local('ArialMT'), local('Roboto'), local('Roboto-Regular');
+  size-adjust: 88%;
+  ascent-override: 99.78%;
+  descent-override: 23.87%;
+  line-gap-override: 0%;
+}
+
+/* Archivo's width axis by role (Tailwind's font-stretch-* has no 87.5 % step). The two narrow
+   roles also pick their own fallback (above). */
+@utility stretch-display {
+  font-family: var(--font-archivo), 'Archivo Display Fallback', var(--font-sans);
+  font-stretch: var(--stretch-display);
+}
+@utility stretch-heading {
+  font-family: var(--font-archivo), 'Archivo Heading Fallback', var(--font-sans);
+  font-stretch: var(--stretch-heading);
+}
+@utility stretch-title {
+  font-stretch: var(--stretch-title);
+}
+@utility stretch-body {
+  font-stretch: var(--stretch-body);
+}
+
+/* Mono = data: section indexes, price labels, references, "Antes / Después". Always 500, the
+   only weight loaded. A leading-* utility next to it wins over its line-height of 1. */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  line-height: var(--tw-leading, 1);
+}
+
+/* Inside the cobalt closing band (Section tone="accent"), e.g. outline buttons turn white */
+@custom-variant on-accent (&:where(.on-accent *));
+
+@layer base {
+  body {
+    background-color: var(--paper-1);
+    color: var(--ink-1);
+    font-family: var(--font-sans);
+    line-height: var(--leading-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  /* List items are short paragraphs too (case panels, plan features): no one-word last line */
+  p,
+  li {
+    text-wrap: pretty;
+  }
+  /* Underlined links (add `underline`) get a 2 px cobalt line that turns ink on hover */
+  a {
+    text-decoration-color: var(--accent-500);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+  ::selection {
+    background-color: var(--sun-400);
+    color: var(--ink-1);
+  }
 }
 
 /* Market (docs/04 §8.2): the HTML carries both currencies and CSS shows the active one.
@@ -36,11 +257,12 @@ html {
   scroll-padding-top: 64px;
 }
 
-/* 2 px focus ring with a 2 px offset (docs/06 §3); white on the dark closing section */
+/* 2 px ink focus ring with a 2 px offset (docs/06 §3); sun yellow on the deep-navy and cobalt
+   bands, which carry the on-ink class (Section tone="ink" | "accent", footer) */
 :focus-visible {
-  outline: 2px solid var(--color-focus);
+  outline: 2px solid var(--ink-1);
   outline-offset: 2px;
 }
-.bg-fg :focus-visible {
-  outline-color: var(--color-bg);
+.on-ink :focus-visible {
+  outline-color: var(--sun-400);
 }

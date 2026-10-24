@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { site } from '@/content/site'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Container } from '@/components/ui/Container'
 import { Footer } from '@/components/sections/Footer'
 import { Header } from '@/components/sections/Header'
+import { pad2 } from '@/lib/format'
 import { getContent } from '@/lib/i18n'
 
 // Privacy policy per language (docs/09 §6.5). The effective date is site.legal.privacyVersion.
@@ -41,32 +43,41 @@ export default async function Privacy() {
   return (
     <>
       <Header lang={lang} nav={content.nav} path="/privacy" />
-      <main id="main" className="pt-24 pb-16">
+      <main id="main" className="pt-28 pb-16">
         <Container>
           <div className="max-w-3xl">
-            <h1 className="text-[clamp(2rem,5vw,2.75rem)] leading-tight font-bold">
+            <h1 className="text-[clamp(2.25rem,5.5vw,3.5rem)] leading-heading font-extrabold tracking-heading stretch-heading">
               {privacy.title}
             </h1>
-            <p className="mt-3 text-sm text-muted">
+            <p className="mt-5 label-mono text-ink-2">
               {privacy.effectiveLabel}:{' '}
               <time dateTime={site.legal.privacyVersion}>{effective}</time>
             </p>
-            {privacy.sections.map((section) => (
-              <section key={section.heading} className="mt-10">
-                <h2 className="text-xl font-semibold">{section.heading}</h2>
-                {section.paragraphs.map((p) => (
-                  <p key={p} className="mt-3 leading-relaxed text-muted">
-                    {fill(p)}
-                  </p>
-                ))}
+            {/* Numbered like a spec sheet: mono index column and an ink rule per section. The
+                email address may break anywhere, so the narrow column never scrolls sideways */}
+            {privacy.sections.map((section, i) => (
+              <section
+                key={section.heading}
+                className="mt-10 grid grid-cols-[40px_minmax(0,1fr)] gap-4 border-t border-ink-1 pt-5"
+              >
+                <span aria-hidden="true" className="pt-[5px] label-mono text-ink-3">
+                  {pad2(i + 1)}
+                </span>
+                <div>
+                  <h2 className="text-h3">{section.heading}</h2>
+                  {section.paragraphs.map((p) => (
+                    <p key={p} className="mt-3 wrap-anywhere text-ink-2">
+                      {fill(p)}
+                    </p>
+                  ))}
+                </div>
               </section>
             ))}
-            <a
-              href={`/${lang}`}
-              className="mt-12 inline-block font-semibold text-accent underline-offset-4 hover:underline"
-            >
-              {privacy.backHome}
-            </a>
+            <div className="mt-12">
+              <ButtonLink variant="secondary" href={`/${lang}`}>
+                {privacy.backHome}
+              </ButtonLink>
+            </div>
           </div>
         </Container>
       </main>

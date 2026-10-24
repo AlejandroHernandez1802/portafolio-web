@@ -24,12 +24,19 @@ function currencyFormat(market: Market, lang: Locale) {
 
 export type PriceLabels = { from: string; perMonth: string; free: string }
 
-export function formatPrice(spec: PriceSpec, market: Market, lang: Locale, labels: PriceLabels) {
-  if (spec.kind === 'free') return labels.free
+/** A price in the three pieces the design system sets apart: "From" label, amount, "/ month". */
+type PriceParts = { label?: string; amount: string; period?: string }
+
+export function priceParts(
+  spec: PriceSpec,
+  market: Market,
+  lang: Locale,
+  labels: PriceLabels,
+): PriceParts {
+  if (spec.kind === 'free') return { amount: labels.free }
   const format = currencyFormat(market, lang)
-  const value =
-    spec.kind === 'from'
-      ? `${labels.from} ${format.format(spec.amount)}`
-      : format.formatRange(spec.min, spec.max) // "COP 250,000–500,000", currency shown once
-  return spec.period === 'month' ? `${value} ${labels.perMonth}` : value
+  const period = spec.period === 'month' ? labels.perMonth : undefined
+  return spec.kind === 'from'
+    ? { label: labels.from, amount: format.format(spec.amount), period }
+    : { amount: format.formatRange(spec.min, spec.max), period } // "COP 250,000–500,000", currency shown once
 }

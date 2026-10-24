@@ -64,7 +64,7 @@ Los IDs (`RF-xx`) se usan en el [plan](./13-plan-de-implementacion.md) y en las 
 | Categoría | Requisito | Umbral | Cómo se verifica |
 |---|---|---|---|
 | Rendimiento | Lighthouse móvil (Performance) | ≥ 90 en `/en` y `/es` | PageSpeed Insights sobre producción, mediana de 3 corridas ([11 §1](./11-calidad-rendimiento-y-accesibilidad.md#1-presupuestos-de-rendimiento)) |
-| Rendimiento | LCP | < 2,5 s (laboratorio móvil); el elemento LCP es el H1 | PSI y panel Performance de DevTools |
+| Rendimiento | LCP | < 2,5 s (laboratorio móvil); el elemento LCP es el H1 o, en teléfonos, el subtítulo del hero: texto estático, pintado en el primer fotograma | PSI y panel Performance de DevTools |
 | Rendimiento | CLS | < 0,1 (objetivo ≤ 0,02) | PSI; en campo, Cloudflare Web Analytics (opcional) |
 | Rendimiento | INP | < 200 ms (campo) | Cloudflare Web Analytics (opcional), cuando haya datos |
 | Rendimiento | Animación del hero | < 50 KB (objetivo ≤ 15 KB de CSS + SVG) y 0 KB de JS | Reporte de `next build` e inspección del HTML |

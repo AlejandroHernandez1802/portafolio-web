@@ -111,7 +111,7 @@ El diagnóstico (§8) supone 8–10 h por semana: unas 4 de "prueba" (sitio y de
 
 | ID | Tarea | h | Requisitos | Listo cuando | Doc |
 |---|---|---|---|---|---|
-| F1-01 | Hero estático: H1, subtítulo, CTAs, línea de confianza; escenario en su **estado final** (sin animación) | 0,5 | RF-02 | Se ve bien en 375 px y 1280 px; el H1 es el elemento LCP | [05 §2–5](./05-hero-animacion.md#2-composición-y-wireframes) |
+| F1-01 | Hero estático: H1, subtítulo, CTAs, línea de confianza; escenario en su **estado final** (sin animación) | 0,5 | RF-02 | Se ve bien en 375 px y 1280 px; el elemento LCP es el H1 o, en teléfonos, el subtítulo, ambos estáticos | [05 §2–5](./05-hero-animacion.md#2-composición-y-wireframes) |
 | F1-02 | Secuencia de animación. **Corte a 1,5 h** (§11 de 05) | 2 | RF-02 | 4,2 s, una vez; reducir movimiento = estado final; 0 KB de JS | [05](./05-hero-animacion.md) |
 | F1-03 | Estructura: tokens AA, fuente, header fijo con CTA, cambio de idioma, enlace para saltar, pie | 0,75 | RF-01, RF-13 | Teclado completo; contraste AA | [06 §3](./06-secciones-y-ui.md#3-sistema-visual) |
 | F1-04 | Secciones 2, 3 (`named` y `anonymized`), 5, 7 (`<details>`), 8 y 9 | 1,25 | RF-04, 05, 07, 09, 10, 11 | Contenido de ambos idiomas; `disclosure` funcionando | [06](./06-secciones-y-ui.md) |
@@ -122,8 +122,23 @@ El diagnóstico (§8) supone 8–10 h por semana: unas 4 de "prueba" (sitio y de
 | F1-09 | Política de privacidad EN y ES (TSX) | 0,25 | RF-14 | Publicada con versión y fecha | [09 §6.5](./09-seguridad-y-privacidad.md#65-estructura-de-la-política-de-privacidad) |
 | F1-10 | QA, `site.indexable = true`, publicación, Search Console y sitemap | 0,75 | — | Checklist de [11 §5](./11-calidad-rendimiento-y-accesibilidad.md#5-checklist-de-lanzamiento-17-de-octubre) completo | [11](./11-calidad-rendimiento-y-accesibilidad.md) |
 | *F1-11 (P1)* | *Formulario de contacto, solo si sobra tiempo* | *1,5* | *RF-12* | *Ver V11-02* | [07 §5](./07-integraciones.md#5-formulario-de-contacto-v11) |
+| F1-12 | Rediseño visual con el design system "plano técnico" (detalle debajo de la tabla) | — | RF-01–RF-05, RF-07–RF-11, RF-13, RF-14, RF-18 | **Hecha el 24-oct-2026.**<ul><li>`pnpm lint`, `pnpm typecheck` y `pnpm build` sin errores.</li><li>Coincide con el UI kit a 1280, 1024, 768, 390, 320 y 280 px, sin scroll horizontal.</li><li>Los ids, los `data-track*`, los `data-cal-*`, el cambio de mercado y los `aria-*` siguen iguales.</li></ul> | [06 §3](./06-secciones-y-ui.md#3-sistema-visual), [05](./05-hero-animacion.md), [ADR-019](./14-decisiones.md#adr-019) |
 
 **Total P0: 7,5 h.**
+
+**F1-12, rediseño visual.** Se agregó el 24-oct, a tu pedido y antes de F1-10, así que no está en las 7,5 h. Incluye:
+
+- Tokens en `globals.css`.
+- Archivo, recortada y con respaldo ajustado por ancho, e IBM Plex Mono en un solo peso.
+- Bandas e índices por sección.
+- El H1 con tachado y marcador.
+- El escenario restilizado.
+- La política de privacidad y el 404.
+
+Quedan dos pendientes, que pasan a la QA de F1-10:
+
+- Revisar el H1 y el sitio en Safari y Firefox. Solo se probó en Chrome.
+- Medir PSI con las fuentes nuevas ([11 §1](./11-calidad-rendimiento-y-accesibilidad.md#1-presupuestos-de-rendimiento)).
 
 **Plan por día:**
 

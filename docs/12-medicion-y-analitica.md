@@ -150,10 +150,12 @@ El roadmap (§4) pide probar un titular a la vez, dos semanas cada uno, comparan
 
 | Ventana | Variante | Notas |
 |---|---|---|
-| 17-oct → 1-nov | `a`: From "call for pricing" to "add to cart". | Lanzamiento |
+| 17-oct → 1-nov | `a`: From “call for pricing” to “add to cart”. | Lanzamiento |
 | 2-nov → 8-nov | `a` (sin cambio) | Semana de construcción de la v2: la página cambia y los datos no son comparables |
 | 9-nov → 22-nov | `b`: Your website should take orders, not just look nice. | Después de la v2 |
 | 23-nov → 6-dic | `c`: See your new store working in 5 days. | **Ojo:** Thanksgiving (26-nov) reduce el tráfico de EE. UU. |
+
+**Ojo con la forma del titular.** Desde el rediseño ([ADR-019](./14-decisiones.md#adr-019)), solo la variante `a` lleva el tachado y el marcador animados, porque tiene dos frases entre comillas. `b` y `c` se ven como texto plano ([04 §7](./04-i18n-contenido-y-precios.md#7-variantes-del-titular)). La comparación mide el titular con su tratamiento visual, no solo el texto.
 
 **Métrica:** `book_call_click` con `location = hero`, dividido entre los visitantes de la ventana. Como apoyo, la tasa total de clic de agenda y la tasa sobre `landing` con `source = email`.
 

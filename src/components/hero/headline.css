@@ -1,0 +1,69 @@
+/* HeroHeadline decorations (design system components/hero/hero.css). Same rule as the hook
+   (docs/05 §4): the base styles ARE the final state, strike drawn and marker on; the animation
+   only declares where it starts (scaleX(0)) and touches pseudo-elements, never the H1 text. */
+
+.headline__strike {
+  color: var(--ink-3); /* 4.5:1 on paper, well above the 3:1 large text needs */
+}
+.headline__mark {
+  margin-inline: 0.06em; /* room for the marker's overhang, off the neighbouring text */
+}
+
+/* A word never breaks, so each one's box is a single line fragment to hang a decoration on.
+   Mid-line its trailing space joins the stroke; at a line end the space collapses and the
+   stroke stops at the last letter. The decorations are ::before so they sit at the start of
+   the word: a line break before it takes the decoration along to the next line. */
+.headline__word {
+  position: relative;
+}
+.headline__word::before {
+  content: '';
+  position: absolute;
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* Each word is its own stacking context, so a decoration at z-index -1 paints behind that
+   word's text only, never behind the section's backdrop */
+.headline__strike > .headline__word,
+.headline__mark > .headline__word {
+  z-index: 0;
+}
+
+/* Strike: a 0.075em ink rule just below the middle of the content area, behind the letters
+   like the kit's background stroke, so the struck phrase stays legible. The words overlap a
+   hair so fractional pixels leave no seams. */
+.headline__strike > .headline__word::before {
+  z-index: -1;
+  inset-inline: -0.02em;
+  top: calc((100% - 0.075em) * 0.56);
+  height: 0.075em;
+  background: var(--ink-1);
+}
+
+/* Marker: sun yellow behind the text, overhanging a little like padding */
+.headline__mark > .headline__word::before {
+  z-index: -1;
+  inset-inline: -0.06em;
+  top: 0.14em;
+  height: 0.95em;
+  background: var(--sun-400);
+}
+
+/* Left to right, word after word: --t and --d split the stroke by length in the JSX, so a
+   linear curve reads as one continuous pen stroke */
+@keyframes headline-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+.headline__word::before {
+  animation: headline-draw var(--d, 0ms) linear var(--t, 0ms) both;
+}
+
+/* Reduced motion: no animation, the base (final state) shows */
+@media (prefers-reduced-motion: reduce) {
+  .headline__word::before {
+    animation: none;
+  }
+}

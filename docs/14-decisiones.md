@@ -1,6 +1,6 @@
 # 14 · Registro de decisiones (ADR)
 
-Estas son las decisiones de arquitectura del portafolio, con su contexto, las alternativas que se descartaron y sus consecuencias. Se tomaron el **3 de octubre de 2026**, con la información verificada ese día. El **4 de octubre** cambiaron el hosting y la analítica ([ADR-017](#adr-017) y [ADR-018](#adr-018)), y se ajustaron los ADR afectados.
+Estas son las decisiones de arquitectura del portafolio, con su contexto, las alternativas que se descartaron y sus consecuencias. Se tomaron el **3 de octubre de 2026**, con la información verificada ese día. El **4 de octubre** cambiaron el hosting y la analítica ([ADR-017](#adr-017) y [ADR-018](#adr-018)), y se ajustaron los ADR afectados. El **24 de octubre** se agregó el sistema visual ([ADR-019](#adr-019)).
 
 **Regla:** si una tarea necesita cambiar una de estas decisiones, se agrega o actualiza el ADR en el mismo PR. Los estados posibles son *Aceptada*, *Plan B* (alternativa lista si la aceptada falla) y *Reemplazada*.
 
@@ -24,6 +24,7 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
 | [ADR-016](#adr-016) | Aceptación de rendimiento con PSI en producción | Aceptada |
 | [ADR-017](#adr-017) | Hosting en Cloudflare Workers Free con export estático | Aceptada |
 | [ADR-018](#adr-018) | Analítica con Umami Cloud Hobby | Aceptada |
+| [ADR-019](#adr-019) | Sistema visual "plano técnico" | Aceptada (24-oct) |
 
 ---
 
@@ -379,3 +380,49 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
   - Ya no hay límite de 2 propiedades por evento, pero la taxonomía se mantiene igual para no complicarla.
   - Sus términos permiten el uso para "internal business purpose" ([Umami](https://umami.is/terms)).
   - Umami pasa a ser encargado en la política de privacidad ([09 §6](./09-seguridad-y-privacidad.md#6-privacidad-y-cumplimiento)).
+
+<a id="adr-019"></a>
+
+## ADR-019 · Sistema visual "plano técnico"
+
+- **Fecha:** 24 de octubre de 2026.
+- **Contexto:**
+  - La v1 usaba Tailwind con grises, un azul por defecto e Inter. Dijiste que la página se veía "demasiado sobria" y pediste darle vida antes de cerrar los pendientes del lanzamiento.
+  - Preparaste un design system en `Design system/`, en la raíz del proyecto y fuera del repositorio ([readme](../../Design%20system/readme.md)). Trae tokens, fundamentos, componentes de muestra y un UI kit por sección.
+  - El design system cambia la capa visual sin tocar la estructura, el copy ni las reglas técnicas: presupuestos, accesibilidad, mercado y animación.
+- **Decisión:**
+  - **Adoptar el sistema "plano técnico":** papel crema, tinta azul marino, cobalto para toda acción y un marcador amarillo sol ([06 §3](./06-secciones-y-ui.md#3-sistema-visual)).
+  - **Tokens:**
+    - Viven como variables en el `:root` de `globals.css` y pasan a Tailwind 4 con `@theme inline`, con los nombres del design system (`paper-1`, `ink-2`, `accent-500`…).
+    - La paleta por defecto de Tailwind se elimina (`--color-*: initial`).
+    - Desaparecen los tokens anteriores: `bg`, `fg`, `muted`, `surface`, `border`, `accent`, `success` y `focus`.
+  - **Tipografía:** reemplazan a Inter dos familias, autoalojadas con `next/font`:
+    - Archivo variable, que cubre todos los roles con su eje de ancho (62, 75, 87,5 y 100 %). Va en un archivo propio recortado a ancho 62–100 % y pesos 400–800 (60 KB), con `display: 'swap'` y un respaldo ajustado por rol de ancho que conserva las líneas del H1 ([05 §6](./05-hero-animacion.md#6-guardas-de-rendimiento)).
+    - IBM Plex Mono, para los datos, en un solo peso (500).
+  - **Componentes propios:**
+    - Los JSX y las clases `ah-*` del design system son referencia, no código: se reescriben con utilidades de Tailwind.
+    - Solo lleva CSS propio, junto a su componente, lo que las utilidades no expresan bien: keyframes, pseudoelementos y fondos de varias capas.
+    - **[ADR-015](#adr-015) sigue vigente:** no se agrega ninguna librería.
+  - **El H1 entra en la secuencia del hook:** tachado a 1,2 s y marcador a 3,3 s.
+    - Sigue las reglas de **[ADR-006](#adr-006), que no cambian:** estado final primero, solo `transform`, `opacity` y `clip-path`, y 0 KB de JS.
+    - El texto del H1 no se anima; solo sus pseudoelementos ([05 §4](./05-hero-animacion.md#4-implementación-el-estado-final-primero)).
+- **Alternativas descartadas:**
+  - **Mantener el estilo y ajustar solo los colores:** no responde al pedido.
+  - **Copiar el CSS del design system** (`styles.css` y clases `ah-*`): habría dos sistemas de estilos en paralelo, con CSS sin usar, y chocaría con la convención de [03 §7](./03-arquitectura.md#7-convenciones-de-código).
+  - **Animar `background-size` en el H1, como el UI kit:** esa propiedad no está entre las que permite ADR-006. Se usa un pseudoelemento por palabra con `scaleX`.
+  - **Archivo con `display: 'swap'` y el respaldo por defecto de `next/font`, como propone el design system:** si la fuente llega tarde, el H1 pasa de 2 a 3 líneas y mueve toda la primera pantalla.
+  - **Archivo con `display: 'optional'`:** evita ese salto, pero en carga en frío por debajo de ~20 Mbps la visita se quedaba toda con Arial (medido el 24-oct), y el sitio es de una sola página. Fue la primera versión del rediseño; se reemplazó por `swap` con respaldo ajustado ([05 §6](./05-hero-animacion.md#6-guardas-de-rendimiento)).
+  - **Archivo completa de Google** (ancho 62–125 %, pesos 100–900, 90 KB) **con tres pesos de Plex Mono:** llevaba el LCP de laboratorio a 2,6 s, por encima del presupuesto.
+  - **Una librería de componentes o de animación:** innecesaria, y prohibida sin ADR (ADR-006 y ADR-015).
+- **Consecuencias:**
+  - **Más peso de fuentes:** ~60 KB de Archivo (precargada) más ~10 KB de Plex Mono (sin precarga), frente a ~48 KB de Inter.
+    - El presupuesto de fuentes de [11 §1](./11-calidad-rendimiento-y-accesibilidad.md#1-presupuestos-de-rendimiento) pasa de ≤ 50 KB a ≤ 120 KB.
+    - LCP < 2,5 s y CLS < 0,1 no cambian: 2,3 s y 0 en Lighthouse móvil el 24-oct ([11 §2](./11-calidad-rendimiento-y-accesibilidad.md#2-técnicas-de-rendimiento)).
+  - **Archivo es un archivo del repositorio** (`src/fonts/`, licencia OFL), no una descarga de `next/font/google`: si Google la actualiza, no llega sola. Cómo regenerarla, en [06 §3.2](./06-secciones-y-ui.md#32-tipografía).
+  - **Primera visita lenta:** mientras Archivo llega se ve un respaldo de Arial (Roboto en Android) ajustado al ancho de cada rol, con las mismas líneas en el H1. Al llegar cambia el dibujo de las letras, no el layout.
+  - **Contrastes recalculados sobre papel crema:** todos cumplen AA ([06 §3.1](./06-secciones-y-ui.md#31-color)). `ink-3` solo puede ir sobre `paper-0` y `paper-1`.
+  - **Índices visibles 01–07:** cuando llegue la demo (v2), hay que renumerar las secciones que quedan después de ella.
+  - **La variante `a` del titular se ve distinta de `b` y `c`:** solo ella lleva tachado y marcador. Esto afecta la prueba de titulares ([12 §6](./12-medicion-y-analitica.md#6-prueba-secuencial-de-titulares)).
+  - **El design system no se sincroniza solo:** el código es la fuente de verdad. Si el design system cambia, el cambio se lleva a mano a `globals.css` y a los componentes.
+  - **Las imágenes OG** de F0-11 todavía no existen. Conviene diseñarlas con la paleta y la tipografía nuevas.
+  - **Ningún ADR anterior se reemplaza:** ADR-006 y ADR-015 se aplican sin cambios.

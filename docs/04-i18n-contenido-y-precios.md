@@ -233,11 +233,12 @@ Los textos en español siguen la misma lógica. La fecha límite para decidir es
 
   | Variante | EN | ES |
   |---|---|---|
-  | `a` | From "call for pricing" to "add to cart". | De "precio por interno" a "agregar al carrito". |
+  | `a` | From “call for pricing” to “add to cart”. | De “precio por interno” a “agregar al carrito”. |
   | `b` | Your website should take orders, not just look nice. | Tu sitio debería recibir pedidos, no solo verse bien. |
   | `c` | See your new store working in 5 days. | Ve tu nueva tienda funcionando en 5 días. |
 
 - `site.hero.activeHeadline` elige la variante activa en ambos idiomas.
+- **Las comillas tipográficas “ ” son parte del contrato.** `HeroHeadline` tacha la primera frase entre comillas y marca la segunda con el resaltador ([05 §3](./05-hero-animacion.md#3-guion--línea-de-tiempo-técnica)). Una variante sin dos frases entre comillas, como `b` y `c`, se ve como texto plano. Con comillas rectas (`"`) no se decora nada.
 - La comparación es por ventana de fechas, con un registro en [12 §6](./12-medicion-y-analitica.md#6-prueba-secuencial-de-titulares).
 
 ## 8. Precios por país del visitante
@@ -260,10 +261,16 @@ Un script inline en el `<head>` decide el mercado antes del primer pintado, en e
 El HTML estático trae **las dos monedas**. El CSS muestra solo la del mercado activo:
 
 ```html
-<!-- Price (Server Component) renderiza ambas -->
-<span data-only-market="us">From US$3,000</span>
-<span data-only-market="co">From COP 3,000,000</span>
+<!-- Price (Server Component) renderiza ambas; cada una en tres piezas (06 §3.7) -->
+<span data-only-market="us">
+  <span>From</span> <span>$3,000</span>                <!-- etiqueta mono, importe condensado -->
+</span>
+<span data-only-market="co">
+  <span>From</span> <span>COP 3,000,000</span>
+</span>
 ```
+
+`priceParts()` (`lib/market.ts`) devuelve las piezas `{ label?, amount, period? }`: la etiqueta "From" / "Desde", el importe y el periodo "/ month" / "/ mes".
 
 ```css
 /* globals.css */
