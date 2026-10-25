@@ -1,14 +1,16 @@
 import type { CSSProperties } from 'react'
 import type { SiteContent } from '@/content/types'
+import type { trackAttrs } from '@/lib/analytics'
 import { Icon } from '@/components/ui/Icon'
 import { TIMELINE, type Step } from './timeline'
 import './hook.css'
 
-// Hook A (docs/05 §5): a Server Component with no state. Decorative for screen readers: the
-// H1 and subtitle carry the message, and the link goes where the secondary CTA goes. Its
-// timings come from timeline.ts, shared with HeroHeadline.
+// Hook A (docs/05 §5): a Server Component with no state. Since ADR-020 it lives in tile B of the
+// services bento and plays once when it scrolls into view, in CSS only (hook.css). Decorative
+// for screen readers: the tile's title and body carry the message, and the link goes to the
+// case page (the demo in v2). Its timings come from timeline.ts.
 
-type Stage = SiteContent['hero']['stage']
+type Stage = SiteContent['services']['stage']
 
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const // registration marks of the spec sheet
 
@@ -60,10 +62,29 @@ function Cursor() {
   )
 }
 
-export function HookStage({ stage, href }: { stage: Stage; href: string }) {
+export function HookStage({
+  stage,
+  href,
+  track,
+  className = '',
+}: {
+  stage: Stage
+  href: string
+  /** trackAttrs() of the click, e.g. case_open from 'stage' */
+  track?: ReturnType<typeof trackAttrs>
+  /** Placement in the tile, e.g. grow to fill a tall tile (the scene scales to the width) */
+  className?: string
+}) {
   const { product } = stage
   return (
-    <a href={href} className="hook" aria-hidden="true" tabIndex={-1} title={stage.linkTitle}>
+    <a
+      href={href}
+      className={`hook ${className}`}
+      aria-hidden="true"
+      tabIndex={-1}
+      title={stage.linkTitle}
+      {...track}
+    >
       {CORNERS.map((corner) => (
         <span key={corner} className={`hook__corner hook__corner--${corner}`} />
       ))}

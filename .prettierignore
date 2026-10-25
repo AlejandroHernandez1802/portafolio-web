@@ -6,3 +6,6 @@ pnpm-lock.yaml
 worker/worker-configuration.d.ts
 AGENTS.md
 CLAUDE.md
+media-raw/
+media-out/
+src/media/manifest.generated.ts

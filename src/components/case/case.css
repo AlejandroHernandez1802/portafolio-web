@@ -1,0 +1,52 @@
+/* Case page (R-08): the two things utilities can't express. Static, no motion. */
+
+/* The deep-navy results band starts behind the lower part of the hero capture, so the frame
+   straddles the two bands. border-image paints past the box on both sides as ink overflow:
+   full bleed without horizontal scroll at any width. */
+.case-bridge {
+  border-image-source: linear-gradient(var(--deep), var(--deep));
+  border-image-slice: 0 fill;
+  border-image-outset: 0 100vw;
+}
+
+/* The plate behind each "What I built" capture: the hero stage's spec sheet (hook.css), a
+   24 px cobalt grid on the cobalt tint inside an ink frame, so the captures sit on the
+   blueprint instead of floating on the page. */
+.case-plate {
+  position: relative;
+  border: 1px solid var(--ink-1);
+  background-color: var(--accent-50);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: -1px -1px;
+}
+/* Registration marks in the four corners: one bordered box masked down to its corners */
+.case-plate::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1.5px solid var(--ink-1);
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000, #000) left top / 14px 14px no-repeat,
+    linear-gradient(#000, #000) right top / 14px 14px no-repeat,
+    linear-gradient(#000, #000) left bottom / 14px 14px no-repeat,
+    linear-gradient(#000, #000) right bottom / 14px 14px no-repeat;
+  mask:
+    linear-gradient(#000, #000) left top / 14px 14px no-repeat,
+    linear-gradient(#000, #000) right top / 14px 14px no-repeat,
+    linear-gradient(#000, #000) left bottom / 14px 14px no-repeat,
+    linear-gradient(#000, #000) right bottom / 14px 14px no-repeat;
+}
+
+/* The phone twin beside a browser capture is ~130 px wide: at that size the default 8 px bezel
+   and 36 px radius read as a toy, so a real phone's proportions (as in the hero showcase) */
+.case-twin .device--phone {
+  padding: 5px;
+  border-radius: 22px;
+}
+.case-twin .device--phone .device__screen {
+  border-radius: 17px;
+}

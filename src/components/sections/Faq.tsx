@@ -1,21 +1,22 @@
 import type { SiteContent } from '@/content/types'
 import { pad2 } from '@/lib/format'
+import { SECTION } from '@/lib/routes'
 import { Icon } from '@/components/ui/Icon'
 import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
-// Section 7: native <details>, no JavaScript (docs/06 §1). At most 8 questions. On the light
+// Section 04 of the home (ADR-024): native <details>, no JavaScript (docs/06 §1). At most 8 questions. On the light
 // cobalt band; from 1024 px the title sticks beside the list (5/7 columns). Each row (design
 // system FaqItem) is an ink rule with a mono number, and its arrow turns 90° when open.
 export function Faq({ faq }: { faq: SiteContent['faq'] }) {
   return (
     <Section
-      id="preguntas"
+      id={SECTION.faq}
       tone="tint"
       containerClassName="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-12"
     >
       <div className="lg:sticky lg:top-[calc(var(--header-h)+32px)]">
-        <SectionHeading id="preguntas" index={5}>
+        <SectionHeading id={SECTION.faq} index={4}>
           {faq.title}
         </SectionHeading>
       </div>

@@ -38,5 +38,7 @@ export function priceParts(
   const period = spec.period === 'month' ? labels.perMonth : undefined
   return spec.kind === 'from'
     ? { label: labels.from, amount: format.format(spec.amount), period }
-    : { amount: format.formatRange(spec.min, spec.max), period } // "COP 250,000–500,000", currency shown once
+    : // "COP 250,000–500,000", currency shown once. es-CO joins the ends with a hyphen; a range
+      // takes an en dash, as everywhere else in the copy ("3–6 semanas")
+      { amount: format.formatRange(spec.min, spec.max).replace(/(\d)-(\d)/, '$1–$2'), period }
 }

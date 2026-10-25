@@ -1,9 +1,17 @@
-// Hook A timeline (docs/05 §3), in ms: t = delay, d = duration. One source for the stage
-// (HookStage) and the H1 decorations (HeroHeadline), so the strike and the marker can't drift
-// from the reply bubble and the button press.
+// Animation timings in ms (docs/05 §3): t = delay, d = duration.
 
 export type Step = { t: number; d?: number }
 
+// The H1 decorations (HeroHeadline). Since R-06 the hero has no stage to sync with (it moved to
+// services tile B), so the H1 tells the story on its own, right after the first paint: the old
+// way is struck at ~0.4 s and the new way marked at ~1.0 s, once the strike has landed.
+export const HEADLINE = {
+  strike: { t: 400, d: 500 },
+  mark: { t: 1000, d: 450 },
+} satisfies Record<string, Step>
+
+// Hook A (HookStage, services tile B), from the moment the scene starts. The bubbles, card,
+// cursor and toast keep their relative order; nothing here drives the H1 any more.
 const reply = { t: 1000, d: 1200 } // "Call for pricing": fully visible at ~1.18 s (15 % in)
 const press = { t: 3300, d: 200 } // the cursor presses "Add to cart"
 
@@ -17,7 +25,4 @@ export const TIMELINE = {
   press,
   badge: { t: 3400, d: 250 },
   toast: { t: 3600, d: 500 },
-  // H1: the old way is struck as the reply shows, the new way is marked with the press
-  strike: { t: reply.t + 200, d: 500 },
-  mark: { t: press.t, d: 450 },
 } satisfies Record<string, Step>

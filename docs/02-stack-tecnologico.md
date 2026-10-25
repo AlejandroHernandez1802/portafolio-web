@@ -2,6 +2,8 @@
 
 Next.js 16.3 (App Router) con TypeScript y Tailwind CSS 4. El sitio se exporta como archivos estáticos y se publica en Cloudflare Workers, plan gratuito. En la v1 no hay librerías de UI, de i18n, de animación ni de MDX: el stack es lo mínimo que cumple el roadmap en 7,5 h y saca 90 o más en Lighthouse móvil.
 
+La reestructuración del 24-oct ([ADR-020](./14-decisiones.md#adr-020) y [ADR-021](./14-decisiones.md#adr-021)) no agrega dependencias de ejecución. Solo suma **sharp** como dependencia de desarrollo, para los scripts locales que procesan las capturas y las imágenes OG. En la fase B se suman ffmpeg, instalado con Homebrew fuera del repositorio, y Cloudflare R2 para el video ([ADR-022](./14-decisiones.md#adr-022)).
+
 Versiones verificadas el 3 de octubre de 2026; hosting y analítica, el 4 de octubre. Las versiones exactas se fijan en `package.json` y `pnpm-lock.yaml` al hacer el scaffold.
 
 ---
@@ -11,11 +13,11 @@ Versiones verificadas el 3 de octubre de 2026; hosting y analítica, el 4 de oct
 | Capa | Herramienta | Versión mínima | Rol | Por qué | Costo |
 |---|---|---|---|---|---|
 | Framework | [Next.js](https://nextjs.org/blog/next-16-3) (App Router) | **16.3.8** | Rutas, render estático exportado con `output: 'export'`, metadata, fuentes | Tu stack actual. 16.3.8 es el parche de seguridad del 30-sep-2026 de la línea Active LTS ([anuncio](https://nextjs.org/blog/september-2026-security-release)) | — |
-| UI | React | 19 (incluido por Next) | Componentes de servidor y 4 islas de cliente | Viene con Next; no se instala aparte | — |
+| UI | React | 19 (incluido por Next) | Componentes de servidor y 4 islas de cliente en la fase A (7 con la v1.1 y la fase B, [03 §5](./03-arquitectura.md#5-componentes-de-servidor-y-de-cliente)) | Viene con Next; no se instala aparte | — |
 | Lenguaje | TypeScript | 5.x, `strict: true` | Tipos del contenido, la configuración y los eventos | Hace que falte una traducción sea un error de compilación ([04](./04-i18n-contenido-y-precios.md)) | — |
 | Estilos | [Tailwind CSS](https://tailwindcss.com/docs/installation/framework-guides/nextjs) + `@tailwindcss/postcss` | 4.3 | Utilidades y tokens del sistema visual en CSS (`@theme`, [06 §3](./06-secciones-y-ui.md#3-sistema-visual)) | Configuración en CSS, sin `tailwind.config.js`; variantes `motion-safe:` y `motion-reduce:` | — |
 | Fuentes | `next/font`, autoalojadas en el build: `next/font/local` para Archivo (un archivo propio en `src/fonts/`) y `next/font/google` para Plex Mono | Incluido | [Archivo](https://fonts.google.com/specimen/Archivo) variable con eje de ancho, recortada a 62–100 % y pesos 400–800, para todo el texto, e [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono) 500, solo para etiquetas de datos ([06 §3.2](./06-secciones-y-ui.md#32-tipografía), [ADR-019](./14-decisiones.md#adr-019)) | Sin peticiones a Google en tiempo de ejecución. Archivo va con `display: 'swap'` y un respaldo ajustado por rol de ancho, que conserva las líneas del H1 y evita el CLS ([05 §6](./05-hero-animacion.md#6-guardas-de-rendimiento)) | — |
-| Imágenes | `next/image` con `unoptimized` + archivos ya optimizados | Incluido | Dimensiones fijas (sin CLS), carga diferida, escritorio o móvil con `<picture>` y `getImageProps()` | El export no incluye el optimizador de imágenes ([docs](https://nextjs.org/docs/app/guides/static-exports)). Las imágenes se exportan en WebP o AVIF con las medidas de [06 §4](./06-secciones-y-ui.md#4-imágenes) | — |
+| Imágenes | `ResponsiveImage` propio (`<picture>` con AVIF y WebP) sobre archivos importados estáticamente | — | Dimensiones fijas (sin CLS), `srcset` y `sizes`, carga diferida salvo la captura del hero en escritorio, y `preload` con `media` | El export no incluye el optimizador de imágenes ([docs](https://nextjs.org/docs/app/guides/static-exports)). Las imágenes llegan ya codificadas por `pnpm media:images` y el build les pone un hash en el nombre, así que heredan la caché `immutable` ([06 §4](./06-secciones-y-ui.md#4-imágenes), [ADR-021](./14-decisiones.md#adr-021)) | — |
 | i18n | Nativo: `[locale]` + [`next/root-params`](https://nextjs.org/docs/app/api-reference/functions/next-root-params) + diccionarios TS | Next ≥ 16.3 | Idiomas `/en` y `/es` | Patrón oficial; 0 KB en el cliente ([ADR-003](./14-decisiones.md#adr-003)) | — |
 | Animación | CSS `@keyframes` + SVG inline | — | Hook A | 0 KB de JS; se ejecuta antes de la hidratación ([ADR-006](./14-decisiones.md#adr-006)) | — |
 | Hosting y CDN | [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/) (plan Free) con *static assets* | — | CDN de los archivos de `out/`; un Worker mínimo para 3 redirecciones y, en la v1.1, el formulario | Gratis y sin restricción de uso comercial; las solicitudes a archivos estáticos son ilimitadas ([ADR-017](./14-decisiones.md#adr-017)) | US$0 |
@@ -27,7 +29,10 @@ Versiones verificadas el 3 de octubre de 2026; hosting y analítica, el 4 de oct
 | Correo del dominio | [Google Workspace Business Starter](https://workspace.google.com/intl/es-419/pricing.html) | — | `hola@`, prospección, calendario | Lo recomienda el diagnóstico; buena entregabilidad | US$7/mes anual (COP 29.200) |
 | Correo transaccional (v1.1) | [Resend](https://resend.com/pricing) + SDK `resend` | Actual | Envío del formulario al buzón, desde el Worker | Plan gratuito suficiente; subdominio aislado ([ADR-010](./14-decisiones.md#adr-010)). Sus reglas prohíben la prospección en frío: solo se usa para el formulario | US$0 |
 | Validación (v1.1) | [Zod](https://zod.dev/v4/versioning) | 4.6 (`import * as z from "zod"`) | Validar el cuerpo de `/api/contact` | Solo en el Worker: no pesa en el navegador | — |
-| JSON-LD | [`schema-dts`](https://www.npmjs.com/package/schema-dts) (dev) | Actual | Tipos para Person y ProfessionalService | Lo recomienda la [guía de Next](https://nextjs.org/docs/app/guides/json-ld) | — |
+| JSON-LD | [`schema-dts`](https://www.npmjs.com/package/schema-dts) (dev) | Actual | Tipos para Person, ProfessionalService, Article y BreadcrumbList | Lo recomienda la [guía de Next](https://nextjs.org/docs/app/guides/json-ld) | — |
+| Medios (local) | [sharp](https://sharp.pixelplumbing.com/) (dependencia de desarrollo) | **0.35.5** | Codifica las capturas a AVIF y WebP en varios anchos (`media:images`) y baja las imágenes OG a PNG con paleta (`media:og`) | La misma versión que ya trae Next. Solo la usan los scripts de `scripts/`, que no corren en Workers Builds ([ADR-021](./14-decisiones.md#adr-021)) | — |
+| Capturas (local) | Chrome instalado + CDP propio (`scripts/lib/cdp.mjs`) | Node 24 | Capturas del sitio de MRB (`media:capture`) e imágenes OG, en Chrome headless | El `WebSocket` y el `fetch` de Node 24 alcanzan para abrir una página, emular un dispositivo y tomar la captura. Sin Puppeteer ni Playwright. El folleto en PDF se renderiza con un script de Swift (`scripts/lib/render-pdf.swift`, solo macOS), porque sharp no lee PDF | — |
+| Video (fase B) | ffmpeg (Homebrew, fuera del repositorio) + [Cloudflare R2](https://developers.cloudflare.com/r2/pricing/) | — | Clips en AV1 y H.264 sin audio, servidos desde `media.alejandrodeveloper.com` | R2 responde a peticiones por rango, que Safari necesita, y su plan gratuito cubre el volumen ([ADR-022](./14-decisiones.md#adr-022)) | US$0 (con tarjeta registrada) |
 | Paquetes | [pnpm](https://pnpm.io/installation) | 12 | Instalación y lockfile | Rápido y estricto. La imagen de Workers Builds trae pnpm 10.11.1, así que se fija la versión con la variable `PNPM_VERSION` ([imagen de build](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/)) | — |
 | Runtime | Node.js | **24.x** | Builds | Workers Builds usa Node 24.18.0 por defecto y respeta `.nvmrc`. El Worker no corre en Node, sino en el runtime de Cloudflare | — |
 | Lint | ESLint + `eslint-config-next` (flat config) | **9.39.x** + 16.3.8 | Calidad de código | `next lint` ya no existe. **ESLint 10 aún rompe la configuración de Next** ([PR #99628](https://github.com/vercel/next.js/pull/99628)) | — |
@@ -41,12 +46,15 @@ Versiones verificadas el 3 de octubre de 2026; hosting y analítica, el 4 de oct
 
 | Herramienta | Por qué no | Cuándo reconsiderarla |
 |---|---|---|
-| next-intl (4.14) | Dos idiomas y una página no justifican una librería; el patrón nativo no envía código al cliente | Si el sitio pasa de ~5 páginas o necesita plurales y formatos complejos |
+| next-intl (4.14) | Dos idiomas y unas pocas páginas (home, caso y política) no justifican una librería; el patrón nativo no envía código al cliente | Si el sitio pasa de ~10 páginas o necesita plurales y formatos complejos |
 | `proxy.ts` (antes `middleware.ts`) | El export estático no lo soporta, y además correría en cada visita. La redirección de `/` va en el Worker ([ADR-004](./14-decisiones.md#adr-004)) | Si la detección de mercado por zona horaria falla, el plan B usa el Worker ([ADR-005](./14-decisiones.md#adr-005)) |
 | OpenNext o vinext (Next.js completo en Workers) | El sitio es estático: no hace falta ejecutar Next en el servidor, y cada página contaría para el límite diario del Worker ([ADR-017](./14-decisiones.md#adr-017)) | Si el sitio necesita render dinámico |
 | `next/link` para la navegación interna | En exports de Next 16, su prefetch pide los payloads RSC en rutas equivocadas y da 404 ([issue #85374](https://github.com/vercel/next.js/issues/85374)). Entre páginas estáticas, un `<a>` es igual de rápido | Cuando Next corrija el issue |
 | MDX | La política se escribe en TSX; las propuestas, como objetos tipados con una sola plantilla ([ADR-011](./14-decisiones.md#adr-011)) | Si aparece un blog |
-| Motion (antes Framer Motion, v14) | El hook se resuelve con CSS: 0 KB frente a ~20 KB de `LazyMotion` + `domAnimation` ([ref.](https://motion.dev/docs/react-reduce-bundle-size)) | Si se necesitan animaciones con gestos o arrastre |
+| Motion (antes Framer Motion, v14) o GSAP | El hook y los revelados de la fase B se resuelven con CSS: 0 KB frente a ~20 KB de `LazyMotion` + `domAnimation` ([ref.](https://motion.dev/docs/react-reduce-bundle-size)) ([ADR-023](./14-decisiones.md#adr-023)) | Si se necesitan animaciones con gestos o arrastre |
+| `next/image` y Cloudflare Images | El export no tiene optimizador, y ~20 imágenes que no cambian entre despliegues no justifican transformaciones en tiempo de ejecución ([ADR-021](./14-decisiones.md#adr-021)) | Si las imágenes pasan a cambiar con frecuencia |
+| Puppeteer o Playwright para las capturas | Descargan su propio navegador; el CDP con Node 24 alcanza. Playwright sí entra en la v1.1, solo para las pruebas | — |
+| Headless UI u otra librería de menú | La Popover API nativa resuelve Esc, el cierre al tocar fuera y el foco ([ADR-020](./14-decisiones.md#adr-020)) | — |
 | shadcn/ui | Se necesitan 3 o 4 componentes simples; las preguntas frecuentes usan `<details>` nativo ([ADR-015](./14-decisiones.md#adr-015)) | Si el formulario o futuras páginas crecen |
 | CMS headless | Los textos cambian poco y viven versionados en Git | Si alguien más va a editar contenido |
 | Base de datos | No hay datos que guardar en v1 ni en v1.1 | En la v3, para guardar leads del diagnóstico |
@@ -78,16 +86,24 @@ En `package.json` van `"engines": { "node": "24.x" }`, `"packageManager": "pnpm@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit && tsc -p worker --noEmit",
     "format": "prettier --write .",
-    "cf-typegen": "wrangler types worker/worker-configuration.d.ts"
+    "cf-typegen": "wrangler types worker/worker-configuration.d.ts",
+    "media:capture": "node scripts/capture-screens.mjs",
+    "media:images": "node scripts/build-images.mjs",
+    "media:og": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-og.mjs"
   }
 }
 ```
+
+Los tres scripts `media:*` se agregaron en la fase A (R-04 y R-09). Son locales: no corren en Workers Builds y sus resultados se commitean ([06 §4](./06-secciones-y-ui.md#4-imágenes)).
 
 - **`pnpm dev`** (puerto 3000) sirve para construir. No ejecuta el Worker ni `_headers`, así que ahí `/` no redirige.
 - **`pnpm preview`** (puerto 8787) sirve `out/` con el Worker, los encabezados y el 404, igual que en Cloudflare. Úsalo antes de cada PR; la CI también lo usa.
 - **`pnpm typecheck`** revisa la app y el Worker por separado: el Worker tiene su propio `worker/tsconfig.json` con los tipos del runtime de Cloudflare, que chocarían con los del navegador.
 - **`pnpm cf-typegen`** regenera `worker/worker-configuration.d.ts` (el tipo `Env` y los tipos del runtime) a partir de `wrangler.jsonc`. El archivo se commitea; hay que regenerarlo cuando cambien los bindings, por ejemplo en la v1.1.
-- **`pnpm-workspace.yaml`:** pnpm 12 solo ejecuta los scripts de instalación aprobados. Se permiten los de `esbuild` y `workerd` (los usa Wrangler) y se bloquean `sharp` y `unrs-resolver`, que el sitio no necesita.
+- **`pnpm media:capture`** toma las capturas del sitio en vivo de MRB y renderiza su logo y su folleto en `media-raw/mrb/` (en `.gitignore`). Necesita red, Chrome y `swift` (macOS), y tarda ~40 s. `--only=nombre,…` repite algunas; `CHROME_PATH`, `CDP_PROFILE_ROOT` y `MRB_PROJECT_DIR` cambian las rutas.
+- **`pnpm media:images`** codifica `media-raw/` a AVIF y WebP en `src/media/` y reescribe `src/media/manifest.generated.ts` (~3,5 min). Si falta una fuente cruda, conserva los archivos ya commiteados, así que funciona en un clon nuevo.
+- **`pnpm media:og`** genera las 4 imágenes OG en `public/og/` (~11 s). Hay que repetirlo cuando cambian el titular, el título del caso, una cifra o una captura.
+- **`pnpm-workspace.yaml`:** pnpm 12 solo ejecuta los scripts de instalación aprobados. Se permiten los de `esbuild` y `workerd` (los usa Wrangler). Los de `sharp` y `unrs-resolver` siguen bloqueados: sharp es dependencia de desarrollo de los scripts de medios, y sus binarios precompilados funcionan sin script de instalación.
 
 ## 4. Política de versiones
 
@@ -132,3 +148,5 @@ Consultadas el 3-oct-2026 (hosting y analítica, el 4-oct-2026):
 - [Precios de Google Workspace (Colombia)](https://workspace.google.com/intl/es-419/pricing.html)
 - [Motion: tamaño del bundle](https://motion.dev/docs/react-reduce-bundle-size)
 - [Zod v4](https://zod.dev/v4/versioning)
+- [sharp](https://sharp.pixelplumbing.com/) (24-oct-2026)
+- [Cloudflare R2: precios](https://developers.cloudflare.com/r2/pricing/) (24-oct-2026)

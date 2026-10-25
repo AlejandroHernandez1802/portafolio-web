@@ -31,7 +31,7 @@ En privacidad, el sitio:
 | `Content-Security-Policy-Report-Only` | Política completa (abajo) | Todas, también en las previews | v1 en observación → aplicada en v1.1 |
 | `X-Robots-Tag` | `noindex, nofollow` | `/en/p/*` y `/es/p/*` | v1.1 |
 | `X-Robots-Tag` | `noindex` | URL de `workers.dev` (previews) | v1 |
-| `Cache-Control` | `public, max-age=31536000, immutable` | `/_next/static/*` (archivos con hash en el nombre) | v1 |
+| `Cache-Control` | `public, max-age=31536000, immutable` | `/_next/static/*` (archivos con hash en el nombre, también las capturas de `src/media/`, [ADR-021](./14-decisiones.md#adr-021)) | v1 |
 | `Strict-Transport-Security` | Se activa en Cloudflare (*SSL/TLS → Edge Certificates → HSTS*), de 6 a 12 meses, **sin** `preload` ni `includeSubDomains`. Confírmalo con `curl -I` | Todas | v1 |
 
 Con el export estático, los encabezados viven en `public/_headers`. Next lo copia a `out/` y Cloudflare lo aplica a los archivos estáticos ([Cloudflare](https://developers.cloudflare.com/workers/static-assets/headers/)):
@@ -193,7 +193,7 @@ Una página por idioma (`/en/privacy`, `/es/privacy`), en TSX, con `site.legal.p
 | Riesgo | Mitigación |
 |---|---|
 | **Empleo actual** | No nombrar al empleador en el sitio, el JSON-LD ni los perfiles enlazados (`sameAs`, ver [08 §4](./08-seo.md#4-datos-estructurados-json-ld)). Revisar la cláusula de exclusividad y conflicto de interés **antes de publicar** (roadmap §10) |
-| **Permisos de clientes** | MRB con nombre, métrica o testimonio solo con autorización escrita de Brian ([04 §6](./04-i18n-contenido-y-precios.md#6-caso-mrb-con-disclosure)). El prototipo de Jerrell's no se muestra |
+| **Permisos de clientes** | MRB va con nombre y capturas desde la fase A, con su permiso; el alcance (nombre, logo, capturas, folleto, video y cifras) se confirma por escrito en R-01 ([04 §6](./04-i18n-contenido-y-precios.md#6-caso-mrb-con-disclosure)). Las capturas usan datos ficticios y el cotizador de MRB nunca se envía. Sin testimonio. El prototipo de Jerrell's no se muestra |
 | **Marcas reales en propuestas** | Solo en `/p/[slug]` privadas y con `noindex`. Nunca en la página pública |
 | **Testimonios** | Solo reales, textuales y autorizados. La FTC y Google prohíben las reseñas y testimonios falsos, pagados o condicionados (diagnóstico §10) |
 | **Marca ficticia de la animación** | Verificar que no exista ([05 §12](./05-hero-animacion.md#12-producto-y-marca-ficticios)) |

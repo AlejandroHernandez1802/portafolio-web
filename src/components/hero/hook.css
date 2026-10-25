@@ -2,12 +2,15 @@
    every animation only declares its starting point (or ends where the base is), so with
    reduced motion, a failed load or an old browser the finished scene is what you see.
    Looks from the design system (components/hero/hero.css): a spec-sheet panel with a 24 px
-   cobalt grid, an ink frame and corner marks; only the UI drawn inside it is rounded. */
+   cobalt grid, an ink frame and corner marks; only the UI drawn inside it is rounded.
+   Since ADR-020 it sits in tile B of the services bento, below the fold: it is a 4:3 box that
+   scales the scene to its own width and starts its timeline when it scrolls into view (end of
+   this file). */
 
 .hook {
   position: relative;
   display: block;
-  height: 200px; /* mobile: ≤ 200 px (docs/05 §8) */
+  aspect-ratio: 4 / 3; /* the scene's; a tall tile may stretch it, the scene stays centered */
   overflow: hidden;
   border: 1px solid var(--ink-1);
   /* Gradients, not images: they never compete with the H1 for LCP */
@@ -19,6 +22,7 @@
   background-position: -1px -1px;
   color: var(--ink-1);
   contain: layout paint;
+  container: hook / inline-size; /* 100cqi = stage width; also the style container below */
 }
 
 /* Registration marks in the four corners, like a print sheet */
@@ -53,31 +57,17 @@
   border-bottom-width: 1.5px;
 }
 
-/* The scene is drawn at 400 × 300 and scaled with transform, never by changing sizes */
+/* The scene is drawn at 400 × 300 and scaled with transform, never by changing sizes. The
+   scale is the stage width / 400 px (tan(atan2()) turns that ratio of lengths into a number),
+   capped at 1.25; a browser without it keeps the fixed 0.75 of the first declaration. */
 .hook__scene {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 400px;
   height: 300px;
-  transform: translate(-50%, -50%) scale(0.6667);
-}
-/* Tablets get the scene at 1:1 instead of a small strip across a wide column */
-@media (min-width: 640px) {
-  .hook {
-    height: 300px;
-  }
-  .hook__scene {
-    transform: translate(-50%, -50%);
-  }
-}
-@media (min-width: 1024px) {
-  .hook {
-    height: 360px;
-  }
-  .hook__scene {
-    transform: translate(-50%, -50%) scale(1.2);
-  }
+  transform: translate(-50%, -50%) scale(0.75);
+  transform: translate(-50%, -50%) scale(min(1.25, tan(atan2(100cqi, 400px))));
 }
 
 .hook__scene > * {
@@ -357,7 +347,37 @@
   animation-name: hook-pop;
 }
 
-/* Reduced motion: no animations, the base (final state) shows */
+/* ---- Play once in view, 0 KB of JS ----
+   A scroll-driven animation flips --hook-state on .hook from `wait` to `go` once ~60 % of the
+   stage has entered the viewport (it flips at the middle of its range), and a style query keeps
+   the timeline above paused while it reads `wait`: paused at 0 ms, every element shows its
+   starting point. Scrolled away mid-play, it pauses and resumes on the way back; once finished
+   it stays on the final scene. Without scroll-driven animations the state is never set and the
+   timeline runs on load, finished long before the visitor scrolls here; without style queries
+   it can't pause and does the same. */
+@supports (animation-timeline: view()) {
+  .hook {
+    animation: hook-arm linear both;
+    animation-timeline: view();
+    animation-range: entry 40% entry 80%;
+  }
+  @container hook style(--hook-state: wait) {
+    .hook [data-anim] {
+      animation-play-state: paused;
+    }
+  }
+}
+@keyframes hook-arm {
+  from {
+    --hook-state: wait;
+  }
+  to {
+    --hook-state: go;
+  }
+}
+
+/* Reduced motion: no animations, the base (final state) shows. This also drops hook-arm, so
+   nothing waits either */
 @media (prefers-reduced-motion: reduce) {
   .hook,
   .hook * {

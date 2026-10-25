@@ -66,14 +66,23 @@ export function TrackingListener() {
       cleanups.push(stop)
     }
 
-    // Section views: 50 % visible for 1 s, once per session
+    // Section views: 50 % visible for 1 s, once per session. A section more than twice as tall
+    // as the viewport never reaches a 0.5 ratio (#trabajo is ~1,450 px on phones), so filling
+    // half the viewport counts too. Checked at every 10 % step, so the timer starts and stops
+    // close to those lines.
     const timers = new Map<Element, number>()
+    const visible = (e: IntersectionObserverEntry) =>
+      e.intersectionRatio >= 0.5 ||
+      e.intersectionRect.height >= 0.5 * (e.rootBounds?.height ?? window.innerHeight)
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const name = (entry.target as HTMLElement).dataset.trackView as EventName | undefined
           if (!name) continue
-          if (entry.isIntersecting) {
+          if (!visible(entry)) {
+            window.clearTimeout(timers.get(entry.target))
+            timers.delete(entry.target)
+          } else if (!timers.has(entry.target)) {
             timers.set(
               entry.target,
               window.setTimeout(() => {
@@ -81,12 +90,10 @@ export function TrackingListener() {
                 if (once(`view_${name}`)) track(name, { campaign: getCampaign() })
               }, VIEW_DELAY_MS),
             )
-          } else {
-            window.clearTimeout(timers.get(entry.target))
           }
         }
       },
-      { threshold: 0.5 },
+      { threshold: Array.from({ length: 11 }, (_, i) => i / 10) },
     )
     document.querySelectorAll('[data-track-view]').forEach((el) => observer.observe(el))
     cleanups.push(() => {

@@ -11,13 +11,18 @@ El idioma y el mercado son independientes. El idioma lo elige la URL. El mercado
 | URL | Qué es | Indexable |
 |---|---|---|
 | `/` | Redirección 307 a `/en` o `/es` según el navegador | No (redirección) |
-| `/en`, `/es` | La página única | Sí |
+| `/en`, `/es` | La home | Sí |
+| `/en/work/{slug}`, `/es/trabajos/{slug}` | Página de un caso; hoy solo `malone-road-belt` ([ADR-020](./14-decisiones.md#adr-020)) | Sí |
 | `/en/privacy`, `/es/privacy` | Política de privacidad | Sí |
 | `/en/p/{slug}`, `/es/p/{slug}` | Propuesta privada por prospecto (v1.1) | **No** |
 | `/call`, `/llamada` | Enlaces cortos a la agenda de Cal.com | No (redirección) |
 | `https://www.alejandrodeveloper.com/*` | Redirección 308 al apex (Redirect Rule de Cloudflare, [10 §6](./10-infraestructura-y-entornos.md#6-cloudflare)) | No |
 
-**Regla para correos:** los enlaces de prospección apuntan directo a `/en?utm_…` o `/es?utm_…&mkt=co`, para evitar el salto de la redirección de `/` (ver [12 §5](./12-medicion-y-analitica.md#5-convención-utm)).
+**Segmento traducido.** El caso vive en `work` en inglés y en `trabajos` en español (`CASE_SEGMENT` en `src/lib/routes.ts`). El slug también es por idioma (`slug.en`, `slug.es` en `cases.ts`); para MRB es el mismo. Cada ruta genera solo su idioma, así que `/es/work/…`, `/en/trabajos/…`, `/en/work` y `/es/trabajos` responden con el 404 bilingüe ([03 §5](./03-arquitectura.md#5-componentes-de-servidor-y-de-cliente)).
+
+**Anclas de la home.** Los ids van en español en los dos idiomas: `#inicio` (hero), `#trabajo`, `#servicios`, `#proceso`, `#precios`, `#sobre-mi`, `#preguntas` y `#contacto` (`SECTION` en `routes.ts`). Desde el caso y la privacidad, la barra y el pie enlazan `/{lang}#{id}`. En la home usan el ancla sola (`#precios`), para que el salto no recargue la página ni pierda la query de la URL (`?mkt=co`, las UTM); `sectionHref()` elige la forma según la página. `#solucion` y `#caso` ya no existen; el sitio no se había publicado, así que no se rompió ningún enlace externo.
+
+**Regla para correos:** los enlaces de prospección apuntan directo a `/en?utm_…`, `/es?utm_…&mkt=co` o a la página del caso (`/en/work/malone-road-belt?utm_…`), para evitar el salto de la redirección de `/` (ver [12 §5](./12-medicion-y-analitica.md#5-convención-utm)).
 
 ## 2. Redirección de `/`
 
@@ -108,74 +113,74 @@ import type { SiteContent } from './types'
 export const en = { /* … */ } satisfies SiteContent
 ```
 
-`satisfies` valida la **forma**: si a `es.ts` le falta una clave, la compilación falla. No valida que el texto esté traducido, así que se revisa en el PR. Los textos visibles son **obligatorios** en el tipo; solo son opcionales los que dependen de permisos (testimonio, métricas).
+`satisfies` valida la **forma**: si a `es.ts` le falta una clave, la compilación falla. No valida que el texto esté traducido, así que se revisa en el PR. Los textos visibles son **obligatorios** en el tipo. Solo son opcionales los que dependen de un dato que puede faltar: la prueba de un bloque de Servicios (`proof?`), sus listas (`list?`) y la cifra de respaldo de la franja (`fallback?`).
 
 ```ts
-// src/content/types.ts (extracto)
+// src/content/types.ts (extracto; la fuente de verdad es el archivo)
 export type Locale = 'en' | 'es'
-export type HeadlineVariant = 'a' | 'b' | 'c'
-export type TrackLocation = 'header' | 'hero' | 'stage' | 'pricing' | 'closing' | 'faq' | 'demo'
-
-export type ImageRef = { src: string; width: number; height: number; alt: string } // alt obligatorio
-
-export type PriceSpec =
-  | { kind: 'from'; amount: number; period?: 'month' } // "Desde US$3,000"
-  | { kind: 'range'; min: number; max: number; period?: 'month' } // "US$350–500"
-export type PriceByMarket = { us: PriceSpec; co: PriceSpec } // USD y COP
+export type TrackLocation =
+  'header' | 'nav' | 'hero' | 'stage' | 'work' | 'case' | 'pricing' | 'closing' | 'faq' | 'demo' | 'footer'
 
 export type SiteContent = {
   meta: { title: string; description: string; ogImageAlt: string }
-  nav: { bookCall: string; switchLanguage: string; skipToContent: string }
+  nav: {
+    tagline: string
+    bookCall: string // "Agenda": CTA compacto (< 1024 px)
+    bookCallFull: string // "Agenda una llamada": desde 1024 px y dentro del menú
+    switchLanguage: string; skipToContent: string; label: string
+    links: { work: string; services: string; process: string; pricing: string; about: string }
+    menu: { open: string; close: string; label: string } // menú Popover (< 1024 px)
+  }
   hero: {
     headlines: Record<HeadlineVariant, string>
     subtitle: string
     primaryCta: string // "Book a 15-minute call"
-    secondaryCta: { caseNamed: string; caseAnonymized: string; demo: string }
-    trustLine: { named: string; anonymized: string }
-    stage: {
-      linkTitle: string // tooltip del escenario clicable; el escenario es aria-hidden (ver 05 §7)
-      customerMessage: string // "Hi, how much for…?"
-      businessReply: string // "Call for pricing"
-      product: { brand: string; name: string; price: { us: string; co: string }; unit: string; qtyLabel: string } // precio por mercado, con data-only-market (05 §12)
-      addToCart: string
-      orderReceived: string // "Order received · Delivery Thursday"
-    }
+    secondaryCta: { case: string; demo: string } // página del caso (fase A) → tienda demo (v2)
+    trustLine: string // "Trabajas directamente conmigo · Colombia, UTC−5"
+    figures: { label: string; items: FigureCell[] } // franja de cifras
+    showcase: { label: string } // leyenda de los marcos; los alt salen de cases.<id>.alts
   }
-  solves: { title: string; items: Array<{ icon: 'search' | 'star' | 'cart'; title: string; body: string }> }
-  caseMrb: {
-    title: { named: string; anonymized: string }
-    summary: { named: string; anonymized: string }
-    before: { label: string; points: string[]; images: { named: ImageRef[]; anonymized: ImageRef[] } }
-    after: { label: string; points: string[]; images: { named: ImageRef[]; anonymized: ImageRef[] } }
-    built: string[] // catálogo, buscador por referencia OEM, tres idiomas, cotizador
-    result?: { metric: string; note: string } // solo con permiso
-    testimonial?: { quote: string; author: string; role: string } // solo con permiso
-    link?: { label: string; href: string } // solo en modo named
+  work: { title: string; lead: string; card: { viewCase: string; builtLabel: string } }
+  services: {
+    title: string; lead: string
+    tiles: Record<'catalog' | 'quote' | 'languages' | 'seo' | 'analytics' | 'care', ServiceTile>
+    ownership: string // "Dominio, hosting y cuentas a tu nombre."
+    pricingLink: string // enlace a #precios
+    stage: { /* el escenario del hook A, antes hero.stage (05 §5) */ }
   }
+  cases: Record<CaseId, CaseContent> // textos de cada caso, ver abajo
   demo: { title: string; body: string; cta: string; posterAlt: string } // v2
-  process: { title: string; steps: Array<{ title: string; body: string }>; weeklyUpdate: string }
-  pricing: {
-    title: string
-    note: string // "Prices are starting points…"
-    currencyToggle: { label: string; usd: string; cop: string }
-    plans: Array<{ name: string; description: string; price: PriceByMarket; features: string[] }>
-  }
+  process: { title: string; steps: Array<{ title: string; body: string; duration: string }>; weeklyUpdate: string; changes: string }
+  pricing: { /* title, note, currencyToggle, priceLabels, plans */ cta: string; faqLink: string }
   faq: { title: string; items: Array<{ q: string; a: string }> } // máximo 8
-  about: { title: string; lines: [string, string, string]; photo: ImageRef }
-  closing: {
-    title: string
-    body: string
-    bookCall: string
-    whatsapp: { label: string; prefilledMessage: string }
-    email: { label: string; subject: string }
-  }
-  contactForm: {
-    /* v1.1: etiquetas, consentimiento, estados (enviando, éxito, error) */
-  }
-  footer: { addressLabel: string; privacy: string; rights: string }
+  about: { title: string; lead: string; facts: Fact[]; photo: { alt: string } }
+  closing: { title: string; body: string; bookCall: string; whatsapp: {…}; email: {…} }
+  contactForm: Record<string, never> // v1.1
+  footer: { addressLabel: string; privacy: string; rights: string; navLabel: string; caseLink: string }
   notFound: { title: string; body: string; backHome: string }
+  privacy: { /* meta, title, effectiveLabel, sections, backHome */ }
 }
+
+export type ServiceTile = {
+  outcome: string // la etiqueta de resultado: "Que te encuentren", "Que te elijan"…
+  title: string; body: string
+  proof?: string // puede usar {cifras} del caso destacado: "{oemBrands} marcas OEM en Malone Road Belt"
+  list?: string[] // bloques D y E: lista mono
+}
+
+export type FigureCell =
+  | { kind: 'fact'; value: string; label: string; fallback?: { value: string; label: string } }
+  | { kind: 'price'; label: string } // el precio "desde" de la tienda, por mercado
 ```
+
+**Casos: datos y textos por separado** ([ADR-020](./14-decisiones.md#adr-020), que extiende [ADR-011](./14-decisiones.md#adr-011)):
+
+- **`src/content/cases.ts`** exporta `cases: CaseStudy[]`, sin textos: `id`, `slug` por idioma, `disclosure`, el cliente (`name`, `url`, `domain`), las fechas (`published`, `updated`, `launched`), `featured`, las cifras, los idiomas y el stack, los medios de cada lugar (`hero`, `card`, `showcase`, `after`, `services`) y las filas de "Qué construí" (`features`, cada una con su captura y su marco). También `getCase(id)`, `caseBySlug(lang, slug)` y `featuredCases`.
+- **Los textos de cada caso** viven en `en.ts` y `es.ts`, en `cases.<id>` (`CaseContent`): `visitSite`; `alts`, con un `alt` por cada clave de medios del caso, que se usa en todo el sitio; `card` (la tarjeta de `#trabajo`); y `page` (meta, migas, hero, resultados, resumen, antes/después, qué construí, cierre y "siguiente").
+- **Las cifras se escriben una sola vez,** en `cases.ts` (`figures`), y el copy las nombra con marcadores: `{products}`, `{languages}`, `{oemBrands}`, `{machines}`, `{categories}`, `{quotes}`, `{weeks}` y `{launched}` (el mes de salida, "agosto de 2026"). `fillCase()` de `src/lib/cases.ts` los reemplaza en el build con `Intl.NumberFormat` del idioma. **Si una cifra es `null`, el texto que la usa devuelve `null` y el componente omite esa celda, línea o fila sin dejar hueco.** `resolveMetrics()` hace lo mismo con las métricas (`Metric = { figure, label }`).
+- **Cifras sin verificar:** cada una lleva `// REVIEW(R-08)` junto al valor en `cases.ts`, con su fuente. Al 24-oct: `quotes` y `weeks` son `null`; `products` 15 (malonebelt.com), `categories` 4, `oemBrands` 29 (el plan decía 16, 5 y 30) y `machines` 6 (datos de ejemplo del repo de MRB; el plan decía 7).
+
+**Lo que se eliminó del modelo** con la reestructuración: `caseMrb` (pasó a `cases.mrb`), `solves` (pasó a `services`), `hero.stage` (pasó a `services.stage`), `about.lines` (pasó a `about.lead` y `about.facts`), `ImageRef` (las imágenes se nombran por su clave del manifiesto de medios, [06 §4](./06-secciones-y-ui.md#4-imágenes)) y `site.caseMrb`.
 
 **Flujo de textos (fase 0):** se escriben directamente en `content/en.ts` y `content/es.ts`, partiendo de los textos del roadmap (§4 y §5). Si prefieres redactar en un documento aparte, se pegan al final. El código no contiene ningún texto visible.
 
@@ -190,15 +195,18 @@ export const site = {
   name: 'Alejandro Hernández',
   indexable: false, // prelanzamiento: noindex en todo el sitio; true al publicar (F1-10)
   features: {
-    demoStore: false, // v2: muestra #demo y cambia el CTA secundario y el escenario
+    demoStore: false, // v2: cambia el CTA secundario y el escenario a la tienda demo
     contactForm: false, // v1.1: muestra el formulario en el cierre
+    pricing: false, // apagado mientras defines los precios: sin montos y con LinkedIn en su lugar (ADR-025)
   },
   hero: { activeHeadline: 'a' as const }, // ver 12 §6
-  caseMrb: { disclosure: 'anonymized' as 'named' | 'anonymized' }, // 'named' cuando Brian autorice
+  // disclosure ya no vive aquí: es un campo de cada caso en content/cases.ts (ADR-020)
+  media: { baseUrl: 'https://media.alejandrodeveloper.com' }, // fase B: clips en R2 (ADR-022)
   contact: {
     email: 'hola@alejandrodeveloper.com',
     whatsapp: '57XXXXXXXXXX', // sin "+" ni espacios (formato wa.me)
     calLink: { en: 'tu-usuario/15min', es: 'tu-usuario/15min-es' }, // un evento por idioma (07 §2.1)
+    linkedin: 'https://www.linkedin.com/in/alejandro-hernandez-quintero/', // también sameAs (08 §4)
   },
   demoUrl: 'https://demo.alejandrodeveloper.com', // v2
   analytics: { umamiWebsiteId: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' }, // ID público de Umami (12 §4)
@@ -213,19 +221,29 @@ Cambiar un flag requiere commit y despliegue (~1–2 minutos con Workers Builds)
 
 ## 6. Caso MRB con `disclosure`
 
-El permiso de Brian no solo condiciona el testimonio y la métrica: también el **nombre** del cliente en tres lugares visibles. Por eso existe `site.caseMrb.disclosure`, y la versión anónima es la que se construye primero.
+Desde el 24-oct, `disclosure` es un campo de cada `CaseStudy` en `content/cases.ts`, y no de `site.ts` ([ADR-020](./14-decisiones.md#adr-020), que ajusta [ADR-014](./14-decisiones.md#adr-014)). **MRB está en `'named'`**: dio permiso para mostrar el trabajo con nombre e imágenes. El alcance exacto del permiso (nombre, logo, capturas, folleto, video y cifras) se confirma por escrito en R-01 y está marcado con `REVIEW(R-08)` junto al campo.
 
-| Elemento | `named` (con permiso) | `anonymized` (por defecto) |
+| Elemento | MRB hoy (`named`) | Si el permiso llega más estrecho |
 |---|---|---|
-| Línea de confianza (hero) | "Built the catalog and quote system for Malone Road Belt, Kentucky." | "Built the catalog and quote system for a U.S. industrial supplier." Sin estado ni producto exacto, que lo harían identificable |
-| CTA secundario (v1) | "See the Malone Road Belt case" | "See the industrial supplier case" |
-| Título de la sección | "Malone Road Belt: from phone quotes to online requests" (sugerencia) | "An industrial supplier: from phone quotes to online requests" (sugerencia) |
-| Capturas | Sitio anterior (archive.org) y nuevo, escritorio y móvil | Recortes sin logo ni nombre, o maquetas genéricas |
-| Enlace a malonebelt.com | Sí | No |
-| Métrica de cotizaciones | Solo si Brian la autoriza | No |
-| Testimonio | Solo si Brian lo envía | No |
+| Nombre del cliente | En la tarjeta de `#trabajo`, el CTA secundario del hero ("Ver el caso de Malone Road Belt"), el pie, la página del caso y su JSON-LD (`about`) | Volver a `'anonymized'` obliga a reescribir el copy de `cases.mrb` y a retirar las capturas |
+| Capturas del sitio | En el hero, la tarjeta, los bloques A y C de Servicios y la página del caso. `HeroShowcase` no dibuja nada si el caso no es `'named'`, porque las capturas identifican al cliente | Se quitan las claves afectadas de `media` y `features` |
+| Logo y folleto | En "Qué construí" (fila "Marca") | Se quita la fila `brand` |
+| Enlace a malonebelt.com | "Visitar malonebelt.com" en la tarjeta y en el hero del caso, en otra pestaña con `noopener` | Se quita `visitSite` |
+| Cifras del catálogo (productos, marcas OEM, idiomas…) | Verificadas en malonebelt.com el 24-oct, con `REVIEW(R-08)` | Se ponen en `null` y desaparecen sin hueco |
+| Cotizaciones desde el 27-ago | `null` hasta que la confirmes: su celda en la franja del hero la ocupa la cifra de marcas OEM (`fallback`), y la de resultados se omite | — |
+| Testimonio | No hay, y el modelo no lo tiene: no queda ningún espacio esperándolo | Si llega, se agrega como campo opcional |
 
-Los textos en español siguen la misma lógica. La fecha límite para decidir es el **14 de octubre** ([13](./13-plan-de-implementacion.md)).
+**Antes/después.** archive.org no guarda ninguna captura del sitio anterior de MRB. Por eso el antes/después compara en texto el proceso de compra de antes (llamar o escribir para conocer un precio) con el de después, y solo el lado "después" lleva capturas ([ADR-021](./14-decisiones.md#adr-021)).
+
+**Lo que el caso afirma, y lo que no** (verificado en el sitio en vivo y en el repositorio de MRB el 24-oct):
+
+- El cotizador pide **un solo producto con su urgencia** ("Machine is down now" o "Planned purchase") y envía la solicitud al correo de ventas con Resend. Nunca se habla de un carrito de varias piezas ni de "las piezas exactas".
+- Los pagos y los pedidos en línea **no son tu trabajo**: son la fase 2 de MRB, de otro equipo. El caso no menciona checkout.
+- Los idiomas son **inglés, portugués y español** (`/en`, `/pt` y `/es`).
+- El stack que se muestra es Next.js, Vercel y Resend.
+- El buscador se llama "BeltMatch" por dentro, pero el sitio dice "Find my belt", así que el copy dice "buscador por máquina o referencia OEM".
+
+**`'anonymized'` sigue en el tipo** para casos futuros. Hoy solo `HeroShowcase` lo consulta. Un caso anónimo necesitaría además copy sin el nombre y capturas recortadas, y su página tendría que revisar qué medios muestra; se resuelve cuando llegue uno.
 
 ## 7. Variantes del titular
 
@@ -233,15 +251,18 @@ Los textos en español siguen la misma lógica. La fecha límite para decidir es
 
   | Variante | EN | ES |
   |---|---|---|
-  | `a` | From “call for pricing” to “add to cart”. | De “precio por interno” a “agregar al carrito”. |
+  | `a` | No website, or an outdated one? Go from “call for pricing” to “add to cart”. | ¿Sin página web o con una desactualizada? Pasa de “precio por interno” a “agregar al carrito”. |
   | `b` | Your website should take orders, not just look nice. | Tu sitio debería recibir pedidos, no solo verse bien. |
   | `c` | See your new store working in 5 days. | Ve tu nueva tienda funcionando en 5 días. |
 
 - `site.hero.activeHeadline` elige la variante activa en ambos idiomas.
+- **Línea de público** (25-oct, [ADR-024](./14-decisiones.md#adr-024)): si el texto antes de la primera comilla termina en "?", `HeroHeadline` lo pone en su propia línea, más pequeño, dentro del mismo H1, y el H1 baja a un máximo de 7 rem. Así la variante `a` le habla a quien no tiene sitio y a quien lo tiene desactualizado. Antes decía “From “call for pricing” to “add to cart”.” / “De “precio por interno” a “agregar al carrito”.”.
 - **Las comillas tipográficas “ ” son parte del contrato.** `HeroHeadline` tacha la primera frase entre comillas y marca la segunda con el resaltador ([05 §3](./05-hero-animacion.md#3-guion--línea-de-tiempo-técnica)). Una variante sin dos frases entre comillas, como `b` y `c`, se ve como texto plano. Con comillas rectas (`"`) no se decora nada.
 - La comparación es por ventana de fechas, con un registro en [12 §6](./12-medicion-y-analitica.md#6-prueba-secuencial-de-titulares).
 
 ## 8. Precios por país del visitante
+
+> **Ocultos desde el 25-oct ([ADR-025](./14-decisiones.md#adr-025)).** Con `site.features.pricing = false` no se muestra ningún monto: ni la sección de precios, ni la celda del hero, ni el plan mensual, ni `priceRange`. Todo lo de esta sección vuelve con `true`.
 
 **Decisión del usuario:** COP solo para visitantes en Colombia; USD para todos los demás, en `/en` y en `/es`. Así un proveedor hispano de EE. UU. que lea `/es` ve USD, y un cliente colombiano ve COP aunque lea en inglés.
 
@@ -340,7 +361,7 @@ export type Proposal = {
   prospect: { company: string; contactName?: string; website?: string }
   createdAt: string // ISO
   validUntil?: string // ISO; se muestra como "propuesta válida hasta…"
-  findings: Array<{ title: string; evidence: string; image?: ImageRef }> // 3 hallazgos verificables
+  findings: Array<{ title: string; evidence: string; image?: { key: KnownMediaKey; alt: string } }> // 3 hallazgos verificables; la imagen, del manifiesto de medios (06 §4)
   plan: {
     summary: string
     phases: Array<{ name: string; deliverables: string[]; weeks: number; price: PriceSpec }>

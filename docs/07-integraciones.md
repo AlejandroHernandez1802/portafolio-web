@@ -243,7 +243,8 @@ La demo es una **plantilla reutilizable para clientes**: un distribuidor fictici
 
 **El portafolio debe:**
 
-- [ ] Con `site.features.demoStore = true`, mostrar la sección `#demo`: póster estático (WebP o AVIF ≤ 150 KB), título, una línea y el botón "Try the demo store" / "Prueba la tienda demo".
+- [ ] Con `site.features.demoStore = true`, mostrar la tarjeta `#demo` como segunda tarjeta dentro de `#trabajo` ([ADR-020](./14-decisiones.md#adr-020)): póster estático (AVIF y WebP ≤ 150 KB, por el pipeline de [06 §4](./06-secciones-y-ui.md#4-imágenes)), título, una línea y el botón "Try the demo store" / "Prueba la tienda demo". Los índices 01–07 no cambian.
+- [ ] Desde la v2, la tarjeta "siguiente" de la página del caso lleva a la demo en vez de a Servicios y precios.
 - [ ] Enlazar a `https://demo.alejandrodeveloper.com/?utm_source=portfolio&utm_medium=demo_block&utm_campaign={campaign}` en otra pestaña, con `data-track="demo_open"`.
 - [ ] Cambiar el CTA secundario del hero y el destino del escenario de la animación a la demo.
 - [ ] **No usar un iframe.** La experiencia móvil es mala, Stripe Checkout no se puede enmarcar y el iframe pesaría en el rendimiento de la página ([ADR-012](./14-decisiones.md#adr-012)).

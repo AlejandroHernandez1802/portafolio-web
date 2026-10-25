@@ -9,13 +9,15 @@ export type EventName =
   | 'booking_completed'
   | 'whatsapp_click'
   | 'email_click'
-  | 'case_mrb_view'
+  | 'case_mrb_view' // the home's #trabajo summary seen (data-track-view)
+  | 'case_open' // click to a case page: hero, work, stage, nav, services or footer
   | 'currency_switch'
   | 'demo_open'
+  | 'linkedin_open' // click to the LinkedIn profile: nav, about or footer (docs/14 ADR-025)
 
 type ClickEvent = Extract<
   EventName,
-  'book_call_click' | 'whatsapp_click' | 'email_click' | 'demo_open'
+  'book_call_click' | 'whatsapp_click' | 'email_click' | 'demo_open' | 'case_open' | 'linkedin_open'
 >
 
 declare global {

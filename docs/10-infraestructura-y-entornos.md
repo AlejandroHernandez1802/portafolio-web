@@ -8,6 +8,7 @@ La infraestructura se monta en **una sola sesión de 1–2 h**, idealmente este 
 - **Resend** en el subdominio `notify.` para el formulario de la v1.1.
 - **Umami Cloud** para la analítica.
 - **Search Console.**
+- **Cloudflare R2**, desde la fase B de la reestructuración (R-12), para los clips de video en `media.alejandrodeveloper.com` ([ADR-022](./14-decisiones.md#adr-022)). La fase A no agrega nada a la infraestructura: las capturas viven en el repositorio y salen por los archivos estáticos ([ADR-021](./14-decisiones.md#adr-021)).
 
 El costo total ronda los **US$8 al mes**: Google Workspace y el dominio. El hosting y la analítica son gratis ([ADR-017](./14-decisiones.md#adr-017), [ADR-018](./14-decisiones.md#adr-018)).
 
@@ -57,6 +58,7 @@ Todo el DNS vive en Cloudflare. Los valores marcados como "del panel" se copian 
 | TXT | `send.notify` | `v=spf1 include:amazonses.com ~all` | SPF de Resend (subdominio) | Fase 0 |
 | TXT | `resend._domainkey.notify` | `p=…` (del panel de Resend) | DKIM de Resend | Fase 0 |
 | Por definir | `demo` | Depende de dónde se aloje la demo; se define en sus docs | Tienda demo | v2 |
+| Automático | `media` | Lo crea R2 al conectar `media.alejandrodeveloper.com` como dominio propio del bucket `web-portfolio-media`; pasa por la caché de Cloudflare. `r2.dev` queda apagado | Video de la fase B ([ADR-022](./14-decisiones.md#adr-022)) | Fase B (R-12) |
 
 **Notas:**
 
@@ -182,6 +184,7 @@ En la v1.1, el Worker valida las variables con Zod al recibir la solicitud. Si f
 | Umami Cloud Hobby | 100.000 eventos al mes, 1 sitio, 6 meses de retención | [Umami](https://umami.is/pricing) | 0 |
 | Cal.com Free | — | [Cal.com](https://cal.com/pricing) | 0 |
 | Resend Free | 3.000 correos al mes, 100 al día, 3 dominios | [Resend](https://resend.com/pricing) | 0 |
+| Cloudflare R2 (fase B) | Plan gratuito: 10 GB-mes, 1 millón de operaciones clase A, 10 millones clase B y salida gratis. Pide una tarjeta registrada: un exceso sí se cobraría, así que se crea una alerta de facturación en US$1 (R-12) | [Cloudflare](https://developers.cloudflare.com/r2/pricing/) | 0 |
 | **Total** | | | **≈ 8** |
 
 **Opcionales**, solo si los datos o los ingresos lo justifican:

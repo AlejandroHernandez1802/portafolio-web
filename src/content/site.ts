@@ -1,4 +1,4 @@
-import type { Disclosure, HeadlineVariant } from './types'
+import type { HeadlineVariant } from './types'
 
 // Settings that don't depend on the language and change between versions (docs/04 §5).
 // Changing a flag means commit + deploy, so every change stays in Git.
@@ -9,13 +9,18 @@ export const site = {
   features: {
     demoStore: false, // v2: shows #demo and switches the secondary CTA and the stage
     contactForm: false, // v1.1: shows the form in the closing section
+    // Off while the prices are being defined (docs/14 ADR-025): no pricing section, amount or
+    // link anywhere, and LinkedIn in their place. true brings every one of them back.
+    pricing: false,
   },
   hero: { activeHeadline: 'a' as HeadlineVariant }, // docs/12 §6
-  caseMrb: { disclosure: 'anonymized' as Disclosure }, // 'named' once Brian approves
+  // Case disclosure is per case now, in content/cases.ts (docs/14 ADR-020)
+  media: { baseUrl: 'https://media.alejandrodeveloper.com' }, // phase B: video clips on R2 (ADR-022)
   contact: {
     email: 'hola@alejandrodeveloper.com',
     whatsapp: '57XXXXXXXXXX', // TODO(F0-13): no "+" or spaces (wa.me format)
     calLink: { en: 'tu-usuario/15min', es: 'tu-usuario/15min-es' }, // TODO(F0-09): one event per language (docs/07 §2.1)
+    linkedin: 'https://www.linkedin.com/in/alejandro-hernandez-quintero/', // also sameAs in JSON-LD (docs/08 §4)
   },
   demoUrl: 'https://demo.alejandrodeveloper.com', // v2
   analytics: { umamiWebsiteId: '4785d172-91a3-47a9-b8d6-cdf8a082806d' }, // public ID (docs/12 §4)

@@ -2,19 +2,29 @@ import { site } from '@/content/site'
 import type { Locale, SiteContent } from '@/content/types'
 import { trackAttrs } from '@/lib/analytics'
 import { mailtoHref, whatsappHref } from '@/lib/links'
+import { SECTION } from '@/lib/routes'
 import { BookCallLink } from '@/components/booking/BookCallLink'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
-// Section 9: the cobalt band, once per page. Booking first, on sun yellow; email and WhatsApp
+// The last section of the home, the services page and the About page: the cobalt band, once per
+// page (`index` is its number on each). Booking first, on sun yellow; email and WhatsApp
 // are outline buttons, which turn white on this band. In Colombia WhatsApp moves ahead of email
 // (docs/06 §5) through data-market-order, handled in globals.css next to the other market rules.
-export function Closing({ lang, closing }: { lang: Locale; closing: SiteContent['closing'] }) {
+export function Closing({
+  lang,
+  closing,
+  index,
+}: {
+  lang: Locale
+  closing: SiteContent['closing']
+  index: number
+}) {
   const whatsapp = whatsappHref(closing.whatsapp.prefilledMessage) // null until F0-13
   return (
-    <Section id="contacto" tone="accent">
-      <SectionHeading id="contacto" index={7} tone="accent" size="xl">
+    <Section id={SECTION.contact} tone="accent">
+      <SectionHeading id={SECTION.contact} index={index} tone="accent" size="xl">
         {closing.title}
       </SectionHeading>
       <p className="mt-6 max-w-[46ch] text-lead">{closing.body}</p>

@@ -29,3 +29,7 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# media sources and encoded video (scripts/, docs/06 §4): only src/media/ is versioned
+/media-raw/
+/media-out/

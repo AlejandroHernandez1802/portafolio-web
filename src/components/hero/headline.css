@@ -2,6 +2,24 @@
    (docs/05 §4): the base styles ARE the final state, strike drawn and marker on; the animation
    only declares where it starts (scaleX(0)) and touches pseudo-elements, never the H1 text. */
 
+/* With an audience line, 7 rem at most instead of 8.5: the phrases keep two lines on desktop.
+   Unlayered, so it wins over the text-display utility. */
+.headline--audience {
+  font-size: clamp(2.5rem, 7.4vw, 7rem);
+}
+
+/* The audience question: its own line, about 40 % of the display size (never under 22 px on
+   phones), in the heading width so it reads as a lead-in and not as a third phrase. The em
+   size follows the H1 clamp. */
+.headline__audience {
+  display: block;
+  margin-bottom: 0.3em;
+  font-size: max(1.375rem, 0.42em);
+  font-stretch: var(--stretch-heading);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
 .headline__strike {
   color: var(--ink-3); /* 4.5:1 on paper, well above the 3:1 large text needs */
 }
@@ -30,11 +48,11 @@
   z-index: 0;
 }
 
-/* Strike: a 0.075em ink rule just below the middle of the content area, behind the letters
-   like the kit's background stroke, so the struck phrase stays legible. The words overlap a
-   hair so fractional pixels leave no seams. */
+/* Strike: a 0.075em ink rule just below the middle of the content area, drawn over the
+   letters so it reads as a real strikethrough (the ink-3 text keeps the phrase legible). The
+   words overlap a hair so fractional pixels leave no seams. */
 .headline__strike > .headline__word::before {
-  z-index: -1;
+  z-index: 1;
   inset-inline: -0.02em;
   top: calc((100% - 0.075em) * 0.56);
   height: 0.075em;

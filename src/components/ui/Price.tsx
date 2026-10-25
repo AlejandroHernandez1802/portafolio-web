@@ -6,6 +6,7 @@ import { priceParts, type Market, type PriceLabels } from '@/lib/market'
 // amount in condensed Archivo 800, then a mono period ("/ mes") that wraps below when tight.
 
 const MONO = 'label-mono text-ink-2'
+const LONG = 15 // characters: past this an amount (a COP range) takes text-price-long
 
 export function Price({
   price,
@@ -30,7 +31,11 @@ export function Price({
             </span>
           )}
           <span className="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <span className="text-price wrap-anywhere stretch-display">{amount}</span>
+            <span
+              className={`${amount.length > LONG ? 'text-price-long' : 'text-price'} stretch-display wrap-anywhere`}
+            >
+              {amount}
+            </span>
             {period && <span className={MONO}>{period}</span>}
           </span>
         </span>

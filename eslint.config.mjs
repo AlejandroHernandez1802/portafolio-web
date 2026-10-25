@@ -22,6 +22,9 @@ const eslintConfig = defineConfig([
     // Cloudflare: Wrangler state and generated Worker types
     '.wrangler/**',
     'worker/worker-configuration.d.ts',
+    // Media sources and encoded video (scripts/media.config.mjs), gitignored
+    'media-raw/**',
+    'media-out/**',
   ]),
 ])
 

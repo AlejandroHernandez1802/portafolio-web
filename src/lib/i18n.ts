@@ -22,6 +22,11 @@ export async function currentLocale(): Promise<Locale> {
   return value
 }
 
+/** Texts for a known locale, e.g. in PageShell, which receives `lang` as a prop. */
+export function dictionary(lang: Locale): SiteContent {
+  return dictionaries[lang]
+}
+
 /** Texts for the current route's locale. */
 export async function getContent(): Promise<{ lang: Locale; content: SiteContent }> {
   const lang = await currentLocale()

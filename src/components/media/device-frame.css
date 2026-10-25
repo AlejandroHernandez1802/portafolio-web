@@ -1,0 +1,117 @@
+/* Device frames (DeviceFrame.tsx). Browser: 1 px ink frame with an 8 px radius, a 28 px bar
+   with three outlined dots (the blueprint line, not traffic lights) and a mono URL pill.
+   Phone: an ink bezel with a 36 px body radius and a dynamic island. Both float on
+   --shadow-2. Captures fill the screen anchored to the top, so a crop loses the bottom. */
+.device {
+  position: relative;
+  isolation: isolate;
+  box-shadow: var(--shadow-2);
+}
+
+.device__screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--device-aspect);
+  background-color: var(--paper-2); /* until the image paints */
+  container-type: size; /* 100cqh = screen height, for the hover scroll below */
+}
+.device__screen :is(img, video) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Browser */
+.device--browser {
+  overflow: hidden;
+  border: 1px solid var(--ink-1);
+  border-radius: 8px;
+  background-color: var(--paper-0);
+}
+.device__bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  height: 28px;
+  padding-inline: 12px;
+  border-bottom: 1px solid var(--ink-1);
+  background-color: var(--paper-0);
+}
+.device__dots {
+  display: flex;
+  gap: 6px;
+}
+.device__dots > span {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--ink-1);
+  border-radius: 50%;
+}
+.device__dots > span:first-child {
+  background-color: var(--sun-400);
+}
+.device__spacer {
+  width: 36px; /* as wide as the dots, so the pill sits in the true center */
+}
+.device__url {
+  justify-self: center;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 2px 12px;
+  border-radius: 2px;
+  background-color: var(--paper-1);
+  box-shadow: inset 0 0 0 1px var(--paper-3);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Phone */
+.device--phone {
+  padding: 8px;
+  border-radius: 36px;
+  background-color: var(--ink-1);
+}
+.device--phone .device__screen {
+  border-radius: 28px;
+}
+/* Sized in screen units (cqi/cqh) so it stays above the captured site header at any width */
+.device__island {
+  position: absolute;
+  z-index: 1;
+  top: 1.2cqh;
+  left: 37cqi;
+  width: 26cqi;
+  height: 2.6cqh;
+  border-radius: 999px;
+  background-color: var(--ink-1);
+}
+
+/* scrollOnHover: the capture keeps its height and slides up by (its height − the screen's) */
+.device--scroll .device__screen :is(img, video) {
+  height: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .device__scroller {
+    transition: transform 700ms var(--ease-in-out);
+  }
+  .device--scroll:focus-within .device__scroller,
+  [data-device-hover]:focus-within .device--scroll .device__scroller {
+    transform: translateY(calc(-100% + 100cqh));
+    transition-duration: 3s;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .device--scroll:hover .device__scroller,
+  [data-device-hover]:hover .device--scroll .device__scroller {
+    transform: translateY(calc(-100% + 100cqh));
+    transition-duration: 3s;
+  }
+}

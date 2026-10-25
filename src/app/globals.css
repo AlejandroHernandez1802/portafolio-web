@@ -44,8 +44,8 @@
   --grid-line: rgb(39 66 184 / 0.1);
   --grid-size: 24px; /* hero stage */
   --grid-size-lg: 32px; /* page backdrop */
-  --header-h: 48px;
-  --header-bg: rgb(250 246 238 / 0.9);
+  --header-h: 56px; /* fixed bar with the nav (docs/14 ADR-020) */
+  --header-bg: rgb(250 246 238 / 0.92); /* design system: paper at 92 % */
   --header-blur: 8px;
 }
 
@@ -189,6 +189,18 @@
   font-stretch: var(--stretch-body);
 }
 
+/* A long amount ("COP 250.000–500.000", 7.3 em): one step down from text-price so it stays on
+   one line in a 3-column plan card or bento tile, where text-price would break it at the dash */
+@utility text-price-long {
+  font-size: 2rem;
+  line-height: var(--text-price--line-height);
+  letter-spacing: var(--text-price--letter-spacing);
+  font-weight: var(--text-price--font-weight);
+  @media (width >= 64rem) {
+    font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  }
+}
+
 /* Mono = data: section indexes, price labels, references, "Antes / Después". Always 500, the
    only weight loaded. A leading-* utility next to it wins over its line-height of 1. */
 @utility label-mono {
@@ -252,9 +264,10 @@ html[data-market='co'] [data-market-order='first'] {
   order: 1; /* WhatsApp before email in Colombia (docs/06 §5) */
 }
 
-/* Fixed 48 px header: anchors and focus are never hidden under it (WCAG 2.4.11) */
+/* Fixed 56 px header: anchors and focus are never hidden under it (WCAG 2.4.11). 72 px: the bar
+   plus 16 px of air, so a section's index callout never touches it */
 html {
-  scroll-padding-top: 64px;
+  scroll-padding-top: calc(var(--header-h) + 16px);
 }
 
 /* 2 px ink focus ring with a 2 px offset (docs/06 §3); sun yellow on the deep-navy and cobalt

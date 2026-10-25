@@ -1,0 +1,54 @@
+/* Figures strip (sections/FiguresStrip.tsx). Values size to their cell with container units, so
+   the widest one, the price in COP ("COP 3.000.000", 4.9 em at 62 % width), still fits a 2 × 2
+   cell on a 280 px phone, and the shorter figures go a size up. Final state first: the sun
+   marker is drawn from the first paint; phase B only adds its entrance (ADR-023), on
+   transform, from the transform-origin set here. */
+
+.figures__value {
+  container-type: inline-size; /* 100cqi = the cell's content width */
+  line-height: 1;
+}
+
+/* The number, and the amount inside <Price>: condensed Archivo 800 (stretch-display in the
+   JSX and in Price), sized like the step numerals but bound to the cell */
+.figures__num,
+.figures__value .text-price {
+  position: relative;
+  z-index: 0; /* its own stacking context: the marker paints behind this number only */
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  font-size: 2.5rem; /* browsers without container units */
+  font-size: min(4.5rem, 28cqi);
+}
+.figures__num {
+  display: inline-block; /* one box for the marker, on the unit's baseline */
+}
+/* COP amounts are the longest string: a step down so they never break mid-number */
+.figures__value [data-only-market='co'] .text-price {
+  font-size: 1.75rem;
+  font-size: min(4.5rem, 19.5cqi);
+}
+
+/* Sun marker under the number, like the H1's but a low band: it crosses the foot of the digits
+   and sits behind them (ink on sun, 12.2:1) */
+.figures__num::before,
+.figures__value .text-price::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset-inline: -0.04em;
+  bottom: 0.02em;
+  height: 0.3em;
+  background-color: var(--sun-400);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* The unit beside the number ("business days"), Archivo 700 at heading width (in the JSX);
+   it wraps under the number when the cell is tight */
+.figures__unit {
+  margin-inline-start: 0.12em;
+  line-height: 1.1;
+  font-size: 1.0625rem;
+  font-size: clamp(1.0625rem, 9cqi, 1.5rem);
+}

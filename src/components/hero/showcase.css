@@ -1,0 +1,118 @@
+/* Hero showcase (HeroShowcase.tsx). Final state first: nothing animates on load and no capture
+   starts hidden or faded (ADR-021). Below 1024 px only the phone shows, centered with the caption
+   under it. From 1024 px the browser fills the column and the phone overlaps its lower right
+   corner, hanging below and a little past it; the caption takes the free corner on the left.
+   The frames float on --shadow-2 (DeviceFrame) over a soft cobalt glow, and the main frame has
+   a dashed cobalt construction line offset behind it, the blueprint's trace of the drawing.
+   Static gradients and borders only: none of it can become an LCP candidate. */
+
+/* Row 1 holds the frames, which share it and so overlap; row 2 the caption. A phone that spans
+   both rows puts its overhang into the flexible row 2, so row 1 stays the browser's height */
+.showcase {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+}
+.showcase__frame {
+  position: relative;
+  grid-area: 1 / 1;
+}
+.showcase__caption {
+  grid-area: 2 / 1;
+  align-self: start;
+  margin-top: 28px;
+}
+.showcase__browser {
+  display: none; /* and never downloaded (ResponsiveImage hideBelow) */
+}
+.showcase__phone {
+  width: min(16rem, 66%);
+}
+.showcase[data-frames='browser'] {
+  display: none;
+}
+
+/* Cobalt glow: accent-500 fading out from the middle, wider than the frames so it shows */
+.showcase::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -10% -16px;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent-500) 30%, transparent),
+    color-mix(in srgb, var(--accent-500) 12%, transparent) 55%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Construction line: same shape as the frame, 14 px down and right, behind it */
+.showcase__frame::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  translate: 14px 14px;
+  border: 1px dashed color-mix(in srgb, var(--accent-500) 55%, transparent);
+  border-radius: 10px;
+  pointer-events: none;
+}
+.showcase__phone::before {
+  border-radius: 38px;
+}
+
+@media (min-width: 1024px) {
+  .showcase[data-frames] {
+    display: grid;
+    justify-items: start;
+  }
+  .showcase[data-frames='phone'] {
+    justify-items: center;
+  }
+  .showcase__browser {
+    display: block;
+    width: 100%;
+  }
+  .showcase::before {
+    inset: -14% -10%; /* the section clips overflow-x, so near the edge it just runs off */
+  }
+
+  /* Both frames: the phone is 30 % of the column, its top at ~1/3 of the browser's height,
+     3 % past its right edge (inside the container's 24 px gutter). Percent margins resolve
+     against the column width, so the composition scales with it. */
+  .showcase[data-frames='both'] .showcase__phone {
+    grid-row: 1 / 3;
+    justify-self: end;
+    align-self: start;
+    width: 30%;
+    margin-top: 22%;
+    margin-right: -3%;
+  }
+  .showcase[data-frames='both'] .showcase__phone::before {
+    display: none; /* one construction line: the browser's */
+  }
+  .showcase[data-frames='both'] .showcase__caption {
+    margin-top: 40px; /* clear of the construction line */
+  }
+  /* At this size the phone's 36 px radius would look toy-like: a real phone's ~14 % */
+  .showcase[data-frames='both'] .device--phone {
+    padding: 6px;
+    border-radius: 26px;
+  }
+  .showcase[data-frames='both'] .device--phone .device__screen {
+    border-radius: 20px;
+  }
+}
+
+/* Hover anywhere on it (the whole figure is a link): the frames lift off their trace */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .showcase .device {
+    transition: translate 200ms var(--ease-out);
+  }
+  .showcase:hover .device {
+    translate: 0 -4px;
+  }
+}

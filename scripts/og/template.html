@@ -1,0 +1,625 @@
+<!doctype html>
+<!--
+  Open Graph card template (R-09, docs/08 §3), rendered at 1200 × 630 by scripts/build-og.mjs.
+  It holds no copy: the script serves it with the tokens of src/app/globals.css (/tokens.css),
+  the site's own fonts and the captures, then calls renderOg() with the texts from
+  src/content. Two layouts: "home" (the hero: H1 with strike and marker, the live work in its
+  frames) and "case" (the case hero: outcome, frames straddling the navy results band, one
+  verified figure). Final state only: nothing here animates.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200" />
+    <link rel="stylesheet" href="/tokens.css" />
+    <style>
+      @font-face {
+        font-family: 'Archivo';
+        src: url('/fonts/archivo.woff2') format('woff2');
+        font-weight: 400 800;
+        font-stretch: 62% 100%;
+      }
+      @font-face {
+        font-family: 'IBM Plex Mono';
+        src: url('/fonts/plex-mono.woff2') format('woff2');
+        font-weight: 500;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--paper-1);
+      }
+      body {
+        color: var(--ink-1);
+        font-family: 'Archivo', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      [hidden] {
+        display: none !important;
+      }
+
+      .og {
+        position: relative;
+        isolation: isolate;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      /* Blueprint backdrop, as the hero's (src/components/ui/section.css), unmasked: the card
+         is one band */
+      .og::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background:
+          linear-gradient(var(--grid-line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+          radial-gradient(60% 70% at 6% 0%, var(--accent-100) 0%, transparent 70%),
+          radial-gradient(50% 70% at 98% 100%, var(--paper-2) 0%, transparent 70%);
+        background-size:
+          var(--grid-size-lg) var(--grid-size-lg),
+          var(--grid-size-lg) var(--grid-size-lg),
+          auto,
+          auto;
+        background-position: -1px -1px;
+      }
+
+      .mono {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        line-height: 1.35;
+      }
+
+      /* Top bar: the header's lockup (name 800 at 87.5 % width · tagline) and the domain,
+         over a hairline like the fixed bar's */
+      .og__top {
+        position: absolute;
+        top: 40px;
+        left: 64px;
+        right: 64px;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 32px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--paper-3);
+      }
+      .lockup {
+        font-size: 26px;
+        line-height: 1.1;
+        white-space: nowrap;
+      }
+      .lockup__name {
+        font-weight: 800;
+        font-stretch: var(--stretch-title);
+        letter-spacing: -0.01em;
+      }
+      .lockup__tagline {
+        color: var(--ink-2);
+        font-weight: 500;
+      }
+      .lockup__tagline::before {
+        content: ' · ';
+        white-space: pre;
+      }
+      .og__domain {
+        font-size: 15px;
+        color: var(--ink-2);
+        white-space: nowrap;
+      }
+
+      /* Kicker (case) and H1 stack, so a longer kicker pushes the H1 down instead of
+         overlapping it */
+      .og__copy {
+        position: absolute;
+        left: 64px;
+        top: 128px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* H1: condensed Archivo 800, the size set by renderOg to fit its box */
+      .og__h1 {
+        font-weight: 800;
+        font-stretch: var(--stretch-display);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+      }
+      .og__line {
+        display: block;
+        width: max-content; /* measured per line by fit() */
+        white-space: nowrap;
+      }
+
+      /* Strike and marker: src/components/hero/headline.css, final state */
+      .headline__strike {
+        color: var(--ink-3);
+      }
+      .headline__mark {
+        margin-inline: 0.06em;
+      }
+      .headline__word {
+        position: relative;
+        z-index: 0;
+      }
+      .headline__word::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+      }
+      .headline__strike > .headline__word::before {
+        z-index: 1; /* over the letters, as on the site */
+        inset-inline: -0.02em;
+        top: calc((100% - 0.075em) * 0.56);
+        height: 0.075em;
+        background: var(--ink-1);
+      }
+      .headline__mark > .headline__word::before {
+        inset-inline: -0.06em;
+        top: 0.14em;
+        height: 0.95em;
+        background: var(--sun-400);
+      }
+
+      /* Frames: src/components/media/device-frame.css and hero/showcase.css (glow and the
+         dashed construction line), at the card's scale */
+      .showcase {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .showcase::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: var(--glow-x);
+        top: var(--glow-y);
+        width: 760px;
+        height: 620px;
+        background: radial-gradient(
+          closest-side,
+          color-mix(in srgb, var(--accent-500) 26%, transparent),
+          color-mix(in srgb, var(--accent-500) 10%, transparent) 55%,
+          transparent
+        );
+      }
+      .frame {
+        position: absolute;
+      }
+      .frame--browser::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        translate: 14px 14px;
+        border: 1px dashed color-mix(in srgb, var(--accent-500) 55%, transparent);
+        border-radius: 10px;
+      }
+      .device {
+        position: relative;
+        isolation: isolate;
+        box-shadow: var(--shadow-2);
+      }
+      .device__screen {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: var(--aspect);
+        background: var(--paper-2);
+        container-type: size;
+      }
+      .device__screen img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+      }
+      .device--browser {
+        overflow: hidden;
+        border: 1px solid var(--ink-1);
+        border-radius: 8px;
+        background: var(--paper-0);
+        --aspect: 1440 / 900;
+      }
+      .device__bar {
+        display: grid;
+        grid-template-columns: 36px minmax(0, 1fr) 36px;
+        align-items: center;
+        gap: 12px;
+        height: 28px;
+        padding-inline: 12px;
+        border-bottom: 1px solid var(--ink-1);
+        background: var(--paper-0);
+      }
+      .device__dots {
+        display: flex;
+        gap: 6px;
+      }
+      .device__dots > span {
+        width: 8px;
+        height: 8px;
+        border: 1px solid var(--ink-1);
+        border-radius: 50%;
+      }
+      .device__dots > span:first-child {
+        background: var(--sun-400);
+      }
+      .device__url {
+        justify-self: center;
+        padding: 2px 12px;
+        border-radius: 2px;
+        background: var(--paper-1);
+        box-shadow: inset 0 0 0 1px var(--paper-3);
+        color: var(--ink-2);
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 16px;
+        white-space: nowrap;
+      }
+      .device--phone {
+        padding: 6px;
+        border-radius: 26px;
+        background: var(--ink-1);
+        --aspect: 390 / 844;
+      }
+      .device--phone .device__screen {
+        border-radius: 20px;
+      }
+      .device__island {
+        position: absolute;
+        z-index: 1;
+        top: 1.2cqh;
+        left: 37cqi;
+        width: 26cqi;
+        height: 2.6cqh;
+        border-radius: 999px;
+        background: var(--ink-1);
+      }
+
+      /* ── Home ─────────────────────────────────────────────────────────────── */
+      /* --frames-top: set by renderOg below the H1's second line when it reaches the frames */
+      [data-card='home'] {
+        --frames-top: 304px;
+      }
+      [data-card='home'] .showcase {
+        --glow-x: 480px;
+        --glow-y: calc(var(--frames-top) - 154px);
+      }
+      [data-card='home'] .frame--browser {
+        left: 604px;
+        top: var(--frames-top);
+        width: 540px;
+      }
+      [data-card='home'] .frame--phone {
+        left: 1040px;
+        top: calc(var(--frames-top) + 56px);
+        width: 132px;
+      }
+      /* One cell of the hero's figures strip (hero/figures.css): number with the low sun
+         marker, its unit on the baseline, the mono label under an ink rule */
+      [data-card='home'] .og__figure {
+        position: absolute;
+        left: 64px;
+        bottom: 52px;
+        width: 480px;
+        padding-top: 18px;
+        border-top: 1px solid var(--ink-1);
+      }
+      [data-card='home'] .og__figure-value {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3em;
+        font-size: 30px;
+        font-weight: 700;
+        font-stretch: var(--stretch-heading);
+        line-height: 1;
+      }
+      [data-card='home'] .og__figure-num {
+        position: relative;
+        z-index: 0;
+        font-size: 84px;
+        font-weight: 800;
+        font-stretch: var(--stretch-display);
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+      }
+      [data-card='home'] .og__figure-num::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset-inline: -0.04em;
+        bottom: 0.02em;
+        height: 0.3em;
+        background: var(--sun-400);
+      }
+      [data-card='home'] .og__figure-label {
+        margin-top: 14px;
+        color: var(--ink-2);
+        font-size: 15px;
+      }
+
+      /* ── Case ─────────────────────────────────────────────────────────────── */
+      /* The deep band under the frames: the results band of the case page, which the hero
+         capture straddles (src/components/case/case.css) */
+      [data-card='case'] .og__band {
+        position: absolute;
+        inset: 444px 0 0;
+        z-index: -1;
+        background: var(--deep);
+      }
+      /* Home: the audience question over the H1, as the site's .headline__audience */
+      [data-card='home'] .og__kicker {
+        max-width: 1072px;
+        color: var(--ink-1);
+        font-family: inherit;
+        font-size: 40px;
+        font-weight: 800;
+        font-stretch: var(--stretch-heading);
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        text-transform: none;
+      }
+      [data-card='case'] .og__kicker {
+        max-width: 552px; /* clear of the browser frame */
+        color: var(--accent-700);
+        font-size: 15px;
+      }
+      [data-card='case'] .showcase {
+        --glow-x: 520px;
+        --glow-y: 60px;
+      }
+      [data-card='case'] .frame--browser {
+        left: 640px;
+        top: 136px;
+        width: 504px;
+      }
+      /* The phone stands in front of the form's side panel (MRB's own phone line), so the
+         form and its urgency choice carry the frame */
+      [data-card='case'] .frame--phone {
+        left: 946px;
+        top: 230px;
+        width: 150px;
+      }
+      [data-card='case'] .og__figure {
+        position: absolute;
+        left: 64px;
+        top: 476px;
+        display: flex;
+        align-items: flex-start;
+        gap: 24px;
+        color: var(--on-ink-1);
+      }
+      [data-card='case'] .og__figure-value {
+        font-size: 104px;
+        font-weight: 800;
+        font-stretch: var(--stretch-display);
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+        font-variant-numeric: tabular-nums;
+      }
+      /* The results band's sun bar under the number (CaseResults) */
+      [data-card='case'] .og__figure-value::after {
+        content: '';
+        display: block;
+        width: 56px;
+        height: 6px;
+        margin-top: 14px;
+        background: var(--sun-400);
+      }
+      [data-card='case'] .og__figure-label {
+        max-width: 26ch;
+        padding-top: 6px;
+        color: var(--on-ink-2);
+        font-size: 15px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="og" data-card="home">
+      <div class="og__band" hidden></div>
+      <header class="og__top">
+        <p class="lockup">
+          <span class="lockup__name" data-slot="name"></span
+          ><span class="lockup__tagline" data-slot="tagline"></span>
+        </p>
+        <p class="og__domain mono" data-slot="domain"></p>
+      </header>
+      <div class="og__copy">
+        <p class="og__kicker mono" data-slot="kicker" hidden></p>
+        <h1 class="og__h1" data-slot="headline"></h1>
+      </div>
+      <div class="og__figure" hidden>
+        <p class="og__figure-value" data-slot="figureValue"></p>
+        <p class="og__figure-label mono" data-slot="figureLabel"></p>
+      </div>
+      <div class="showcase">
+        <div class="frame frame--browser" hidden>
+          <div class="device device--browser">
+            <div class="device__bar">
+              <span class="device__dots"><span></span><span></span><span></span></span>
+              <span class="device__url" data-slot="url"></span>
+              <span></span>
+            </div>
+            <div class="device__screen"><img alt="" data-slot="browser" /></div>
+          </div>
+        </div>
+        <div class="frame frame--phone" hidden>
+          <div class="device device--phone">
+            <div class="device__screen">
+              <span class="device__island"></span>
+              <img alt="" data-slot="phone" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Fills the card and resolves once fonts and captures are painted. `data` comes from
+      // scripts/build-og.mjs: { card, lang, name, tagline, domain, headline, kicker?,
+      // figure?: { value, label }, browser?: { src, url }, phone?: { src } }.
+      const QUOTED = /(“[^”]*”)/ // as HeroHeadline: first phrase struck, second marked
+
+      const $ = (sel) => document.querySelector(sel)
+      const slot = (name) => $(`[data-slot="${name}"]`)
+
+      /** Words of a phrase as spans with their trailing space (each carries a decoration). */
+      function phrase(text, kind) {
+        const span = document.createElement('span')
+        span.className = `headline__${kind}`
+        for (const word of text.match(/\S+\s*/g) ?? []) {
+          const w = document.createElement('span')
+          w.className = 'headline__word'
+          w.textContent = word
+          span.append(w)
+        }
+        return span
+      }
+
+      /**
+       * The H1. With two quoted phrases (the home headline) each half is one line, broken
+       * after the struck phrase: "From “call for pricing”" / "to “add to cart”.". Anything
+       * else is plain text that wraps.
+       */
+      function headline(h1, text) {
+        const parts = text.split(QUOTED)
+        if (parts.length < 5) {
+          h1.textContent = text
+          return
+        }
+        const lines = [parts.slice(0, 2), parts.slice(2)]
+        lines.forEach((chunk, n) => {
+          const line = document.createElement('span')
+          line.className = 'og__line'
+          chunk.forEach((part, i) => {
+            const index = n * 2 + i
+            if (index === 1) line.append(phrase(part, 'strike'))
+            else if (index === 3) line.append(phrase(part, 'mark'))
+            else line.append(part.replace(/^\s+/, ''))
+          })
+          h1.append(line)
+        })
+      }
+
+      /** "5 business days" → the number set big and its unit beside it (FiguresStrip). */
+      function figureValue(el, text) {
+        const match = /^(\d[\d.,]*)\s*(.*)$/.exec(text)
+        if (!match) {
+          el.textContent = text
+          return
+        }
+        const num = document.createElement('span')
+        num.className = 'og__figure-num'
+        num.textContent = match[1]
+        el.append(num)
+        if (match[2]) el.append(` ${match[2]}`)
+      }
+
+      /**
+       * Largest font size (px, step 2) at which the H1 fits: with forced lines, each line
+       * within its own width (`widths`, the last one repeats); otherwise within `width` and
+       * `lines` wrapped lines.
+       */
+      function fit(h1, { max, min, width, lines, widths }) {
+        h1.style.width = `${width}px`
+        const rows = [...h1.querySelectorAll('.og__line')]
+        for (let size = max; size >= min; size -= 2) {
+          h1.style.fontSize = `${size}px`
+          const fits = rows.length
+            ? rows.every(
+                (row, i) =>
+                  row.getBoundingClientRect().width <= widths[Math.min(i, widths.length - 1)],
+              )
+            : h1.scrollWidth <= width + 0.5 &&
+              h1.getBoundingClientRect().height <= size * 0.95 * lines + 1
+          if (fits) return size
+        }
+        return min
+      }
+
+      const loaded = (img) =>
+        img.complete
+          ? img.decode().catch(() => {})
+          : new Promise((resolve, reject) => {
+              img.addEventListener('load', () => img.decode().then(resolve, resolve), {
+                once: true,
+              })
+              img.addEventListener('error', () => reject(new Error(`No image: ${img.src}`)), {
+                once: true,
+              })
+            })
+
+      window.renderOg = async (data) => {
+        document.documentElement.lang = data.lang
+        const og = $('.og')
+        og.dataset.card = data.card
+        for (const key of ['name', 'tagline', 'domain', 'kicker']) {
+          const el = slot(key)
+          el.textContent = data[key] ?? ''
+          if (data[key]) el.hidden = false
+        }
+        if (data.figure) {
+          figureValue(slot('figureValue'), data.figure.value)
+          slot('figureLabel').textContent = data.figure.label
+          $('.og__figure').hidden = false
+        }
+        $('.og__band').hidden = data.card !== 'case'
+
+        const images = []
+        if (data.browser) {
+          slot('url').textContent = data.browser.url
+          slot('browser').src = data.browser.src
+          $('.frame--browser').hidden = false
+          images.push(loaded(slot('browser')))
+        }
+        if (data.phone) {
+          slot('phone').src = data.phone.src
+          $('.frame--phone').hidden = false
+          images.push(loaded(slot('phone')))
+        }
+
+        await Promise.all([
+          document.fonts.load('800 100px Archivo'),
+          document.fonts.load('500 15px "IBM Plex Mono"'),
+        ])
+        const h1 = slot('headline')
+        headline(h1, data.headline)
+        const framed = Boolean(data.browser || data.phone)
+        const size =
+          data.card === 'home'
+            ? fit(h1, { max: 112, min: 64, width: 1072, lines: 3, widths: [800, 780] })
+            : fit(h1, { max: 84, min: 52, width: framed ? 540 : 1072, lines: 3 })
+        // Home: a second line that reaches the frames pushes them down, clear of its
+        // descenders, so the H1 keeps its size in both languages (the frames bleed off anyway)
+        if (data.card === 'home' && framed) {
+          const rows = [...h1.querySelectorAll('.og__line')].map((r) => r.getBoundingClientRect())
+          const last = rows.at(-1) ?? h1.getBoundingClientRect()
+          const reaches = last.right + 28 > $('.frame--browser').offsetLeft
+          const top = reaches ? Math.ceil(last.bottom + size * 0.22 + 20) : 304
+          og.style.setProperty('--frames-top', `${Math.max(304, top)}px`)
+        }
+
+        await Promise.all(images)
+        await document.fonts.ready
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
+        return { size, h1: h1.getBoundingClientRect().toJSON() }
+      }
+    </script>
+  </body>
+</html>
