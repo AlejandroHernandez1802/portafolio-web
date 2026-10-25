@@ -5,6 +5,7 @@ import { Container } from '@/components/ui/Container'
 import { PageShell } from '@/components/layout/PageShell'
 import { pad2 } from '@/lib/format'
 import { getContent } from '@/lib/i18n'
+import { postalAddress } from '@/lib/links'
 import { homePath, privacyAlternates, privacyPath } from '@/lib/routes'
 
 // Privacy policy per language (docs/09 §6.5). The effective date is site.legal.privacyVersion.
@@ -18,15 +19,18 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-/** Fills {name}, {email}, {address} and {whatsapp} from site.ts. */
+/** Fills {name}, {email}, {address} and {whatsapp} from site.ts; the sentence with the
+ * address is dropped until there is one (F0-07). */
 function fill(text: string): string {
+  const address = postalAddress()
+  const body = address ? text : text.replace(/\s*[^.]*\{address\}\./, '')
   const values: Record<string, string> = {
     name: site.name,
     email: site.contact.email,
-    address: site.legal.postalAddress,
+    address: address ?? '',
     whatsapp: /^\d{10,15}$/.test(site.contact.whatsapp) ? `+${site.contact.whatsapp}` : '—',
   }
-  return text.replace(/\{(\w+)\}/g, (match, key: string) => values[key] ?? match)
+  return body.replace(/\{(\w+)\}/g, (match, key: string) => values[key] ?? match)
 }
 
 export default async function Privacy() {

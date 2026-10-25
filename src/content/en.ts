@@ -20,7 +20,7 @@ export const en = {
     skipToContent: 'Skip to content',
     label: 'Main',
     links: { work: 'Work', services: 'Services', about: 'About' },
-    // REVIEW(R-25): the dropdowns of the bar (docs/14 ADR-024)
+    // The dropdowns of the bar (docs/14 ADR-024)
     groups: {
       work: { all: 'All work' },
       services: { all: 'All services, with examples' },
@@ -31,7 +31,7 @@ export const en = {
           body: 'Free prototype, build in phases, launch and monthly plan.',
         },
         pricing: { title: 'Pricing', body: 'Starting prices in USD or COP.' },
-        // REVIEW(R-28): in the place of pricing while the prices are hidden (ADR-025)
+        // In the place of pricing while the prices are hidden (ADR-025)
         linkedin: { title: 'LinkedIn', body: 'My background and experience, on my profile.' },
       },
     },
@@ -72,14 +72,14 @@ export const en = {
         {
           kind: 'price',
           label: 'for a store or catalog with quote system',
-          // REVIEW(R-28): shown while the prices are hidden (ADR-025)
+          // Shown while the prices are hidden (ADR-025)
           fallback: { value: '100%', label: 'of the domain, hosting and accounts in your name' },
         },
       ],
     },
     showcase: { label: 'Live work · malonebelt.com' },
   },
-  // REVIEW(R-26): the home summary of the work page (ADR-025)
+  // The home summary of the work page (ADR-025)
   work: {
     title: 'Recent work',
     lead: 'I design and build product catalogs, quote systems and online stores for businesses that sell products, from the brand and the interface to the site live on your domain. Every project has its full case.',
@@ -103,10 +103,10 @@ export const en = {
   },
   services: {
     title: 'What your store includes',
-    // REVIEW(R-27): design joins the services (ADR-025)
+    // Design joins the services (ADR-025)
     lead: 'What your business needs to be found, chosen and asked for an order or a quote, designed and built around your catalog.',
     tiles: {
-      // REVIEW(R-27): for any catalog, not only industrial parts
+      // For any catalog, not only industrial parts
       catalog: {
         outcome: 'Get chosen',
         title: 'Catalog with search and filters',
@@ -118,7 +118,6 @@ export const en = {
         title: 'Quote request or cart',
         body: 'A quote form, a cart or WhatsApp: buyers act without waiting for a callback, and every request reaches your inbox.',
       },
-      // REVIEW(R-27)
       design: {
         outcome: 'Be remembered',
         title: 'Design for your site and your brand',
@@ -179,7 +178,7 @@ export const en = {
       orderReceived: 'Order received · Delivery Thursday',
     },
   },
-  // REVIEW(R-26): the work page (ADR-025)
+  // The work page (ADR-025)
   workPage: {
     meta: {
       title: 'Work: online store and catalog case studies | Alejandro Hernández',
@@ -191,11 +190,11 @@ export const en = {
     // REVIEW(R-08)
     lead: {
       one: 'One project, shown in full: the catalog and quote system I built for a U.S. industrial belt supplier, live since August 2026.',
-      // REVIEW(R-25): shown once a demo store joins cases.ts
+      // Shown once a demo store joins cases.ts
       many: 'Client work and demo stores I build to show what’s possible, each one with its full case.',
     },
   },
-  // REVIEW(R-24): the whole services page; REVIEW(R-27): design and the global catalog
+  // The services page, with design and the global catalog (ADR-024, ADR-025)
   servicesPage: {
     meta: {
       title: 'Services: design and development of stores and catalogs | Alejandro Hernández',
@@ -317,7 +316,7 @@ export const en = {
         ],
         built: ['Product catalog', 'OEM part-number search', '3 languages', 'Quote requests'],
       },
-      // REVIEW(R-24): captions of the MRB examples on the services page
+      // Captions of the MRB examples on the services page
       examples: {
         catalog:
           'Search by OEM part number on malonebelt.com: the buyer types the number on the old belt and gets the belt that fits.',
@@ -581,7 +580,7 @@ export const en = {
     ],
     photo: { alt: 'Alejandro Hernández' },
   },
-  // REVIEW(R-25): the home summary and the About page
+  // The home summary and the About page
   aboutTeaser: {
     lead: 'I’m Alejandro, a software engineer and project lead in Colombia. I design and build your store myself, and I’m the person you talk to from the first call to launch.',
     stepsLabel: 'How I work',
@@ -589,7 +588,7 @@ export const en = {
     cta: 'More about me and how I work',
     pricingLink: 'See all prices',
   },
-  // REVIEW(R-28): in the place of the prices while they are hidden (ADR-025)
+  // In the place of the prices while they are hidden (ADR-025)
   linkedin: {
     title: 'Get to know me',
     body: 'My background as a software engineer and project lead is on LinkedIn, so you know who you’ll work with before the first call.',
@@ -597,7 +596,7 @@ export const en = {
     newTab: '(opens in a new tab)',
   },
   aboutPage: {
-    // REVIEW(R-28): without the prices; mention them again when site.features.pricing returns
+    // Without the prices; mention them again when site.features.pricing returns
     meta: {
       title: 'About me and how I work | Alejandro Hernández',
       description:

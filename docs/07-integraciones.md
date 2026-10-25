@@ -35,6 +35,7 @@ La v1 se integra con tres servicios, todos mediante enlaces reales que funcionan
   - **Consentimiento obligatorio** (casilla), con enlace a la política (Ley 1581, ver [09 §6](./09-seguridad-y-privacidad.md#6-privacidad-y-cumplimiento)). Ejemplo en ES: *"Autorizo el tratamiento de mis datos personales según la política de privacidad: alejandrodeveloper.com/es/privacy"*.
 - **Idioma:**
   - **Preferido:** dos tipos de evento, `15min` (EN) y `15min-es` (ES), cada uno con sus preguntas en su idioma.
+  - **Configurado el 25-oct:** dos eventos con enlace en la raíz de cal.com, `sesion-01-1b0p` (EN) y `sesion-02-rojm` (ES), en `site.contact.calLink` y en `/call` y `/llamada` del Worker.
   - **Si no se puede:** la página de precios de Cal.com dice que el plan Free incluye tipos de evento ilimitados, pero un post de Cal.com de 2025 habla de "un tipo de evento activo". **Confírmalo en la app.** Si el límite es uno, se usa un solo evento con etiquetas bilingües.
 - **Recordatorios:** el plan Free envía el recordatorio por defecto, que no se puede personalizar ([Cal.com](https://cal.com/help/workflows/workflowsoverview)).
 
@@ -90,7 +91,7 @@ Cada CTA de agenda es un `<a>` real, renderizado en el servidor:
 
 - **Enlace:** `https://wa.me/57XXXXXXXXXX?text=<mensaje codificado>`, con el número completo sin "+", espacios ni guiones ([WhatsApp](https://faq.whatsapp.com/5913398998672934/)). Mensaje por idioma en `closing.whatsapp.prefilledMessage`.
 - **Atributos:** `target="_blank" rel="noopener"`, `data-track="whatsapp_click"` y `data-track-location`.
-- **App:** se recomienda **WhatsApp Business**, gratis, con perfil de empresa, mensaje de bienvenida y respuestas rápidas.
+- **App:** se recomienda **WhatsApp Business**, gratis, con perfil de empresa, mensaje de bienvenida y respuestas rápidas. Desde el 25-oct el sitio usa el número personal; el enlace `wa.me` es el mismo si después pasa a Business.
 - **Orden y visibilidad por mercado:** ver [06 §5](./06-secciones-y-ui.md#5-whatsapp-y-contacto-según-mercado).
 
 ## 4. Correo (`mailto`)

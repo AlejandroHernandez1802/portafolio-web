@@ -12,6 +12,12 @@ export function whatsappHref(message: string): string | null {
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`
 }
 
+/** The postal address, or null while F0-07 keeps the site.ts placeholder. */
+export function postalAddress(): string | null {
+  const address = site.legal.postalAddress.trim()
+  return address && address !== 'Por definir' ? address : null
+}
+
 export function mailtoHref(subject: string): string {
   return `mailto:${site.contact.email}?subject=${encodeURIComponent(subject)}`
 }

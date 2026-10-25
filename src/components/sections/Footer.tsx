@@ -3,6 +3,7 @@ import { featuredCases } from '@/content/cases'
 import type { Locale, SiteContent } from '@/content/types'
 import { trackAttrs } from '@/lib/analytics'
 import { pad2 } from '@/lib/format'
+import { postalAddress } from '@/lib/links'
 import { casePath, homePath, privacyPath, type Alternates } from '@/lib/routes'
 import { navGroups } from '@/components/layout/nav-items'
 import { Container } from '@/components/ui/Container'
@@ -16,12 +17,6 @@ import { Icon } from '@/components/ui/Icon'
 // and untracked: a click on its own case link is not a case_open.
 const LINK =
   'inline-flex min-h-11 items-center underline decoration-current hover:text-on-ink-1 hover:decoration-sun-400 motion-safe:transition-colors motion-safe:duration-120'
-
-/** The address once F0-07 replaces the site.ts placeholder; skipped until then. */
-function postalAddress(): string | null {
-  const address = site.legal.postalAddress.trim()
-  return address && address !== 'Por definir' ? address : null
-}
 
 export function Footer({
   lang,

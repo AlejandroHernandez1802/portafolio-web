@@ -16,7 +16,7 @@ export function generateStaticParams() {
 // Title, description and alternates live in each page's generateMetadata (docs/08 §2)
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  // Pre-launch: noindex on every page until F1-10 sets site.indexable = true
+  // noindex on every page whenever site.indexable is false (pre-launch until F1-10)
   robots: site.indexable ? undefined : { index: false, follow: false },
 }
 

@@ -2,8 +2,8 @@
 // served straight from the static assets in out/. See docs/04 §2 and docs/14 ADR-004.
 
 const SHORT_LINKS: Record<string, string> = {
-  '/call': 'https://cal.com/tu-usuario/15min',
-  '/llamada': 'https://cal.com/tu-usuario/15min-es', // or 15min if the Free plan allows a single event (docs/07 §2.1)
+  '/call': 'https://cal.com/sesion-01-1b0p', // same events as site.contact.calLink (docs/07 §2.1)
+  '/llamada': 'https://cal.com/sesion-02-rojm',
 }
 
 export default {

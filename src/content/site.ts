@@ -5,7 +5,7 @@ import type { HeadlineVariant } from './types'
 export const site = {
   url: 'https://alejandrodeveloper.com',
   name: 'Alejandro Hernández',
-  indexable: false, // pre-launch: noindex on the whole site; true at launch (F1-10)
+  indexable: true, // launched (F1-10); false puts noindex on the whole site again
   features: {
     demoStore: false, // v2: shows #demo and switches the secondary CTA and the stage
     contactForm: false, // v1.1: shows the form in the closing section
@@ -18,14 +18,14 @@ export const site = {
   media: { baseUrl: 'https://media.alejandrodeveloper.com' }, // phase B: video clips on R2 (ADR-022)
   contact: {
     email: 'hola@alejandrodeveloper.com',
-    whatsapp: '57XXXXXXXXXX', // TODO(F0-13): no "+" or spaces (wa.me format)
-    calLink: { en: 'tu-usuario/15min', es: 'tu-usuario/15min-es' }, // TODO(F0-09): one event per language (docs/07 §2.1)
+    whatsapp: '573103457876', // wa.me format: no "+" or spaces; a personal account for now (F0-13)
+    calLink: { en: 'sesion-01-1b0p', es: 'sesion-02-rojm' }, // one 15-min event per language (docs/07 §2.1)
     linkedin: 'https://www.linkedin.com/in/alejandro-hernandez-quintero/', // also sameAs in JSON-LD (docs/08 §4)
   },
   demoUrl: 'https://demo.alejandrodeveloper.com', // v2
   analytics: { umamiWebsiteId: '4785d172-91a3-47a9-b8d6-cdf8a082806d' }, // public ID (docs/12 §4)
   legal: {
-    postalAddress: 'Por definir', // TODO(F0-07): CAN-SPAM; same address as the emails
+    postalAddress: 'Por definir', // TODO(F0-07): CAN-SPAM; same address as the emails. Hidden until set
     privacyVersion: '2026-10-17', // effective date of the privacy policy
   },
 }
