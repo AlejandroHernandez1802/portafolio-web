@@ -19,7 +19,11 @@ export const site = {
   contact: {
     email: 'hola@alejandrodeveloper.com',
     whatsapp: '573103457876', // wa.me format: no "+" or spaces; a personal account for now (F0-13)
-    calLink: { en: 'sesion-01-1b0p', es: 'sesion-02-rojm' }, // one 15-min event per language (docs/07 §2.1)
+    calLink: {
+      // One 15-min booking link per language (docs/07 §2.1); Cal.com calls them Links now
+      en: 'alejandro-hernandez/your-website-project-15-min',
+      es: 'alejandro-hernandez/tu-proyecto-web-15-min',
+    },
     linkedin: 'https://www.linkedin.com/in/alejandro-hernandez-quintero/', // also sameAs in JSON-LD (docs/08 §4)
   },
   demoUrl: 'https://demo.alejandrodeveloper.com', // v2

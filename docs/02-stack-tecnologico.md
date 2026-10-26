@@ -30,7 +30,7 @@ Versiones verificadas el 3 de octubre de 2026; hosting y analítica, el 4 de oct
 | Correo transaccional (v1.1) | [Resend](https://resend.com/pricing) + SDK `resend` | Actual | Envío del formulario al buzón, desde el Worker | Plan gratuito suficiente; subdominio aislado ([ADR-010](./14-decisiones.md#adr-010)). Sus reglas prohíben la prospección en frío: solo se usa para el formulario | US$0 |
 | Validación (v1.1) | [Zod](https://zod.dev/v4/versioning) | 4.6 (`import * as z from "zod"`) | Validar el cuerpo de `/api/contact` | Solo en el Worker: no pesa en el navegador | — |
 | JSON-LD | [`schema-dts`](https://www.npmjs.com/package/schema-dts) (dev) | Actual | Tipos para Person, ProfessionalService, Article y BreadcrumbList | Lo recomienda la [guía de Next](https://nextjs.org/docs/app/guides/json-ld) | — |
-| Medios (local) | [sharp](https://sharp.pixelplumbing.com/) (dependencia de desarrollo) | **0.35.5** | Codifica las capturas a AVIF y WebP en varios anchos (`media:images`) y baja las imágenes OG a PNG con paleta (`media:og`) | La misma versión que ya trae Next. Solo la usan los scripts de `scripts/`, que no corren en Workers Builds ([ADR-021](./14-decisiones.md#adr-021)) | — |
+| Medios (local) | [sharp](https://sharp.pixelplumbing.com/) (dependencia de desarrollo) | **0.35.5** | Codifica las capturas a AVIF y WebP en varios anchos (`media:images`) baja las imágenes OG a PNG con paleta (`media:og`) y dibuja el favicon ICO y el ícono de iOS (`media:icons`) | La misma versión que ya trae Next. Solo la usan los scripts de `scripts/`, que no corren en Workers Builds ([ADR-021](./14-decisiones.md#adr-021)) | — |
 | Capturas (local) | Chrome instalado + CDP propio (`scripts/lib/cdp.mjs`) | Node 24 | Capturas del sitio de MRB (`media:capture`) e imágenes OG, en Chrome headless | El `WebSocket` y el `fetch` de Node 24 alcanzan para abrir una página, emular un dispositivo y tomar la captura. Sin Puppeteer ni Playwright. El folleto en PDF se renderiza con un script de Swift (`scripts/lib/render-pdf.swift`, solo macOS), porque sharp no lee PDF | — |
 | Video (fase B) | ffmpeg (Homebrew, fuera del repositorio) + [Cloudflare R2](https://developers.cloudflare.com/r2/pricing/) | — | Clips en AV1 y H.264 sin audio, servidos desde `media.alejandrodeveloper.com` | R2 responde a peticiones por rango, que Safari necesita, y su plan gratuito cubre el volumen ([ADR-022](./14-decisiones.md#adr-022)) | US$0 (con tarjeta registrada) |
 | Paquetes | [pnpm](https://pnpm.io/installation) | 12 | Instalación y lockfile | Rápido y estricto. La imagen de Workers Builds trae pnpm 10.11.1, así que se fija la versión con la variable `PNPM_VERSION` ([imagen de build](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/)) | — |
@@ -89,7 +89,8 @@ En `package.json` van `"engines": { "node": "24.x" }`, `"packageManager": "pnpm@
     "cf-typegen": "wrangler types worker/worker-configuration.d.ts",
     "media:capture": "node scripts/capture-screens.mjs",
     "media:images": "node scripts/build-images.mjs",
-    "media:og": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-og.mjs"
+    "media:og": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-og.mjs",
+    "media:icons": "node scripts/build-icons.mjs"
   }
 }
 ```
@@ -103,6 +104,7 @@ Los tres scripts `media:*` se agregaron en la fase A (R-04 y R-09). Son locales:
 - **`pnpm media:capture`** toma las capturas del sitio en vivo de MRB y renderiza su logo y su folleto en `media-raw/mrb/` (en `.gitignore`). Necesita red, Chrome y `swift` (macOS), y tarda ~40 s. `--only=nombre,…` repite algunas; `CHROME_PATH`, `CDP_PROFILE_ROOT` y `MRB_PROJECT_DIR` cambian las rutas.
 - **`pnpm media:images`** codifica `media-raw/` a AVIF y WebP en `src/media/` y reescribe `src/media/manifest.generated.ts` (~3,5 min). Si falta una fuente cruda, conserva los archivos ya commiteados, así que funciona en un clon nuevo.
 - **`pnpm media:og`** genera las 4 imágenes OG en `public/og/` (~11 s). Hay que repetirlo cuando cambian el titular, el título del caso, una cifra o una captura.
+- **`pnpm media:icons`** genera `favicon.ico` y `apple-icon.png` en `src/app/` a partir de `icon.svg` (~1 s) ([06 §3.6](./06-secciones-y-ui.md#36-íconos-y-marca)).
 - **`pnpm-workspace.yaml`:** pnpm 12 solo ejecuta los scripts de instalación aprobados. Se permiten los de `esbuild` y `workerd` (los usa Wrangler). Los de `sharp` y `unrs-resolver` siguen bloqueados: sharp es dependencia de desarrollo de los scripts de medios, y sus binarios precompilados funcionan sin script de instalación.
 
 ## 4. Política de versiones

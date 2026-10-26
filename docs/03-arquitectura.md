@@ -206,6 +206,7 @@ Code/
 │   ├── build-images.mjs           # pnpm media:images → src/media/ + manifest.generated.ts (sharp)
 │   ├── media.config.mjs           # fuentes, anchos, recortes y presupuestos de cada imagen
 │   ├── build-og.mjs               # pnpm media:og → public/og/
+│   ├── build-icons.mjs            # pnpm media:icons → src/app/favicon.ico y apple-icon.png desde icon.svg
 │   └── og/                        # template.html y la fuente mono de las imágenes OG (con su OFL)
 ├── media-raw/  media-out/         # capturas crudas y video codificado (fase B); en .gitignore
 ├── src/
@@ -223,7 +224,9 @@ Code/
 │   │   ├── globals.css            # Tailwind + tokens del sistema visual (@theme), utilidades stretch-*, label-mono y text-price-long, reglas de mercado y foco
 │   │   ├── sitemap.ts             # 12 URLs con hreflang
 │   │   ├── robots.ts
-│   │   └── icon.svg
+│   │   ├── icon.svg               # favicon "AH" (docs/06 §3.6); favicon.ico y apple-icon.png salen de aquí
+│   │   ├── favicon.ico
+│   │   └── apple-icon.png
 │   ├── components/
 │   │   ├── layout/                # PageShell (skip link, Header, <main>, Footer), Nav + nav.css (barra y menú Popover), MenuCloser (cliente)
 │   │   ├── sections/              # la home: Header, Hero, FiguresStrip, Work, Services, Process, Pricing, About, Faq, Closing, Footer

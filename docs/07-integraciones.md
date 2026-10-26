@@ -35,7 +35,7 @@ La v1 se integra con tres servicios, todos mediante enlaces reales que funcionan
   - **Consentimiento obligatorio** (casilla), con enlace a la política (Ley 1581, ver [09 §6](./09-seguridad-y-privacidad.md#6-privacidad-y-cumplimiento)). Ejemplo en ES: *"Autorizo el tratamiento de mis datos personales según la política de privacidad: alejandrodeveloper.com/es/privacy"*.
 - **Idioma:**
   - **Preferido:** dos tipos de evento, `15min` (EN) y `15min-es` (ES), cada uno con sus preguntas en su idioma.
-  - **Configurado el 25-oct:** dos eventos con enlace en la raíz de cal.com, `sesion-01-1b0p` (EN) y `sesion-02-rojm` (ES), en `site.contact.calLink` y en `/call` y `/llamada` del Worker.
+  - **Configurado el 26-oct:** Cal.com llama ahora **Links** a los tipos de evento; **Events** son reuniones de fecha fija y no sirven para agendar. Los dos enlaces son `alejandro-hernandez/your-website-project-15-min` (EN) y `alejandro-hernandez/tu-proyecto-web-15-min` (ES), con Google Meet y 15 min, en `site.contact.calLink` y en `/call` y `/llamada` del Worker.
   - **Si no se puede:** la página de precios de Cal.com dice que el plan Free incluye tipos de evento ilimitados, pero un post de Cal.com de 2025 habla de "un tipo de evento activo". **Confírmalo en la app.** Si el límite es uno, se usa un solo evento con etiquetas bilingües.
 - **Recordatorios:** el plan Free envía el recordatorio por defecto, que no se puede personalizar ([Cal.com](https://cal.com/help/workflows/workflowsoverview)).
 

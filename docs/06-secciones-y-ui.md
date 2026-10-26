@@ -404,6 +404,9 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
   - Nada de fuentes de íconos, PNG ni emoji.
   - Las flechas son siempre el ícono, nunca el carácter "→".
 - **Marca:** sin logo. Es el nombre en Archivo 800 al 87,5 % de ancho, con el descriptor en `ink-2`. Por debajo de 330 px solo se ve "Alejandro", para no cortarlo a mitad de palabra.
+- **Favicon (26-oct):** monograma "AH" en `paper-1` sobre un cuadrado `ink-1` con radio de 4 px, y una barra `sun-400` debajo, como el marcador del titular. Las letras están dibujadas a mano en una cuadrícula de 32 px, no con la fuente, para que se lean a 16 px.
+  - **Fuente:** `src/app/icon.svg`, que Next sirve como favicon SVG.
+  - **Derivados:** `pnpm media:icons` genera `favicon.ico` (16, 32 y 48 px, para navegadores sin SVG y para los resultados de Google, que piden múltiplos de 48 px) y `apple-icon.png` (180 px, a sangre, porque iOS redondea las esquinas). Hay que repetirlo cuando cambia `icon.svg`.
 
 ### 3.7 Componentes base
 
