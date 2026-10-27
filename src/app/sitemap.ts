@@ -12,7 +12,8 @@ import {
 export const dynamic = 'force-static' // required with output: 'export' (docs/08 §5)
 
 // One entry per page and language, each listing both versions as hreflang alternates: home,
-// work, services, about, privacy and every case = 12 URLs with MRB alone (docs/08 §5). Never /p/*.
+// work, services, about, privacy and every case = 16 URLs with MRB and the 2 demos (docs/08 §5).
+// Never /p/*.
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages: Array<{ paths: Alternates; lastModified: Date }> = [
     { paths: homeAlternates, lastModified: new Date() },

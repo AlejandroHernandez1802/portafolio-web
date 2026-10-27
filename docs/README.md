@@ -5,7 +5,7 @@ Sitio en inglés y español que vende "tiendas y catálogos con cotizador" a pym
 | | |
 |---|---|
 | Estado | La v1 se construyó (F1-01 a F1-09) y se rediseñó (F1-12, commit `8ba1036`). El 24-oct se construyó la fase A de la reestructuración (R-02 a R-09), sin commit ni publicar: falta la revisión del copy y de las cifras de MRB (R-08), el QA final y la publicación (R-11). Ver [13 §5.1](./13-plan-de-implementacion.md#51-reestructuración-fase-a-24-de-octubre-al-7-de-noviembre). |
-| Fecha | 3 de octubre de 2026. Versiones, precios y límites verificados en esa fecha. El 4 de octubre se cambiaron el hosting (Cloudflare Free en lugar de Vercel Pro) y la analítica (Umami): ver [ADR-017](./14-decisiones.md#adr-017) y [ADR-018](./14-decisiones.md#adr-018). El 24 de octubre se adoptó el sistema visual y se reestructuró el sitio: [ADR-019](./14-decisiones.md#adr-019) a [ADR-023](./14-decisiones.md#adr-023). El 25 de octubre se sumaron las páginas de Servicios y Sobre mí, los menús desplegables y los demos como casos ([ADR-024](./14-decisiones.md#adr-024)) y, el mismo día, la página de Trabajo, el servicio de diseño y los precios ocultos con LinkedIn en su lugar ([ADR-025](./14-decisiones.md#adr-025)). |
+| Fecha | 3 de octubre de 2026. Versiones, precios y límites verificados en esa fecha. El 4 de octubre se cambiaron el hosting (Cloudflare Free en lugar de Vercel Pro) y la analítica (Umami): ver [ADR-017](./14-decisiones.md#adr-017) y [ADR-018](./14-decisiones.md#adr-018). El 24 de octubre se adoptó el sistema visual y se reestructuró el sitio: [ADR-019](./14-decisiones.md#adr-019) a [ADR-023](./14-decisiones.md#adr-023). El 25 de octubre se sumaron las páginas de Servicios y Sobre mí, los menús desplegables y los demos como casos ([ADR-024](./14-decisiones.md#adr-024)) y, el mismo día, la página de Trabajo, el servicio de diseño y los precios ocultos con LinkedIn en su lugar ([ADR-025](./14-decisiones.md#adr-025)). Esa misma noche entraron las dos tiendas demo como casos ([ADR-026](./14-decisiones.md#adr-026)). |
 | Requisitos de origen | [Roadmap del portafolio](../../Requerimientos/roadmap_portafolio_servicios_web.md) y el [diagnóstico crítico del side project](https://claude.ai/code/artifact/8a596e99-c90e-4d4c-907e-93f88cceed51) |
 | Convenciones | `tu-usuario` (Cal.com) y `57XXXXXXXXXX` (WhatsApp) en los ejemplos de los documentos son marcadores; los valores reales están en `src/content/site.ts`. |
 
@@ -73,7 +73,7 @@ Sitio en inglés y español que vende "tiendas y catálogos con cotizador" a pym
 | 11 | [Calidad, rendimiento y accesibilidad](./11-calidad-rendimiento-y-accesibilidad.md) | Presupuestos con las mediciones de la fase A, WCAG 2.2 AA, pruebas, checklist de lanzamiento y monitoreo |
 | 12 | [Medición y analítica](./12-medicion-y-analitica.md) | Eventos, UTM, prueba de titulares y rutina de los viernes |
 | 13 | [Plan de implementación](./13-plan-de-implementacion.md) | Tareas con horas (también R-00 a R-19 de la reestructuración), calendario, ruta crítica y riesgos |
-| 14 | [Decisiones (ADR)](./14-decisiones.md) | Registro de decisiones y alternativas descartadas (ADR-001 a ADR-025) |
+| 14 | [Decisiones (ADR)](./14-decisiones.md) | Registro de decisiones y alternativas descartadas (ADR-001 a ADR-026) |
 
 **Orden de lectura sugerido:** README → 01 → 13 → 03. Los demás docs se consultan cuando se trabaja en cada tarea.
 

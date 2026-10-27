@@ -28,6 +28,7 @@ export type SectionId = (typeof SECTION)[keyof typeof SECTION]
 /** Case page section ids (the hero is the page's H1, not a numbered section). */
 export const CASE_SECTION = {
   results: 'resultados',
+  tryIt: 'pruebalo', // a demo's band in place of the results (ADR-026)
   overview: 'resumen',
   beforeAfter: 'antes-despues',
   features: 'que-construi',

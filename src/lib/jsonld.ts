@@ -88,7 +88,11 @@ export function caseJsonLd(
         dateModified: study.updated,
         author: { '@id': `${base}/#person` },
         publisher: { '@id': `${base}/#person` },
-        about: { '@type': 'Organization', name: study.client.name, url: study.client.url },
+        // A client is an organization; a demo is my own website with a fictional brand (ADR-026)
+        about:
+          study.kind === 'demo'
+            ? { '@type': 'WebSite', name: study.client.name, url: study.client.url }
+            : { '@type': 'Organization', name: study.client.name, url: study.client.url },
         ...(image ? { image: `${base}${image}` } : {}),
       },
       person(lang),

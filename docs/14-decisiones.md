@@ -1,6 +1,6 @@
 # 14 · Registro de decisiones (ADR)
 
-Estas son las decisiones de arquitectura del portafolio, con su contexto, las alternativas que se descartaron y sus consecuencias. Se tomaron el **3 de octubre de 2026**, con la información verificada ese día. El **4 de octubre** cambiaron el hosting y la analítica ([ADR-017](#adr-017) y [ADR-018](#adr-018)), y se ajustaron los ADR afectados. El **24 de octubre** se agregó el sistema visual ([ADR-019](#adr-019)) y, el mismo día, se decidió la reestructuración del sitio: la estructura con páginas de caso ([ADR-020](#adr-020)), los medios reales ([ADR-021](#adr-021)), el video en R2 ([ADR-022](#adr-022)) y el movimiento ([ADR-023](#adr-023)). El **25 de octubre** se sumaron las páginas de Servicios y Sobre mí, los menús desplegables y los demos como casos ([ADR-024](#adr-024)) y, el mismo día, la página de Trabajo, el servicio de diseño y los precios ocultos con LinkedIn en su lugar ([ADR-025](#adr-025)). ADR-022 y ADR-023 se aplican en la fase B ([13 §5.2](./13-plan-de-implementacion.md#52-reestructuración-fase-b-9-al-15-de-noviembre)).
+Estas son las decisiones de arquitectura del portafolio, con su contexto, las alternativas que se descartaron y sus consecuencias. Se tomaron el **3 de octubre de 2026**, con la información verificada ese día. El **4 de octubre** cambiaron el hosting y la analítica ([ADR-017](#adr-017) y [ADR-018](#adr-018)), y se ajustaron los ADR afectados. El **24 de octubre** se agregó el sistema visual ([ADR-019](#adr-019)) y, el mismo día, se decidió la reestructuración del sitio: la estructura con páginas de caso ([ADR-020](#adr-020)), los medios reales ([ADR-021](#adr-021)), el video en R2 ([ADR-022](#adr-022)) y el movimiento ([ADR-023](#adr-023)). El **25 de octubre** se sumaron las páginas de Servicios y Sobre mí, los menús desplegables y los demos como casos ([ADR-024](#adr-024)) y, el mismo día, la página de Trabajo, el servicio de diseño y los precios ocultos con LinkedIn en su lugar ([ADR-025](#adr-025)). Esa misma noche entraron las dos tiendas demo como casos, con su propia página ([ADR-026](#adr-026)). ADR-022 y ADR-023 se aplican en la fase B ([13 §5.2](./13-plan-de-implementacion.md#52-reestructuración-fase-b-9-al-15-de-noviembre)).
 
 **Regla:** si una tarea necesita cambiar una de estas decisiones, se agrega o actualiza el ADR en el mismo PR. Los estados posibles son *Aceptada*, *Plan B* (alternativa lista si la aceptada falla) y *Reemplazada*.
 
@@ -29,8 +29,9 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
 | [ADR-021](#adr-021) | Medios reales: capturas locales, marcos en CSS y LCP de texto en celular | Aceptada (24-oct) |
 | [ADR-022](#adr-022) | Video del trabajo real en Cloudflare R2 | Aceptada (24-oct; se aplica en la fase B) |
 | [ADR-023](#adr-023) | Movimiento: revelados al hacer scroll, transiciones entre páginas y deslizador | Aceptada (24-oct; se aplica en la fase B) |
-| [ADR-024](#adr-024) | Páginas de sección, menús desplegables y demos como casos | Aceptada (25-oct; ajusta ADR-012 y ADR-020; ajustada por ADR-025) |
+| [ADR-024](#adr-024) | Páginas de sección, menús desplegables y demos como casos | Aceptada (25-oct; ajusta ADR-012 y ADR-020; ajustada por ADR-025; completada por ADR-026) |
 | [ADR-025](#adr-025) | Página de Trabajo, servicio de diseño y precios ocultos | Aceptada (25-oct; ajusta ADR-024 y pone en pausa la parte visible de ADR-005) |
+| [ADR-026](#adr-026) | Página de caso de una tienda demo y capturas de varios sitios | Aceptada (27-oct; completa ADR-024) |
 
 ---
 
@@ -788,3 +789,53 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
     - `REVIEW(R-26)`: página y resumen de Trabajo.
     - `REVIEW(R-27)`: el servicio de diseño y el catálogo sin OEM.
     - `REVIEW(R-28)`: LinkedIn y la celda del 100 %.
+
+<a id="adr-026"></a>
+
+## ADR-026 · Página de caso de una tienda demo y capturas de varios sitios
+
+- **Fecha:** 25 de octubre de 2026. Completa [ADR-024](#adr-024), que dejó entrar los demos como casos sin decir cómo se ve su página. No cambia ninguna decisión anterior.
+- **Contexto:**
+  - Pediste sumar tus dos tiendas demo a Trabajo, con su página cada una, y reflejarlas en los servicios:
+    - **Industrial Parts** (`ecommerce-demo-industrial.netlify.app`): repuestos hidráulicos que se buscan por cualquier número de parte y se venden solo por cotización.
+    - **Landscape Supply** (`ecommerce-demo-landscape.netlify.app`): materiales de paisajismo a granel, con calculadora, envío por código postal, carrito y pago en modo de prueba, y adoquines que se cotizan.
+  - Las dos están en línea, solo en inglés, con marcas ficticias y sin cobrar ni despachar nada. Se revisaron el 25-oct.
+  - La página de caso de [ADR-020](#adr-020) se pensó para un cliente: abre con resultados y tiene un antes y después. Un demo no tiene ni lo uno ni lo otro, y ADR-024 ya dice que nunca muestra cifras.
+  - El pipeline de capturas (R-04) solo conocía malonebelt.com.
+- **Decisión:**
+  - **La página de un demo:** usa la misma plantilla con tres diferencias.
+    1. **"Pruébalo" en lugar de Resultados:** va en la misma banda azul marino que cruza la captura del hero. Trae 3 pasos tomados de la página "How to test" del demo, cada uno con un enlace a esa página del demo en otra pestaña (`demo_open` desde `case`), y la nota de que no se cobra ni se despacha nada.
+    2. **Sin antes y después:** no hubo un sitio anterior.
+    3. **El enlace del hero dice "Abrir la demo"** y cuenta como `demo_open`, igual que el de la tarjeta en Trabajo (`work`).
+  - **Orden de secciones:**
+    - Un cliente: Resultados → Resumen → Antes y después → Qué construí → Cierre (01 a 05).
+    - Un demo: Pruébalo → Resumen → Qué construí → Cierre (01 a 04).
+    - Los números de sección se asignan en el orden en que se muestran.
+  - **Datos:** cada demo es una entrada en `cases.ts` con:
+    - `kind: 'demo'`;
+    - todas sus cifras en `null`;
+    - `tryIt`, con las rutas de los 3 pasos;
+    - `examples` para los bloques de Catálogo y Cotizador de Servicios;
+    - sus filas de "Qué construí".
+  - **Copy:**
+    - Tipos: `page.results` y `page.beforeAfter` pasan a ser opcionales y se suma `page.tryIt`. `features.items` describe solo las filas que el caso lista; una fila sin copy rompe el build.
+    - Los `alts` de cada caso deben cubrir todas sus capturas.
+    - En JSON-LD, el `about` de un demo es un `WebSite` y no una `Organization`.
+  - **Capturas:** `scripts/shots.config.mjs` pasa a una lista de sitios (`mrb`, `industrial`, `landscape`), cada uno con su URL base y sus capturas en `media-raw/<sitio>/`.
+    - Una captura de demo puede llevar pasos antes de tomarse: escribir, hacer clic por texto, navegar o esperar un texto.
+    - Cada captura empieza sin cookies, porque los demos guardan el carrito y la lista de cotización en cookies.
+    - Los pasos nunca pulsan enviar, pagar ni ningún botón que mande un formulario.
+    - El bloqueo de envíos de MRB sigue igual.
+    - `pnpm media:capture --site=industrial` captura un solo sitio.
+- **Alternativas descartadas:**
+  - **Mostrar cifras del demo** (productos, referencias) como resultados: ADR-024 lo prohíbe, y se leerían como resultados de un cliente. Las cifras van en el texto, como descripción.
+  - **Una plantilla aparte para los demos:** duplica el hero, el resumen, Qué construí y el cierre, que ya sirven tal cual.
+  - **Insertar el demo en un iframe:** ya descartado en [ADR-012](#adr-012).
+- **Consecuencias:**
+  - El sitemap pasa de 12 a 16 URLs, y Trabajo, el menú, el pie y los ejemplos de Servicios muestran 3 casos.
+  - En el resumen de la home se suman la categoría "Tiendas con carrito y pago" y dos industrias.
+  - Cada bloque de Catálogo y Cotizador en Servicios muestra 3 ejemplos.
+  - **JS:** no se agrega ninguna isla.
+  - **Medios:** 19 imágenes nuevas (AVIF y WebP), todas dentro de su presupuesto.
+  - **Copy:** revisado y aprobado el 27-oct (R-30).
+  - Las demos están en `*.netlify.app` y no en un subdominio tuyo. Si las mueves, cambia `client.url` y `client.domain` en `cases.ts` y vuelve a correr las capturas.

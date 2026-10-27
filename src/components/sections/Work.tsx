@@ -96,8 +96,11 @@ export function Work({
                         imgClassName="block size-20 border border-paper-3 object-cover object-top"
                       />
                       <span className="flex min-w-0 flex-col gap-1.5">
+                        {/* Beside the thumbnail it has ~130 px on a 320 px phone: let it wrap */}
                         {study.kind === 'demo' && (
-                          <Chip className="self-start">{work.card.demoBadge}</Chip>
+                          <Chip className="max-w-full self-start whitespace-normal!">
+                            {work.card.demoBadge}
+                          </Chip>
                         )}
                         <span className="text-[1.0625rem] leading-[1.25] font-bold stretch-title underline decoration-transparent decoration-2 underline-offset-4 group-hover:decoration-accent-500">
                           {study.client.name}

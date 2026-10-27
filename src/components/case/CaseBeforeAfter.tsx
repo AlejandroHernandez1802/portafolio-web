@@ -7,7 +7,7 @@ import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { altFor, isPortrait } from './case-media'
 
-// Section 03, before / after as facing panels (design system CompareCard) on the cobalt tint,
+// Before / after (section 03, client cases only) as facing panels (design system CompareCard) on the cobalt tint,
 // where both the sand and the navy panel stand out. "Before" is the buying process, as text:
 // archive.org has no snapshot of an older MRB site (ADR-021). From 1024 px the "after" panel
 // is wider and its phone capture (the portrait one of study.media.after; the desktop one is
@@ -40,10 +40,12 @@ export function CaseBeforeAfter({
   study,
   beforeAfter,
   alts,
+  index,
 }: {
   study: CaseStudy
-  beforeAfter: CaseContent['page']['beforeAfter']
+  beforeAfter: NonNullable<CaseContent['page']['beforeAfter']>
   alts: CaseContent['alts']
+  index: number
 }) {
   const phone = study.media.after.find(isPortrait)
   const sides = [
@@ -52,7 +54,7 @@ export function CaseBeforeAfter({
   ]
   return (
     <Section id={CASE_SECTION.beforeAfter} tone="tint">
-      <SectionHeading id={CASE_SECTION.beforeAfter} index={3}>
+      <SectionHeading id={CASE_SECTION.beforeAfter} index={index}>
         {beforeAfter.title}
       </SectionHeading>
       <p className="mt-5 max-w-[60ch] text-lead text-ink-2">{beforeAfter.lead}</p>

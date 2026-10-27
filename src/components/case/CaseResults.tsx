@@ -4,7 +4,7 @@ import { CASE_SECTION } from '@/lib/routes'
 import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
-// Section 01, the results bar on the deep-navy band that starts behind the hero capture
+// The results bar (section 01) on the deep-navy band that starts behind the hero capture
 // (CaseHero .case-bridge), hence the shorter top padding. Big condensed figures with a sun
 // marker under each (the static final state; phase B draws it in on scroll, ADR-023) and mono
 // labels. A metric whose figure is null is skipped, so there are 3 until the quote count
@@ -21,17 +21,19 @@ export function CaseResults({
   lang,
   study,
   results,
+  index,
 }: {
   lang: Locale
   study: CaseStudy
-  results: CaseContent['page']['results']
+  results: NonNullable<CaseContent['page']['results']>
+  index: number
 }) {
   const metrics = resolveMetrics(results.items, study, lang)
   const source = [results.source.catalog]
   if (study.figures.quotes !== null) source.push(results.source.quotes)
   return (
     <Section id={CASE_SECTION.results} tone="ink" className="pt-12 lg:pt-20">
-      <SectionHeading id={CASE_SECTION.results} index={1} tone="inverse">
+      <SectionHeading id={CASE_SECTION.results} index={index} tone="inverse">
         {results.title}
       </SectionHeading>
       <dl

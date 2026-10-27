@@ -451,6 +451,276 @@ export const es = {
         },
       },
     },
+    industrial: {
+      visitSite: 'Abrir la demo',
+      alts: {
+        'industrial/home-desktop':
+          'Página de inicio de la demo Industrial Parts en computador, con el buscador por número de parte',
+        'industrial/home-full-desktop':
+          'La página de inicio completa de la demo Industrial Parts, desde el buscador hasta el pie',
+        'industrial/home-full-top':
+          'La parte de arriba de la página de inicio de Industrial Parts, con el buscador por número de parte',
+        'industrial/home-mobile': 'La página de inicio de Industrial Parts en celular',
+        'industrial/search-desktop':
+          'La búsqueda de “ab 1234-x” en Industrial Parts: AB-1234-X como coincidencia exacta y AB-1234-XL como número que empieza igual',
+        'industrial/search-mobile': 'La misma búsqueda por número de parte, en celular',
+        'industrial/product-desktop':
+          'La ficha de una bomba de engranajes con sus números OEM, de fabricante y de referencia cruzada, la rotación elegida y el aviso de que se agregó a la cotización',
+        'industrial/product-mobile':
+          'La tabla de referencias de la bomba y el botón para agregarla a la cotización, en celular',
+        'industrial/quote-desktop':
+          'La lista de cotización con una bomba, una manguera de 3 m y un número que no está en el catálogo',
+        'industrial/miss-mobile':
+          'Una búsqueda sin resultados que ofrece agregar el número a la cotización como texto libre, en celular',
+      },
+      card: {
+        meta: 'Industrial Parts · Repuestos hidráulicos · Demo',
+        industry: 'Repuestos hidráulicos',
+        outcome: 'Encontrar el repuesto con cualquier número y pedir la cotización',
+        metrics: [],
+        built: ['Buscador por número de parte', 'Referencias cruzadas', 'Lista de cotización'],
+      },
+      examples: {
+        catalog:
+          'Búsqueda en la demo Industrial Parts: “ab 1234-x” encuentra AB-1234-X, porque los espacios, los guiones y las mayúsculas no importan.',
+        quote:
+          'En la ficha de cada repuesto, el comprador elige la opción y la cantidad y lo agrega a su lista de cotización, sin precios ni carrito.',
+      },
+      page: {
+        meta: {
+          title: 'Demo Industrial Parts: repuestos por número de parte | Alejandro Hernández',
+          description:
+            'Una tienda demo de repuestos hidráulicos que construí: buscador por número OEM, de fabricante o de referencia cruzada, fichas con sus referencias y lista de cotización.',
+          ogImageAlt: 'Demo Industrial Parts · Alejandro Hernández',
+        },
+        breadcrumb: { label: 'Ruta de navegación', home: 'Inicio', work: 'Trabajo' },
+        hero: {
+          title: 'Encontrar el repuesto con el número que ya tienes',
+          summary:
+            'Industrial Parts es una tienda demo de repuestos hidráulicos que construí para mostrar cómo vende en línea un mostrador de repuestos: el comprador busca por el número de la placa, ve la ficha con todas sus referencias y pide la cotización. La marca es ficticia y no se cobra ni se despacha nada.',
+          facts: [
+            { label: 'Tipo', value: 'Demo · proyecto propio' },
+            { label: 'Industria', value: 'Repuestos hidráulicos' },
+            { label: 'Comprador', value: 'Talleres y flotas' },
+            { label: 'Venta', value: 'Solo por cotización' },
+            { label: 'Idioma', value: 'Inglés' },
+          ],
+        },
+        tryIt: {
+          title: 'Pruébalo',
+          lead: 'La demo está en línea. Estas tres pruebas toman unos dos minutos.',
+          steps: [
+            {
+              title: 'Busca “ab 1234-x”',
+              body: 'Escrito así, con espacio y en minúsculas, encuentra AB-1234-X. Prueba también 4471 para ver los números que empiezan igual.',
+              cta: 'Buscar el número',
+            },
+            {
+              title: 'Arma el pedido',
+              body: 'Abre la bomba de engranajes de 16 cc, elige la rotación y la cantidad, y agrégala a la lista de cotización.',
+              cta: 'Abrir la bomba',
+            },
+            {
+              title: 'Pide algo que no está',
+              body: 'En la lista de cotización, escribe un número que no esté en el catálogo: entra como una línea más, con su cantidad.',
+              cta: 'Abrir la lista de cotización',
+            },
+          ],
+          note: 'Es una tienda de demostración: no se cobra ni se despacha nada.',
+        },
+        overview: {
+          title: 'Resumen',
+          client: {
+            label: 'Proyecto',
+            value:
+              'Una tienda propia para mostrar cómo vende en línea un proveedor de repuestos hidráulicos: 8 productos en 4 categorías, de bombas a mangueras, todos con precio a cotizar.',
+          },
+          problem: {
+            label: 'Problema',
+            value:
+              'El mecánico tiene el número de la placa, pero cada fabricante lo escribe a su manera y el catálogo lo tiene con otro formato. Si la búsqueda no lo encuentra, llama, y si nadie contesta, compra en otra parte.',
+          },
+          role: {
+            label: 'Mi papel',
+            value:
+              'Diseño y desarrollo completos: el buscador, las fichas, la lista de cotización y el formulario.',
+          },
+          stackLabel: 'Herramientas',
+        },
+        features: {
+          title: 'Qué construí',
+          items: {
+            search: {
+              title: 'Un buscador que entiende el número',
+              body: 'Encuentra el repuesto por su número OEM, de fabricante o de referencia cruzada, lo escriba como lo escriba el comprador: “ab 1234-x”, “AB1234X” y “ab.1234.x” dan lo mismo. Primero muestra la coincidencia exacta y después los números que empiezan igual.',
+            },
+            references: {
+              title: 'Fichas con todas sus referencias',
+              body: 'Cada repuesto muestra sus números en una tabla, con el tipo y el fabricante, además de sus especificaciones, el stock y el tiempo de despacho. El comprador elige la opción, como la rotación o el largo, y la cantidad.',
+            },
+            quoteList: {
+              title: 'Una lista de cotización',
+              body: 'El comprador suma repuestos y cantidades como en un carrito, y cada línea guarda el número tal como lo buscó. La lista dura 30 días sin crear una cuenta, y el formulario solo pide nombre y correo.',
+            },
+            miss: {
+              title: 'Si no está, igual se cotiza',
+              body: 'Una búsqueda sin resultados no es un callejón sin salida: ofrece agregar el número a la cotización como texto libre, para que el proveedor lo busque.',
+            },
+            quality: {
+              title: 'Accesible y rápida',
+              body: 'Se usa con teclado y con lector de pantalla, respeta “reducir movimiento” y no se desborda en un celular de 390 px. Las páginas se generan por adelantado, así que cargan rápido.',
+            },
+          },
+        },
+        closing: {
+          title: '¿Tus clientes te buscan por número de parte?',
+          body: 'En una llamada de 15 minutos vemos cómo te piden repuestos hoy y si una tienda como esta tiene sentido para tu negocio.',
+          cta: 'Agenda una llamada de 15 minutos',
+        },
+        next: {
+          label: 'Siguiente',
+          title: 'Servicios',
+          body: 'Qué incluye tu tienda, con ejemplos reales.',
+        },
+      },
+    },
+    landscape: {
+      visitSite: 'Abrir la demo',
+      alts: {
+        'landscape/home-desktop':
+          'Página de inicio de la demo Landscape Supply en computador, con el código postal 30301 comprobado: Zona A, envío de US$75 y pedido mínimo de US$100',
+        'landscape/home-full-desktop':
+          'La página de inicio completa de la demo Landscape Supply, desde el comprobador de envío hasta el pie',
+        'landscape/home-full-top':
+          'La parte de arriba de la página de inicio de Landscape Supply, con el comprobador de envío',
+        'landscape/home-mobile': 'La página de inicio de Landscape Supply en celular',
+        'landscape/zip-mobile':
+          'El comprobador de envío en celular, con la respuesta para el código postal 30301',
+        'landscape/product-desktop':
+          'La calculadora en la ficha del mulch: 200 ft² a 3 pulgadas de profundidad dan 1,85 yd³, redondeadas a 2 y pasadas a la cantidad',
+        'landscape/product-mobile':
+          'La misma calculadora en celular, con 2 yd³ listas para agregar al carrito',
+        'landscape/checkout-desktop':
+          'El pago en modo de prueba, con envío a domicilio a la Zona A y un total de US$201',
+        'landscape/pavers-desktop':
+          'La ficha de los adoquines, con precio a cotizar y la calculadora que cuenta 946 unidades con un 5 % extra para cortes',
+      },
+      card: {
+        meta: 'Landscape Supply · Materiales de paisajismo · Demo',
+        industry: 'Materiales de paisajismo a granel',
+        outcome: 'Calcular cuánto pedir, saber si hay envío y pagar en línea',
+        metrics: [],
+        built: [
+          'Calculadora de cantidades',
+          'Envío por código postal',
+          'Carrito y pago',
+          'Cotizador',
+        ],
+      },
+      examples: {
+        catalog:
+          'En la demo Landscape Supply, cada ficha calcula la cantidad con las medidas del comprador: 200 ft² a 3 pulgadas son 2 yd³.',
+        quote:
+          'El pago en modo de prueba: carrito, envío a domicilio según el código postal y total, sin cobrar nada.',
+      },
+      page: {
+        meta: {
+          title: 'Demo Landscape Supply: tienda con calculadora y envío | Alejandro Hernández',
+          description:
+            'Una tienda demo de materiales de paisajismo que construí: calculadora de cantidades, envío por código postal, carrito y pago en modo de prueba, y productos que se cotizan.',
+          ogImageAlt: 'Demo Landscape Supply · Alejandro Hernández',
+        },
+        breadcrumb: { label: 'Ruta de navegación', home: 'Inicio', work: 'Trabajo' },
+        hero: {
+          title: 'De las medidas del jardín al carrito, sin llamar',
+          summary:
+            'Landscape Supply es una tienda demo de mulch, piedra y tierra a granel que construí para mostrar cómo vende en línea un patio de materiales: el comprador mide, la tienda calcula cuánto pedir, le dice si hay envío a su código postal y le deja pagar o pedir una cotización. La marca es ficticia y no se cobra ni se despacha nada.',
+          facts: [
+            { label: 'Tipo', value: 'Demo · proyecto propio' },
+            { label: 'Industria', value: 'Materiales de paisajismo' },
+            { label: 'Comprador', value: 'Hogares y contratistas' },
+            { label: 'Venta', value: 'Pago en línea y cotización' },
+            { label: 'Idioma', value: 'Inglés' },
+          ],
+        },
+        tryIt: {
+          title: 'Pruébalo',
+          lead: 'La demo está en línea. Estas tres pruebas toman unos dos minutos.',
+          steps: [
+            {
+              title: 'Calcula el mulch para 200 ft²',
+              body: 'La ficha ya trae el área: la calculadora redondea hacia arriba a media yarda y pasa la cantidad al carrito con un clic.',
+              cta: 'Abrir la calculadora',
+            },
+            {
+              title: 'Comprueba el envío',
+              body: 'Escribe 30301 o 30310 para ver las dos zonas de envío, o 12345 para ver qué pasa fuera de ellas. Retirar en el patio siempre es gratis.',
+              cta: 'Comprobar un código postal',
+            },
+            {
+              title: 'Paga en modo de prueba',
+              body: 'Agrega 3 yd³ al carrito, elige envío a domicilio al 30301 y paga con la tarjeta 1, que aprueba. La 2 rechaza.',
+              cta: 'Abrir el producto',
+            },
+          ],
+          note: 'Es una tienda de demostración: no se cobra ni se despacha nada.',
+        },
+        overview: {
+          title: 'Resumen',
+          client: {
+            label: 'Proyecto',
+            value:
+              'Una tienda propia para mostrar cómo vende en línea un proveedor de materiales a granel: 16 productos en 4 categorías, vendidos por yarda, por tonelada o por bolsa, y adoquines que se cotizan.',
+          },
+          problem: {
+            label: 'Problema',
+            value:
+              'El comprador sabe el tamaño de su jardín, no cuántas yardas pedir, y tampoco sabe si le llevan el material ni cuánto cuesta el envío. Con esas dudas, llama o no compra.',
+          },
+          role: {
+            label: 'Mi papel',
+            value:
+              'Diseño y desarrollo completos: el catálogo, la calculadora, las zonas de envío, el carrito, el pago y la cotización.',
+          },
+          stackLabel: 'Herramientas',
+        },
+        features: {
+          title: 'Qué construí',
+          items: {
+            calculator: {
+              title: 'Una calculadora de cantidades',
+              body: 'El comprador escribe el largo y el ancho, el diámetro o el área, y la profundidad. La tienda calcula el volumen, lo redondea hacia arriba a media yarda o a bolsas enteras, muestra la cuenta y lo pasa a la cantidad con un clic. Si el pedido no cabe en un camión, ofrece cotizarlo.',
+            },
+            delivery: {
+              title: 'Envío según el código postal',
+              body: 'Con el código postal, la tienda dice si hay envío, cuánto cuesta y cuál es el pedido mínimo, en dos zonas de US$75 y US$95. En el carrito avisa cuánto falta para llegar al mínimo, y retirar en el patio siempre es gratis.',
+            },
+            checkout: {
+              title: 'Carrito y pago en modo de prueba',
+              body: 'Del carrito al pago en dos pasos, con el envío y el total a la vista antes de pagar. En la demo el pago es simulado: la tarjeta 1 aprueba, la 2 rechaza y la 3 muestra un error.',
+            },
+            quoteOnly: {
+              title: 'Vender y cotizar en la misma tienda',
+              body: 'Los adoquines no tienen precio fijo: su ficha calcula las unidades con un 5 % extra para cortes y las agrega a una lista de cotización. Y cualquier carrito se convierte en cotización con un clic.',
+            },
+            quality: {
+              title: 'Accesible y rápida',
+              body: 'Se usa con teclado y con lector de pantalla, anuncia el resultado del envío, respeta “reducir movimiento” y no se desborda en un celular de 390 px. Las páginas se generan por adelantado, así que cargan rápido.',
+            },
+          },
+        },
+        closing: {
+          title: '¿Tus clientes te llaman para saber cuánto pedir?',
+          body: 'En una llamada de 15 minutos vemos cómo vendes hoy y si una tienda como esta tiene sentido para tu negocio.',
+          cta: 'Agenda una llamada de 15 minutos',
+        },
+        next: {
+          label: 'Siguiente',
+          title: 'Servicios',
+          body: 'Qué incluye tu tienda, con ejemplos reales.',
+        },
+      },
+    },
   },
   demo: {
     title: 'Pruébala: no es una captura',

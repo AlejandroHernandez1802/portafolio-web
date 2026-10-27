@@ -129,7 +129,13 @@ export function CaseCard({
           <ButtonLink href={href} iconEnd="arrow" {...trackAttrs('case_open', 'work')}>
             {labels.viewCase}
           </ButtonLink>
-          <ButtonLink variant="secondary" href={study.client.url} target="_blank" rel="noopener">
+          <ButtonLink
+            variant="secondary"
+            href={study.client.url}
+            target="_blank"
+            rel="noopener"
+            {...(study.kind === 'demo' && trackAttrs('demo_open', 'work'))}
+          >
             {copy.visitSite}
           </ButtonLink>
         </div>

@@ -4,8 +4,9 @@ import type { CaseId, CaseStudy, Locale } from './types'
 // each case live in content/{en,es}.ts → cases.<id>. Figures are verified facts only: the
 // source of each one is noted next to it, and null hides every place that uses it.
 // Order = order of the cards on the work page, the "Work" menu and the examples. A demo store
-// joins as one more entry with kind 'demo' once it has its URL and captures (ADR-024): until
-// then it is left out. Its categories and industry join the home's work summary (ADR-025).
+// is one more entry with kind 'demo' (ADR-024): no figures (all null), no before/after, and a
+// "Try it" band with the pages of the demo to open instead of the results (ADR-026). Its
+// categories and industry join the home's work summary (ADR-025).
 export const cases: CaseStudy[] = [
   {
     id: 'mrb',
@@ -17,8 +18,8 @@ export const cases: CaseStudy[] = [
       url: 'https://www.malonebelt.com',
       domain: 'malonebelt.com',
     },
-    published: '2026-11-06', // REVIEW(R-08): launch day of this page (F1-10)
-    updated: '2026-11-06', // REVIEW(R-08): bump when the case changes
+    published: '2026-10-25', // launch day of this page (F1-10)
+    updated: '2026-10-25', // bump when the case changes
     launched: '2026-08-25', // full site live (MRB repo, src/data/launch.ts)
     featured: true,
     categories: ['catalog', 'quote', 'languages', 'design'],
@@ -62,6 +63,106 @@ export const cases: CaseStudy[] = [
       { id: 'analytics', media: null, frame: 'plain' }, // text only: no client data on screen
       { id: 'brand', media: 'mrb/brochure', frame: 'plain' },
     ],
+  },
+  // My demo stores, verified on their live sites on 2026-10-25 (ADR-026). Fictional brands,
+  // English only, nothing charged or shipped; captures from scripts/shots.config.mjs.
+  {
+    id: 'industrial',
+    kind: 'demo',
+    slug: { en: 'industrial-parts', es: 'industrial-parts' },
+    disclosure: 'named',
+    client: {
+      name: 'Industrial Parts',
+      url: 'https://ecommerce-demo-industrial.netlify.app',
+      domain: 'ecommerce-demo-industrial.netlify.app',
+    },
+    published: '2026-10-27',
+    updated: '2026-10-27',
+    launched: '2026-10-25', // first verified live
+    featured: true,
+    categories: ['catalog', 'quote'],
+    // A demo shows no figures (ADR-024): 8 products, 4 categories and 26 searchable numbers
+    // are said in its copy instead
+    figures: {
+      quotes: null,
+      products: null,
+      categories: null,
+      oemBrands: null,
+      machines: null,
+      languages: null,
+      weeks: null,
+    },
+    languages: ['EN'],
+    stack: ['Next.js', 'Netlify'],
+    media: {
+      hero: 'industrial/home-desktop',
+      card: 'industrial/home-full-desktop',
+      cardTop: 'industrial/home-full-top',
+      showcase: { browser: 'industrial/home-desktop', phone: 'industrial/search-mobile' },
+      after: [],
+      services: {},
+    },
+    examples: {
+      catalog: { media: 'industrial/search-desktop', frame: 'browser' },
+      quote: { media: 'industrial/product-desktop', frame: 'browser' },
+    },
+    features: [
+      { id: 'search', media: 'industrial/search-desktop', frame: 'browser' },
+      { id: 'references', media: 'industrial/product-desktop', frame: 'browser' },
+      { id: 'quoteList', media: 'industrial/quote-desktop', frame: 'browser' },
+      { id: 'miss', media: 'industrial/miss-mobile', frame: 'phone' },
+      { id: 'quality', media: null, frame: 'plain' },
+    ],
+    tryIt: ['/search?q=ab%201234-x', '/p/gear-pump-16cc', '/quote'],
+  },
+  {
+    id: 'landscape',
+    kind: 'demo',
+    slug: { en: 'landscape-supply', es: 'landscape-supply' },
+    disclosure: 'named',
+    client: {
+      name: 'Landscape Supply',
+      url: 'https://ecommerce-demo-landscape.netlify.app',
+      domain: 'ecommerce-demo-landscape.netlify.app',
+    },
+    published: '2026-10-27',
+    updated: '2026-10-27',
+    launched: '2026-10-25', // first verified live
+    featured: true,
+    categories: ['store', 'quote', 'catalog'],
+    // A demo shows no figures (ADR-024): 16 products and 2 delivery zones are said in its copy
+    figures: {
+      quotes: null,
+      products: null,
+      categories: null,
+      oemBrands: null,
+      machines: null,
+      languages: null,
+      weeks: null,
+    },
+    languages: ['EN'],
+    stack: ['Next.js', 'Netlify'],
+    media: {
+      hero: 'landscape/home-desktop',
+      card: 'landscape/home-full-desktop',
+      cardTop: 'landscape/home-full-top',
+      showcase: { browser: 'landscape/home-desktop', phone: 'landscape/product-mobile' },
+      after: [],
+      services: {},
+    },
+    examples: {
+      catalog: { media: 'landscape/product-desktop', frame: 'browser' },
+      quote: { media: 'landscape/checkout-desktop', frame: 'browser' },
+    },
+    features: [
+      { id: 'calculator', media: 'landscape/product-desktop', frame: 'browser' },
+      { id: 'delivery', media: 'landscape/zip-mobile', frame: 'phone' },
+      { id: 'checkout', media: 'landscape/checkout-desktop', frame: 'browser' },
+      { id: 'quoteOnly', media: 'landscape/pavers-desktop', frame: 'browser' },
+      { id: 'quality', media: null, frame: 'plain' },
+    ],
+    // The calculator, the ZIP check, then 300 ft² (3 yd³) to clear Zone A's minimum and pay
+    tryIt: ['/p/hardwood-mulch?area=200', '/', '/p/hardwood-mulch?area=300'],
   },
 ]
 

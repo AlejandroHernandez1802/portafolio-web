@@ -27,7 +27,6 @@ export type Disclosure = 'named' | 'anonymized'
 // that import these types never pull the manifest. Components look keys up with getMedia()
 // from '@/media' and skip a missing one.
 export type { KnownMediaKey }
-export type MrbMediaKey = Extract<KnownMediaKey, `mrb/${string}`>
 
 export type PriceSpec =
   | { kind: 'from'; amount: number; period?: 'month' } // "From US$3,000"
@@ -38,7 +37,9 @@ export type PriceByMarket = { us: PriceSpec; co: PriceSpec } // USD and COP
 // ---------------------------------------------------------------------------------------------
 // Case studies (docs/14 ADR-020): typed data in cases.ts, copy per language in cases.<id> below.
 
-export type CaseId = 'mrb'
+export type CaseId = 'mrb' | 'industrial' | 'landscape'
+/** The captures of one case: its media keys start with its id ('mrb/home-desktop') */
+export type CaseMediaKey<Id extends CaseId> = Extract<KnownMediaKey, `${Id}/${string}`>
 export type CaseFigureId =
   | 'quotes' // quote requests since launch; null until the owner provides it
   | 'products'
@@ -47,7 +48,24 @@ export type CaseFigureId =
   | 'machines'
   | 'languages'
   | 'weeks' // phase 1 duration
-export type CaseFeatureId = 'search' | 'quote' | 'languages' | 'catalog' | 'analytics' | 'brand'
+// Rows of "What I built". A case lists the ones it has in CaseStudy.features, and its copy
+// describes exactly those (a listed row without copy fails the build).
+export type CaseFeatureId =
+  | 'search'
+  | 'quote'
+  | 'languages'
+  | 'catalog'
+  | 'analytics'
+  | 'brand'
+  // the demo stores (ADR-026)
+  | 'calculator' // quantities from the buyer's measurements
+  | 'delivery' // delivery zones by ZIP code, or free pickup
+  | 'checkout' // cart and checkout in test mode
+  | 'quoteOnly' // products sold by quote beside the ones with a price
+  | 'references' // OEM, manufacturer and cross-reference numbers of each part
+  | 'quoteList' // a quote list that keeps what was searched
+  | 'miss' // a search with no result still ends in a quote
+  | 'quality' // accessibility and speed, as text
 export type DeviceKind = 'browser' | 'phone'
 /** How a capture is shown: in a device, or as print material (the brochure) under the logo */
 export type CaptureFrame = DeviceKind | 'plain'
@@ -86,6 +104,8 @@ export type CaseStudy = {
   examples: Partial<Record<ServiceTileId, { media: KnownMediaKey; frame: CaptureFrame }>>
   /** Rows of "What I built", in order, with the capture shown beside each */
   features: Array<{ id: CaseFeatureId; media: KnownMediaKey | null; frame: CaptureFrame }>
+  /** A demo's "Try it" steps (ADR-026): the page of the demo each one opens, in copy order */
+  tryIt?: string[]
 }
 
 /** A big number with its label. The value comes from CaseStudy.figures; null → not rendered. */
@@ -94,9 +114,9 @@ export type Metric = { figure: CaseFigureId; label: string }
 export type Fact = { label: string; value: string }
 
 export type CaseContent = {
-  visitSite: string // "Visit malonebelt.com"
+  visitSite: string // "Visit malonebelt.com", "Open the demo"
   /** Alt text of every capture of this case, per media key (one place per language) */
-  alts: Record<MrbMediaKey, string>
+  alts: Partial<Record<KnownMediaKey, string>>
   card: {
     meta: string // "Malone Road Belt · Industrial belts · U.S."
     industry: string // a chip of the home's work summary; cases sharing one show it once
@@ -110,7 +130,14 @@ export type CaseContent = {
     meta: { title: string; description: string; ogImageAlt: string }
     breadcrumb: { label: string; home: string; work: string } // the current page is the client name
     hero: { title: string; summary: string; facts: Fact[] } // title is the H1 (the outcome)
-    results: { title: string; items: Metric[]; source: { catalog: string; quotes: string } }
+    // A client case's figures; a demo has none and opens with "Try it" instead (ADR-026)
+    results?: { title: string; items: Metric[]; source: { catalog: string; quotes: string } }
+    tryIt?: {
+      title: string
+      lead: string
+      steps: Array<{ title: string; body: string; cta: string }> // CaseStudy.tryIt opens each
+      note: string // "Nothing is charged or shipped"
+    }
     overview: {
       title: string
       client: Fact
@@ -118,13 +145,16 @@ export type CaseContent = {
       role: Fact
       stackLabel: string // the items come from CaseStudy.stack
     }
-    beforeAfter: {
+    beforeAfter?: {
       title: string
       lead: string
       before: { label: string; points: string[] }
       after: { label: string; points: string[] } // screenshots: CaseStudy.media.after
     }
-    features: { title: string; items: Record<CaseFeatureId, { title: string; body: string }> }
+    features: {
+      title: string
+      items: Partial<Record<CaseFeatureId, { title: string; body: string }>>
+    }
     closing: { title: string; body: string; cta: string }
     // The "next" card when this is the last case: it links to the services page instead
     next: { label: string; title: string; body: string }
@@ -250,7 +280,8 @@ export type SiteContent = {
     items: Record<ServiceTileId, { intro: string; included: string[] }>
     care: { planLabel: string } // the care block shows the plan instead of a capture
   }
-  cases: Record<CaseId, CaseContent>
+  // Each case's alts must name every capture of that case, and only those
+  cases: { [Id in CaseId]: CaseContent & { alts: Record<CaseMediaKey<Id>, string> } }
   demo: { title: string; body: string; cta: string; posterAlt: string } // v2
   process: {
     title: string

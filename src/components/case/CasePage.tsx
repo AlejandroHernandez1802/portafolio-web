@@ -14,6 +14,7 @@ import { CaseFeatures } from './CaseFeatures'
 import { CaseHero } from './CaseHero'
 import { CaseOverview } from './CaseOverview'
 import { CaseResults } from './CaseResults'
+import { CaseTryIt } from './CaseTryIt'
 
 // A case page, shared by the two thin routes /en/work/[slug] and /es/trabajos/[slug]
 // (docs/14 ADR-020). Each route passes its own language, so a slug under the other language's
@@ -87,14 +88,21 @@ function nextLink(lang: Locale, study: CaseStudy): NextLink {
 
 export function CasePage({ lang, slug }: { lang: Locale; slug: string }) {
   const study = findCase(lang, slug)
-  const copy = dictionary(lang).cases[study.id]
+  const content = dictionary(lang)
+  const copy = content.cases[study.id]
   const { page } = copy
   const jsonLd = caseJsonLd(lang, study, copy, ogImage(lang, study.id))
+  const demo = study.kind === 'demo'
+  // Sections are numbered in the order they render: a demo has no before/after
+  let index = 0
+  const next = () => ++index
 
   // Order of the plan (§1): hero → results → overview → before/after → what I built →
   // closing. The 49 s teaser goes between "what I built" and the closing in phase B (R-18).
   // Bands: paper (grid) → ink → paper → tint → paper → accent. The hero and the results stay
   // adjacent: the hero capture straddles the results' navy band (CaseHero .case-bridge).
+  // A demo (ADR-026) puts "Try it" on that navy band and skips the before/after: paper (grid)
+  // → ink → paper → paper → accent.
   return (
     <PageShell lang={lang} alternates={caseAlternates(study.id)} current="work">
       <CaseHero
@@ -105,11 +113,34 @@ export function CasePage({ lang, slug }: { lang: Locale; slug: string }) {
         alts={copy.alts}
         visitSite={copy.visitSite}
       />
-      <CaseResults lang={lang} study={study} results={page.results} />
-      <CaseOverview study={study} overview={page.overview} />
-      <CaseBeforeAfter study={study} beforeAfter={page.beforeAfter} alts={copy.alts} />
-      <CaseFeatures lang={lang} study={study} features={page.features} alts={copy.alts} />
-      <CaseClosing lang={lang} closing={page.closing} next={nextLink(lang, study)} />
+      {demo && page.tryIt && (
+        <CaseTryIt
+          study={study}
+          tryIt={page.tryIt}
+          newTab={content.linkedin.newTab}
+          index={next()}
+        />
+      )}
+      {!demo && page.results && (
+        <CaseResults lang={lang} study={study} results={page.results} index={next()} />
+      )}
+      <CaseOverview study={study} overview={page.overview} index={next()} />
+      {!demo && page.beforeAfter && (
+        <CaseBeforeAfter
+          study={study}
+          beforeAfter={page.beforeAfter}
+          alts={copy.alts}
+          index={next()}
+        />
+      )}
+      <CaseFeatures
+        lang={lang}
+        study={study}
+        features={page.features}
+        alts={copy.alts}
+        index={next()}
+      />
+      <CaseClosing lang={lang} closing={page.closing} next={nextLink(lang, study)} index={next()} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}

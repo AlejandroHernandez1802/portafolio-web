@@ -123,7 +123,9 @@ async function cards(routes) {
 
     for (const study of cases) {
       const copy = content.cases[study.id]
-      const metrics = resolveMetrics(copy.page.results.items, study, lang)
+      // A demo has no results (ADR-026): its card shows no figure
+      const results = study.kind === 'demo' ? undefined : copy.page.results
+      const metrics = results ? resolveMetrics(results.items, study, lang) : []
       const figure = CASE_FIGURES.map((id) => metrics.find((m) => m.id === id)).find(Boolean)
       const shots = CASE_FRAMES[study.id] ?? {
         browser: study.media.hero,

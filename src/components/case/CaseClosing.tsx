@@ -5,7 +5,7 @@ import { Container, Section } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
-// Section 05: the cobalt band (once per page) with the booking CTA on sun yellow, tracked as
+// The closing (section 05, 04 on a demo): the cobalt band (once per page) with the booking CTA on sun yellow, tracked as
 // book_call_click from "case". Then the "next" card, the agency-style "next project" link: the
 // next featured case, or the services page after the last one (CasePage, ADR-024). The whole
 // card is one link; on hover or focus the title takes the cobalt underline and the arrow moves
@@ -17,15 +17,17 @@ export function CaseClosing({
   lang,
   closing,
   next,
+  index,
 }: {
   lang: Locale
   closing: CaseContent['page']['closing']
   next: NextLink
+  index: number
 }) {
   return (
     <>
       <Section id={CASE_SECTION.closing} tone="accent">
-        <SectionHeading id={CASE_SECTION.closing} index={5} tone="accent" size="xl">
+        <SectionHeading id={CASE_SECTION.closing} index={index} tone="accent" size="xl">
           {closing.title}
         </SectionHeading>
         <p className="mt-6 max-w-[46ch] text-lead">{closing.body}</p>

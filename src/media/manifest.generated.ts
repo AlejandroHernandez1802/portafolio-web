@@ -87,6 +87,136 @@ import m_mrb_brochure_spread_1600_avif from './mrb/brochure-spread-1600.avif'
 import m_mrb_brochure_spread_800_webp from './mrb/brochure-spread-800.webp'
 import m_mrb_brochure_spread_1200_webp from './mrb/brochure-spread-1200.webp'
 import m_mrb_brochure_spread_1600_webp from './mrb/brochure-spread-1600.webp'
+import m_landscape_home_desktop_640_avif from './landscape/home-desktop-640.avif'
+import m_landscape_home_desktop_960_avif from './landscape/home-desktop-960.avif'
+import m_landscape_home_desktop_1280_avif from './landscape/home-desktop-1280.avif'
+import m_landscape_home_desktop_1600_avif from './landscape/home-desktop-1600.avif'
+import m_landscape_home_desktop_640_webp from './landscape/home-desktop-640.webp'
+import m_landscape_home_desktop_960_webp from './landscape/home-desktop-960.webp'
+import m_landscape_home_desktop_1280_webp from './landscape/home-desktop-1280.webp'
+import m_landscape_home_desktop_1600_webp from './landscape/home-desktop-1600.webp'
+import m_landscape_product_desktop_640_avif from './landscape/product-desktop-640.avif'
+import m_landscape_product_desktop_960_avif from './landscape/product-desktop-960.avif'
+import m_landscape_product_desktop_1280_avif from './landscape/product-desktop-1280.avif'
+import m_landscape_product_desktop_1600_avif from './landscape/product-desktop-1600.avif'
+import m_landscape_product_desktop_640_webp from './landscape/product-desktop-640.webp'
+import m_landscape_product_desktop_960_webp from './landscape/product-desktop-960.webp'
+import m_landscape_product_desktop_1280_webp from './landscape/product-desktop-1280.webp'
+import m_landscape_product_desktop_1600_webp from './landscape/product-desktop-1600.webp'
+import m_landscape_checkout_desktop_640_avif from './landscape/checkout-desktop-640.avif'
+import m_landscape_checkout_desktop_960_avif from './landscape/checkout-desktop-960.avif'
+import m_landscape_checkout_desktop_1280_avif from './landscape/checkout-desktop-1280.avif'
+import m_landscape_checkout_desktop_1600_avif from './landscape/checkout-desktop-1600.avif'
+import m_landscape_checkout_desktop_640_webp from './landscape/checkout-desktop-640.webp'
+import m_landscape_checkout_desktop_960_webp from './landscape/checkout-desktop-960.webp'
+import m_landscape_checkout_desktop_1280_webp from './landscape/checkout-desktop-1280.webp'
+import m_landscape_checkout_desktop_1600_webp from './landscape/checkout-desktop-1600.webp'
+import m_landscape_pavers_desktop_640_avif from './landscape/pavers-desktop-640.avif'
+import m_landscape_pavers_desktop_960_avif from './landscape/pavers-desktop-960.avif'
+import m_landscape_pavers_desktop_1280_avif from './landscape/pavers-desktop-1280.avif'
+import m_landscape_pavers_desktop_1600_avif from './landscape/pavers-desktop-1600.avif'
+import m_landscape_pavers_desktop_640_webp from './landscape/pavers-desktop-640.webp'
+import m_landscape_pavers_desktop_960_webp from './landscape/pavers-desktop-960.webp'
+import m_landscape_pavers_desktop_1280_webp from './landscape/pavers-desktop-1280.webp'
+import m_landscape_pavers_desktop_1600_webp from './landscape/pavers-desktop-1600.webp'
+import m_landscape_home_full_desktop_960_avif from './landscape/home-full-desktop-960.avif'
+import m_landscape_home_full_desktop_1440_avif from './landscape/home-full-desktop-1440.avif'
+import m_landscape_home_full_desktop_960_webp from './landscape/home-full-desktop-960.webp'
+import m_landscape_home_full_desktop_1440_webp from './landscape/home-full-desktop-1440.webp'
+import m_landscape_home_full_top_480_avif from './landscape/home-full-top-480.avif'
+import m_landscape_home_full_top_720_avif from './landscape/home-full-top-720.avif'
+import m_landscape_home_full_top_1100_avif from './landscape/home-full-top-1100.avif'
+import m_landscape_home_full_top_1440_avif from './landscape/home-full-top-1440.avif'
+import m_landscape_home_full_top_480_webp from './landscape/home-full-top-480.webp'
+import m_landscape_home_full_top_720_webp from './landscape/home-full-top-720.webp'
+import m_landscape_home_full_top_1100_webp from './landscape/home-full-top-1100.webp'
+import m_landscape_home_full_top_1440_webp from './landscape/home-full-top-1440.webp'
+import m_landscape_home_mobile_300_avif from './landscape/home-mobile-300.avif'
+import m_landscape_home_mobile_600_avif from './landscape/home-mobile-600.avif'
+import m_landscape_home_mobile_780_avif from './landscape/home-mobile-780.avif'
+import m_landscape_home_mobile_300_webp from './landscape/home-mobile-300.webp'
+import m_landscape_home_mobile_600_webp from './landscape/home-mobile-600.webp'
+import m_landscape_home_mobile_780_webp from './landscape/home-mobile-780.webp'
+import m_landscape_zip_mobile_300_avif from './landscape/zip-mobile-300.avif'
+import m_landscape_zip_mobile_600_avif from './landscape/zip-mobile-600.avif'
+import m_landscape_zip_mobile_780_avif from './landscape/zip-mobile-780.avif'
+import m_landscape_zip_mobile_300_webp from './landscape/zip-mobile-300.webp'
+import m_landscape_zip_mobile_600_webp from './landscape/zip-mobile-600.webp'
+import m_landscape_zip_mobile_780_webp from './landscape/zip-mobile-780.webp'
+import m_landscape_product_mobile_300_avif from './landscape/product-mobile-300.avif'
+import m_landscape_product_mobile_600_avif from './landscape/product-mobile-600.avif'
+import m_landscape_product_mobile_780_avif from './landscape/product-mobile-780.avif'
+import m_landscape_product_mobile_300_webp from './landscape/product-mobile-300.webp'
+import m_landscape_product_mobile_600_webp from './landscape/product-mobile-600.webp'
+import m_landscape_product_mobile_780_webp from './landscape/product-mobile-780.webp'
+import m_industrial_home_desktop_640_avif from './industrial/home-desktop-640.avif'
+import m_industrial_home_desktop_960_avif from './industrial/home-desktop-960.avif'
+import m_industrial_home_desktop_1280_avif from './industrial/home-desktop-1280.avif'
+import m_industrial_home_desktop_1600_avif from './industrial/home-desktop-1600.avif'
+import m_industrial_home_desktop_640_webp from './industrial/home-desktop-640.webp'
+import m_industrial_home_desktop_960_webp from './industrial/home-desktop-960.webp'
+import m_industrial_home_desktop_1280_webp from './industrial/home-desktop-1280.webp'
+import m_industrial_home_desktop_1600_webp from './industrial/home-desktop-1600.webp'
+import m_industrial_search_desktop_640_avif from './industrial/search-desktop-640.avif'
+import m_industrial_search_desktop_960_avif from './industrial/search-desktop-960.avif'
+import m_industrial_search_desktop_1280_avif from './industrial/search-desktop-1280.avif'
+import m_industrial_search_desktop_1600_avif from './industrial/search-desktop-1600.avif'
+import m_industrial_search_desktop_640_webp from './industrial/search-desktop-640.webp'
+import m_industrial_search_desktop_960_webp from './industrial/search-desktop-960.webp'
+import m_industrial_search_desktop_1280_webp from './industrial/search-desktop-1280.webp'
+import m_industrial_search_desktop_1600_webp from './industrial/search-desktop-1600.webp'
+import m_industrial_product_desktop_640_avif from './industrial/product-desktop-640.avif'
+import m_industrial_product_desktop_960_avif from './industrial/product-desktop-960.avif'
+import m_industrial_product_desktop_1280_avif from './industrial/product-desktop-1280.avif'
+import m_industrial_product_desktop_1600_avif from './industrial/product-desktop-1600.avif'
+import m_industrial_product_desktop_640_webp from './industrial/product-desktop-640.webp'
+import m_industrial_product_desktop_960_webp from './industrial/product-desktop-960.webp'
+import m_industrial_product_desktop_1280_webp from './industrial/product-desktop-1280.webp'
+import m_industrial_product_desktop_1600_webp from './industrial/product-desktop-1600.webp'
+import m_industrial_quote_desktop_640_avif from './industrial/quote-desktop-640.avif'
+import m_industrial_quote_desktop_960_avif from './industrial/quote-desktop-960.avif'
+import m_industrial_quote_desktop_1280_avif from './industrial/quote-desktop-1280.avif'
+import m_industrial_quote_desktop_1600_avif from './industrial/quote-desktop-1600.avif'
+import m_industrial_quote_desktop_640_webp from './industrial/quote-desktop-640.webp'
+import m_industrial_quote_desktop_960_webp from './industrial/quote-desktop-960.webp'
+import m_industrial_quote_desktop_1280_webp from './industrial/quote-desktop-1280.webp'
+import m_industrial_quote_desktop_1600_webp from './industrial/quote-desktop-1600.webp'
+import m_industrial_home_full_desktop_960_avif from './industrial/home-full-desktop-960.avif'
+import m_industrial_home_full_desktop_1440_avif from './industrial/home-full-desktop-1440.avif'
+import m_industrial_home_full_desktop_960_webp from './industrial/home-full-desktop-960.webp'
+import m_industrial_home_full_desktop_1440_webp from './industrial/home-full-desktop-1440.webp'
+import m_industrial_home_full_top_480_avif from './industrial/home-full-top-480.avif'
+import m_industrial_home_full_top_720_avif from './industrial/home-full-top-720.avif'
+import m_industrial_home_full_top_1100_avif from './industrial/home-full-top-1100.avif'
+import m_industrial_home_full_top_1440_avif from './industrial/home-full-top-1440.avif'
+import m_industrial_home_full_top_480_webp from './industrial/home-full-top-480.webp'
+import m_industrial_home_full_top_720_webp from './industrial/home-full-top-720.webp'
+import m_industrial_home_full_top_1100_webp from './industrial/home-full-top-1100.webp'
+import m_industrial_home_full_top_1440_webp from './industrial/home-full-top-1440.webp'
+import m_industrial_home_mobile_300_avif from './industrial/home-mobile-300.avif'
+import m_industrial_home_mobile_600_avif from './industrial/home-mobile-600.avif'
+import m_industrial_home_mobile_780_avif from './industrial/home-mobile-780.avif'
+import m_industrial_home_mobile_300_webp from './industrial/home-mobile-300.webp'
+import m_industrial_home_mobile_600_webp from './industrial/home-mobile-600.webp'
+import m_industrial_home_mobile_780_webp from './industrial/home-mobile-780.webp'
+import m_industrial_search_mobile_300_avif from './industrial/search-mobile-300.avif'
+import m_industrial_search_mobile_600_avif from './industrial/search-mobile-600.avif'
+import m_industrial_search_mobile_780_avif from './industrial/search-mobile-780.avif'
+import m_industrial_search_mobile_300_webp from './industrial/search-mobile-300.webp'
+import m_industrial_search_mobile_600_webp from './industrial/search-mobile-600.webp'
+import m_industrial_search_mobile_780_webp from './industrial/search-mobile-780.webp'
+import m_industrial_product_mobile_300_avif from './industrial/product-mobile-300.avif'
+import m_industrial_product_mobile_600_avif from './industrial/product-mobile-600.avif'
+import m_industrial_product_mobile_780_avif from './industrial/product-mobile-780.avif'
+import m_industrial_product_mobile_300_webp from './industrial/product-mobile-300.webp'
+import m_industrial_product_mobile_600_webp from './industrial/product-mobile-600.webp'
+import m_industrial_product_mobile_780_webp from './industrial/product-mobile-780.webp'
+import m_industrial_miss_mobile_300_avif from './industrial/miss-mobile-300.avif'
+import m_industrial_miss_mobile_600_avif from './industrial/miss-mobile-600.avif'
+import m_industrial_miss_mobile_780_avif from './industrial/miss-mobile-780.avif'
+import m_industrial_miss_mobile_300_webp from './industrial/miss-mobile-300.webp'
+import m_industrial_miss_mobile_600_webp from './industrial/miss-mobile-600.webp'
+import m_industrial_miss_mobile_780_webp from './industrial/miss-mobile-780.webp'
 
 /**
  * Only the hashed URL is taken from each import. Sizes come from sharp: Turbopack in Next 16.3
@@ -95,10 +225,10 @@ import m_mrb_brochure_spread_1600_webp from './mrb/brochure-spread-1600.webp'
 const src = (file: { src: string }) => file.src
 
 /** Keys with encoded files in this build. */
-export type MediaKey = 'mrb/home-desktop' | 'mrb/home-full-desktop' | 'mrb/home-full-top' | 'mrb/search-desktop' | 'mrb/product-desktop' | 'mrb/quote-desktop' | 'mrb/home-pt-desktop' | 'mrb/home-mobile' | 'mrb/product-mobile' | 'mrb/quote-mobile' | 'mrb/logo' | 'mrb/brochure' | 'mrb/brochure-spread'
+export type MediaKey = 'mrb/home-desktop' | 'mrb/home-full-desktop' | 'mrb/home-full-top' | 'mrb/search-desktop' | 'mrb/product-desktop' | 'mrb/quote-desktop' | 'mrb/home-pt-desktop' | 'mrb/home-mobile' | 'mrb/product-mobile' | 'mrb/quote-mobile' | 'mrb/logo' | 'mrb/brochure' | 'mrb/brochure-spread' | 'landscape/home-desktop' | 'landscape/product-desktop' | 'landscape/checkout-desktop' | 'landscape/pavers-desktop' | 'landscape/home-full-desktop' | 'landscape/home-full-top' | 'landscape/home-mobile' | 'landscape/zip-mobile' | 'landscape/product-mobile' | 'industrial/home-desktop' | 'industrial/search-desktop' | 'industrial/product-desktop' | 'industrial/quote-desktop' | 'industrial/home-full-desktop' | 'industrial/home-full-top' | 'industrial/home-mobile' | 'industrial/search-mobile' | 'industrial/product-mobile' | 'industrial/miss-mobile'
 
 /** Every key the media config knows, including optional sources not produced yet. */
-export type KnownMediaKey = 'mrb/home-desktop' | 'mrb/home-full-desktop' | 'mrb/home-full-top' | 'mrb/search-desktop' | 'mrb/product-desktop' | 'mrb/quote-desktop' | 'mrb/home-pt-desktop' | 'mrb/home-mobile' | 'mrb/product-mobile' | 'mrb/quote-mobile' | 'mrb/logo' | 'mrb/brochure' | 'mrb/brochure-spread' | 'portrait/about' | 'portrait/square' | 'portrait/avatar'
+export type KnownMediaKey = 'mrb/home-desktop' | 'mrb/home-full-desktop' | 'mrb/home-full-top' | 'mrb/search-desktop' | 'mrb/product-desktop' | 'mrb/quote-desktop' | 'mrb/home-pt-desktop' | 'mrb/home-mobile' | 'mrb/product-mobile' | 'mrb/quote-mobile' | 'mrb/logo' | 'mrb/brochure' | 'mrb/brochure-spread' | 'landscape/home-desktop' | 'landscape/product-desktop' | 'landscape/checkout-desktop' | 'landscape/pavers-desktop' | 'landscape/home-full-desktop' | 'landscape/home-full-top' | 'landscape/home-mobile' | 'landscape/zip-mobile' | 'landscape/product-mobile' | 'industrial/home-desktop' | 'industrial/search-desktop' | 'industrial/product-desktop' | 'industrial/quote-desktop' | 'industrial/home-full-desktop' | 'industrial/home-full-top' | 'industrial/home-mobile' | 'industrial/search-mobile' | 'industrial/product-mobile' | 'industrial/miss-mobile' | 'portrait/about' | 'portrait/square' | 'portrait/avatar'
 
 export const media: Record<MediaKey, MediaEntry> = {
   'mrb/home-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_mrb_home_desktop_640_avif), width: 640 }, { src: src(m_mrb_home_desktop_960_avif), width: 960 }, { src: src(m_mrb_home_desktop_1280_avif), width: 1280 }, { src: src(m_mrb_home_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_mrb_home_desktop_640_webp), width: 640 }, { src: src(m_mrb_home_desktop_960_webp), width: 960 }, { src: src(m_mrb_home_desktop_1280_webp), width: 1280 }, { src: src(m_mrb_home_desktop_1600_webp), width: 1600 }] },
@@ -114,4 +244,23 @@ export const media: Record<MediaKey, MediaEntry> = {
   'mrb/logo': { width: 1272, height: 371, avif: [], webp: [], svg: src(m_mrb_logo_svg) },
   'mrb/brochure': { width: 1200, height: 1855, avif: [{ src: src(m_mrb_brochure_480_avif), width: 480 }, { src: src(m_mrb_brochure_800_avif), width: 800 }, { src: src(m_mrb_brochure_1200_avif), width: 1200 }], webp: [{ src: src(m_mrb_brochure_480_webp), width: 480 }, { src: src(m_mrb_brochure_800_webp), width: 800 }, { src: src(m_mrb_brochure_1200_webp), width: 1200 }] },
   'mrb/brochure-spread': { width: 1600, height: 1236, avif: [{ src: src(m_mrb_brochure_spread_800_avif), width: 800 }, { src: src(m_mrb_brochure_spread_1200_avif), width: 1200 }, { src: src(m_mrb_brochure_spread_1600_avif), width: 1600 }], webp: [{ src: src(m_mrb_brochure_spread_800_webp), width: 800 }, { src: src(m_mrb_brochure_spread_1200_webp), width: 1200 }, { src: src(m_mrb_brochure_spread_1600_webp), width: 1600 }] },
+  'landscape/home-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_landscape_home_desktop_640_avif), width: 640 }, { src: src(m_landscape_home_desktop_960_avif), width: 960 }, { src: src(m_landscape_home_desktop_1280_avif), width: 1280 }, { src: src(m_landscape_home_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_landscape_home_desktop_640_webp), width: 640 }, { src: src(m_landscape_home_desktop_960_webp), width: 960 }, { src: src(m_landscape_home_desktop_1280_webp), width: 1280 }, { src: src(m_landscape_home_desktop_1600_webp), width: 1600 }] },
+  'landscape/product-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_landscape_product_desktop_640_avif), width: 640 }, { src: src(m_landscape_product_desktop_960_avif), width: 960 }, { src: src(m_landscape_product_desktop_1280_avif), width: 1280 }, { src: src(m_landscape_product_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_landscape_product_desktop_640_webp), width: 640 }, { src: src(m_landscape_product_desktop_960_webp), width: 960 }, { src: src(m_landscape_product_desktop_1280_webp), width: 1280 }, { src: src(m_landscape_product_desktop_1600_webp), width: 1600 }] },
+  'landscape/checkout-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_landscape_checkout_desktop_640_avif), width: 640 }, { src: src(m_landscape_checkout_desktop_960_avif), width: 960 }, { src: src(m_landscape_checkout_desktop_1280_avif), width: 1280 }, { src: src(m_landscape_checkout_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_landscape_checkout_desktop_640_webp), width: 640 }, { src: src(m_landscape_checkout_desktop_960_webp), width: 960 }, { src: src(m_landscape_checkout_desktop_1280_webp), width: 1280 }, { src: src(m_landscape_checkout_desktop_1600_webp), width: 1600 }] },
+  'landscape/pavers-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_landscape_pavers_desktop_640_avif), width: 640 }, { src: src(m_landscape_pavers_desktop_960_avif), width: 960 }, { src: src(m_landscape_pavers_desktop_1280_avif), width: 1280 }, { src: src(m_landscape_pavers_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_landscape_pavers_desktop_640_webp), width: 640 }, { src: src(m_landscape_pavers_desktop_960_webp), width: 960 }, { src: src(m_landscape_pavers_desktop_1280_webp), width: 1280 }, { src: src(m_landscape_pavers_desktop_1600_webp), width: 1600 }] },
+  'landscape/home-full-desktop': { width: 1440, height: 2000, avif: [{ src: src(m_landscape_home_full_desktop_960_avif), width: 960 }, { src: src(m_landscape_home_full_desktop_1440_avif), width: 1440 }], webp: [{ src: src(m_landscape_home_full_desktop_960_webp), width: 960 }, { src: src(m_landscape_home_full_desktop_1440_webp), width: 1440 }] },
+  'landscape/home-full-top': { width: 1440, height: 1440, avif: [{ src: src(m_landscape_home_full_top_480_avif), width: 480 }, { src: src(m_landscape_home_full_top_720_avif), width: 720 }, { src: src(m_landscape_home_full_top_1100_avif), width: 1100 }, { src: src(m_landscape_home_full_top_1440_avif), width: 1440 }], webp: [{ src: src(m_landscape_home_full_top_480_webp), width: 480 }, { src: src(m_landscape_home_full_top_720_webp), width: 720 }, { src: src(m_landscape_home_full_top_1100_webp), width: 1100 }, { src: src(m_landscape_home_full_top_1440_webp), width: 1440 }] },
+  'landscape/home-mobile': { width: 780, height: 1688, avif: [{ src: src(m_landscape_home_mobile_300_avif), width: 300 }, { src: src(m_landscape_home_mobile_600_avif), width: 600 }, { src: src(m_landscape_home_mobile_780_avif), width: 780 }], webp: [{ src: src(m_landscape_home_mobile_300_webp), width: 300 }, { src: src(m_landscape_home_mobile_600_webp), width: 600 }, { src: src(m_landscape_home_mobile_780_webp), width: 780 }] },
+  'landscape/zip-mobile': { width: 780, height: 1688, avif: [{ src: src(m_landscape_zip_mobile_300_avif), width: 300 }, { src: src(m_landscape_zip_mobile_600_avif), width: 600 }, { src: src(m_landscape_zip_mobile_780_avif), width: 780 }], webp: [{ src: src(m_landscape_zip_mobile_300_webp), width: 300 }, { src: src(m_landscape_zip_mobile_600_webp), width: 600 }, { src: src(m_landscape_zip_mobile_780_webp), width: 780 }] },
+  'landscape/product-mobile': { width: 780, height: 1688, avif: [{ src: src(m_landscape_product_mobile_300_avif), width: 300 }, { src: src(m_landscape_product_mobile_600_avif), width: 600 }, { src: src(m_landscape_product_mobile_780_avif), width: 780 }], webp: [{ src: src(m_landscape_product_mobile_300_webp), width: 300 }, { src: src(m_landscape_product_mobile_600_webp), width: 600 }, { src: src(m_landscape_product_mobile_780_webp), width: 780 }] },
+  'industrial/home-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_industrial_home_desktop_640_avif), width: 640 }, { src: src(m_industrial_home_desktop_960_avif), width: 960 }, { src: src(m_industrial_home_desktop_1280_avif), width: 1280 }, { src: src(m_industrial_home_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_industrial_home_desktop_640_webp), width: 640 }, { src: src(m_industrial_home_desktop_960_webp), width: 960 }, { src: src(m_industrial_home_desktop_1280_webp), width: 1280 }, { src: src(m_industrial_home_desktop_1600_webp), width: 1600 }] },
+  'industrial/search-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_industrial_search_desktop_640_avif), width: 640 }, { src: src(m_industrial_search_desktop_960_avif), width: 960 }, { src: src(m_industrial_search_desktop_1280_avif), width: 1280 }, { src: src(m_industrial_search_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_industrial_search_desktop_640_webp), width: 640 }, { src: src(m_industrial_search_desktop_960_webp), width: 960 }, { src: src(m_industrial_search_desktop_1280_webp), width: 1280 }, { src: src(m_industrial_search_desktop_1600_webp), width: 1600 }] },
+  'industrial/product-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_industrial_product_desktop_640_avif), width: 640 }, { src: src(m_industrial_product_desktop_960_avif), width: 960 }, { src: src(m_industrial_product_desktop_1280_avif), width: 1280 }, { src: src(m_industrial_product_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_industrial_product_desktop_640_webp), width: 640 }, { src: src(m_industrial_product_desktop_960_webp), width: 960 }, { src: src(m_industrial_product_desktop_1280_webp), width: 1280 }, { src: src(m_industrial_product_desktop_1600_webp), width: 1600 }] },
+  'industrial/quote-desktop': { width: 1600, height: 1000, avif: [{ src: src(m_industrial_quote_desktop_640_avif), width: 640 }, { src: src(m_industrial_quote_desktop_960_avif), width: 960 }, { src: src(m_industrial_quote_desktop_1280_avif), width: 1280 }, { src: src(m_industrial_quote_desktop_1600_avif), width: 1600 }], webp: [{ src: src(m_industrial_quote_desktop_640_webp), width: 640 }, { src: src(m_industrial_quote_desktop_960_webp), width: 960 }, { src: src(m_industrial_quote_desktop_1280_webp), width: 1280 }, { src: src(m_industrial_quote_desktop_1600_webp), width: 1600 }] },
+  'industrial/home-full-desktop': { width: 1440, height: 2679, avif: [{ src: src(m_industrial_home_full_desktop_960_avif), width: 960 }, { src: src(m_industrial_home_full_desktop_1440_avif), width: 1440 }], webp: [{ src: src(m_industrial_home_full_desktop_960_webp), width: 960 }, { src: src(m_industrial_home_full_desktop_1440_webp), width: 1440 }] },
+  'industrial/home-full-top': { width: 1440, height: 1440, avif: [{ src: src(m_industrial_home_full_top_480_avif), width: 480 }, { src: src(m_industrial_home_full_top_720_avif), width: 720 }, { src: src(m_industrial_home_full_top_1100_avif), width: 1100 }, { src: src(m_industrial_home_full_top_1440_avif), width: 1440 }], webp: [{ src: src(m_industrial_home_full_top_480_webp), width: 480 }, { src: src(m_industrial_home_full_top_720_webp), width: 720 }, { src: src(m_industrial_home_full_top_1100_webp), width: 1100 }, { src: src(m_industrial_home_full_top_1440_webp), width: 1440 }] },
+  'industrial/home-mobile': { width: 780, height: 1688, avif: [{ src: src(m_industrial_home_mobile_300_avif), width: 300 }, { src: src(m_industrial_home_mobile_600_avif), width: 600 }, { src: src(m_industrial_home_mobile_780_avif), width: 780 }], webp: [{ src: src(m_industrial_home_mobile_300_webp), width: 300 }, { src: src(m_industrial_home_mobile_600_webp), width: 600 }, { src: src(m_industrial_home_mobile_780_webp), width: 780 }] },
+  'industrial/search-mobile': { width: 780, height: 1688, avif: [{ src: src(m_industrial_search_mobile_300_avif), width: 300 }, { src: src(m_industrial_search_mobile_600_avif), width: 600 }, { src: src(m_industrial_search_mobile_780_avif), width: 780 }], webp: [{ src: src(m_industrial_search_mobile_300_webp), width: 300 }, { src: src(m_industrial_search_mobile_600_webp), width: 600 }, { src: src(m_industrial_search_mobile_780_webp), width: 780 }] },
+  'industrial/product-mobile': { width: 780, height: 1688, avif: [{ src: src(m_industrial_product_mobile_300_avif), width: 300 }, { src: src(m_industrial_product_mobile_600_avif), width: 600 }, { src: src(m_industrial_product_mobile_780_avif), width: 780 }], webp: [{ src: src(m_industrial_product_mobile_300_webp), width: 300 }, { src: src(m_industrial_product_mobile_600_webp), width: 600 }, { src: src(m_industrial_product_mobile_780_webp), width: 780 }] },
+  'industrial/miss-mobile': { width: 780, height: 1688, avif: [{ src: src(m_industrial_miss_mobile_300_avif), width: 300 }, { src: src(m_industrial_miss_mobile_600_avif), width: 600 }, { src: src(m_industrial_miss_mobile_780_avif), width: 780 }], webp: [{ src: src(m_industrial_miss_mobile_300_webp), width: 300 }, { src: src(m_industrial_miss_mobile_600_webp), width: 600 }, { src: src(m_industrial_miss_mobile_780_webp), width: 780 }] },
 }

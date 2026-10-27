@@ -1,4 +1,5 @@
 import type { CaseContent, CaseStudy, Locale } from '@/content/types'
+import { trackAttrs } from '@/lib/analytics'
 import { fillCase } from '@/lib/cases'
 import { pagePath, SECTION } from '@/lib/routes'
 import { DeviceFrame } from '@/components/media/DeviceFrame'
@@ -85,7 +86,14 @@ export function CaseHero({
       <div className="mt-8 grid gap-5 lg:grid-cols-12 lg:items-end lg:gap-8">
         <p className="max-w-[60ch] text-lead text-ink-2 lg:col-span-8">{hero.summary}</p>
         <div className="lg:col-span-4 lg:justify-self-end">
-          <ButtonLink variant="secondary" href={study.client.url} target="_blank" rel="noopener">
+          {/* A demo's link counts as demo_open (ADR-026); a client's site is just a link */}
+          <ButtonLink
+            variant="secondary"
+            href={study.client.url}
+            target="_blank"
+            rel="noopener"
+            {...(study.kind === 'demo' && trackAttrs('demo_open', 'case'))}
+          >
             {visitSite}
           </ButtonLink>
         </div>

@@ -223,7 +223,7 @@ Cada página de caso lleva su propio `@graph` con un `Article`, un `Person` y un
 export const dynamic = 'force-static' // obligatorio con output: 'export'
 
 // Una entrada por página e idioma, cada una con sus dos versiones como alternas:
-// home, trabajo, servicios, sobre mí, política y cada caso = 12 URLs con MRB. Nunca /p/*.
+// home, trabajo, servicios, sobre mí, política y cada caso = 16 URLs con MRB y los 2 demos. Nunca /p/*.
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
     { paths: homeAlternates, lastModified: new Date() },
@@ -302,7 +302,7 @@ export default function robots(): MetadataRoute.Robots {
 - [ ] `title` y `description` distintos en `/en` y `/es`; ninguno duplicado.
 - [ ] `<html lang>` correcto en cada idioma.
 - [ ] Canonical y hreflang (`en`, `es`, `x-default`) en el HTML y en el sitemap, en la home, la política y los dos casos.
-- [ ] El sitemap tiene 12 URLs: `/en`, `/es`, `/en/work`, `/es/trabajos`, `/en/services`, `/es/servicios`, `/en/about`, `/es/sobre-mi`, `/en/privacy`, `/es/privacy`, `/en/work/malone-road-belt` y `/es/trabajos/malone-road-belt` ([ADR-024](./14-decisiones.md#adr-024), [ADR-025](./14-decisiones.md#adr-025)).
+- [ ] El sitemap tiene 16 URLs: `/en`, `/es`, `/en/work`, `/es/trabajos`, `/en/services`, `/es/servicios`, `/en/about`, `/es/sobre-mi`, `/en/privacy`, `/es/privacy` y los 3 casos en cada idioma: `/en/work/<caso>` y `/es/trabajos/<caso>` para `malone-road-belt`, `industrial-parts` y `landscape-supply` ([ADR-024](./14-decisiones.md#adr-024), [ADR-025](./14-decisiones.md#adr-025), [ADR-026](./14-decisiones.md#adr-026)).
 - [ ] Las páginas del caso tienen `og:type` `article`, `og:image` propia, `Article` y `BreadcrumbList` sin errores. Verificado en el HTML exportado el 24-oct; falta el Rich Results Test en producción.
 - [ ] `/es/work/malone-road-belt`, `/en/trabajos/malone-road-belt` y `/en/work` responden 404.
 - [ ] OG de la home y del caso, en cada idioma, probadas en LinkedIn Post Inspector y en WhatsApp. Si el titular o una cifra cambiaron, `pnpm media:og` antes de publicar.

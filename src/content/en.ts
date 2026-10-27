@@ -446,6 +446,275 @@ export const en = {
         },
       },
     },
+    industrial: {
+      visitSite: 'Open the demo',
+      alts: {
+        'industrial/home-desktop':
+          'Home page of the Industrial Parts demo on a computer, with the part-number search',
+        'industrial/home-full-desktop':
+          'The full home page of the Industrial Parts demo, from the search to the footer',
+        'industrial/home-full-top':
+          'The top of the Industrial Parts home page, with the part-number search',
+        'industrial/home-mobile': 'The Industrial Parts home page on a phone',
+        'industrial/search-desktop':
+          'A search for “ab 1234-x” on Industrial Parts: AB-1234-X as the exact match and AB-1234-XL as a number that starts the same',
+        'industrial/search-mobile': 'The same part-number search on a phone',
+        'industrial/product-desktop':
+          'A gear pump page with its OEM, manufacturer and cross-reference numbers, the chosen rotation and the notice that it was added to the quote list',
+        'industrial/product-mobile':
+          'The pump’s references table and the button to add it to the quote, on a phone',
+        'industrial/quote-desktop':
+          'The quote list with a pump, a 3 m hose and a number that is not in the catalog',
+        'industrial/miss-mobile':
+          'A search with no results that offers to add the number to the quote as free text, on a phone',
+      },
+      card: {
+        meta: 'Industrial Parts · Hydraulic parts · Demo',
+        industry: 'Hydraulic parts',
+        outcome: 'Find the part by any number, then ask for a quote',
+        metrics: [],
+        built: ['Part-number search', 'Cross-references', 'Quote list'],
+      },
+      examples: {
+        catalog:
+          'Search on the Industrial Parts demo: “ab 1234-x” finds AB-1234-X, because spaces, dashes and capital letters don’t matter.',
+        quote:
+          'On each part’s page the buyer picks the option and the quantity and adds it to a quote list, with no prices and no cart.',
+      },
+      page: {
+        meta: {
+          title: 'Industrial Parts demo: parts by part number | Alejandro Hernández',
+          description:
+            'A hydraulic parts demo store I built: search by OEM, manufacturer or cross-reference number, part pages with every reference, and a quote list.',
+          ogImageAlt: 'Industrial Parts demo · Alejandro Hernández',
+        },
+        breadcrumb: { label: 'Breadcrumb', home: 'Home', work: 'Work' },
+        hero: {
+          title: 'Find the part with the number you already have',
+          summary:
+            'Industrial Parts is a hydraulic parts demo store I built to show how a parts counter sells online: the buyer searches by the number on the nameplate, sees the part with all its references and asks for a quote. The brand is fictional, and nothing is charged or shipped.',
+          facts: [
+            { label: 'Type', value: 'Demo · my own project' },
+            { label: 'Industry', value: 'Hydraulic parts' },
+            { label: 'Buyer', value: 'Workshops and fleets' },
+            { label: 'Selling', value: 'By quote only' },
+            { label: 'Language', value: 'English' },
+          ],
+        },
+        tryIt: {
+          title: 'Try it',
+          lead: 'The demo is live. These three tries take about two minutes.',
+          steps: [
+            {
+              title: 'Search “ab 1234-x”',
+              body: 'Typed like that, with a space and in lowercase, it finds AB-1234-X. Try 4471 too, to see the numbers that start the same.',
+              cta: 'Search the number',
+            },
+            {
+              title: 'Build the order',
+              body: 'Open the 16 cc gear pump, choose the rotation and the quantity, and add it to the quote list.',
+              cta: 'Open the pump',
+            },
+            {
+              title: 'Ask for something it doesn’t carry',
+              body: 'In the quote list, type a number that is not in the catalog: it goes in as one more line, with its own quantity.',
+              cta: 'Open the quote list',
+            },
+          ],
+          note: 'This is a demonstration store: nothing is charged or shipped.',
+        },
+        overview: {
+          title: 'Overview',
+          client: {
+            label: 'Project',
+            value:
+              'My own store, built to show how a hydraulic parts supplier sells online: 8 products in 4 categories, from pumps to hoses, all priced by quote.',
+          },
+          problem: {
+            label: 'Problem',
+            value:
+              'The mechanic has the number off the nameplate, but every manufacturer writes it their own way and the catalog stores it in another format. When the search can’t find it, they call, and when nobody answers, they buy elsewhere.',
+          },
+          role: {
+            label: 'My role',
+            value:
+              'Design and development end to end: the search, the part pages, the quote list and the form.',
+          },
+          stackLabel: 'Tools',
+        },
+        features: {
+          title: 'What I built',
+          items: {
+            search: {
+              title: 'A search that understands the number',
+              body: 'It finds the part by its OEM, manufacturer or cross-reference number, however the buyer types it: “ab 1234-x”, “AB1234X” and “ab.1234.x” are the same. The exact match comes first, then the numbers that start the same.',
+            },
+            references: {
+              title: 'Part pages with every reference',
+              body: 'Each part lists its numbers in a table, with their type and manufacturer, plus its specs, its stock and its lead time. The buyer chooses the option, such as rotation or length, and the quantity.',
+            },
+            quoteList: {
+              title: 'A quote list',
+              body: 'The buyer adds parts and quantities as in a cart, and each line keeps the number as it was searched. The list lasts 30 days without an account, and the form only asks for a name and an email.',
+            },
+            miss: {
+              title: 'Not in the catalog? Still quoted',
+              body: 'A search with no results is not a dead end: it offers to add the number to the quote as free text, so the supplier can look for it.',
+            },
+            quality: {
+              title: 'Accessible and fast',
+              body: 'It works with a keyboard and a screen reader, respects “reduce motion” and doesn’t overflow on a 390 px phone. Pages are built ahead of time, so they load fast.',
+            },
+          },
+        },
+        closing: {
+          title: 'Do your buyers search by part number?',
+          body: 'In a 15-minute call we look at how buyers ask you for parts today and whether a store like this makes sense for your business.',
+          cta: 'Book a 15-minute call',
+        },
+        next: {
+          label: 'Next',
+          title: 'Services',
+          body: 'What your store includes, with real examples.',
+        },
+      },
+    },
+    landscape: {
+      visitSite: 'Open the demo',
+      alts: {
+        'landscape/home-desktop':
+          'Home page of the Landscape Supply demo on a computer, with ZIP code 30301 checked: Zone A, $75 delivery and a $100 minimum order',
+        'landscape/home-full-desktop':
+          'The full home page of the Landscape Supply demo, from the delivery check to the footer',
+        'landscape/home-full-top':
+          'The top of the Landscape Supply home page, with the delivery check',
+        'landscape/home-mobile': 'The Landscape Supply home page on a phone',
+        'landscape/zip-mobile': 'The delivery check on a phone, with the answer for ZIP code 30301',
+        'landscape/product-desktop':
+          'The calculator on the mulch page: 200 ft² at 3 inches deep is 1.85 yd³, rounded up to 2 and filled into the quantity',
+        'landscape/product-mobile':
+          'The same calculator on a phone, with 2 yd³ ready to add to the cart',
+        'landscape/checkout-desktop':
+          'Checkout in test mode, with home delivery to Zone A and a $201 total',
+        'landscape/pavers-desktop':
+          'The pavers page, priced by quote, with the calculator counting 946 units including 5% extra for cuts',
+      },
+      card: {
+        meta: 'Landscape Supply · Landscape materials · Demo',
+        industry: 'Bulk landscape materials',
+        outcome: 'Work out how much to order, check delivery and pay online',
+        metrics: [],
+        built: [
+          'Quantity calculator',
+          'Delivery by ZIP code',
+          'Cart and checkout',
+          'Quote requests',
+        ],
+      },
+      examples: {
+        catalog:
+          'On the Landscape Supply demo, each product page works out the quantity from the buyer’s measurements: 200 ft² at 3 inches is 2 yd³.',
+        quote:
+          'Checkout in test mode: the cart, home delivery by ZIP code and the total, with nothing charged.',
+      },
+      page: {
+        meta: {
+          title: 'Landscape Supply demo: store with calculator and delivery | Alejandro Hernández',
+          description:
+            'A landscape materials demo store I built: a quantity calculator, delivery by ZIP code, cart and checkout in test mode, and products sold by quote.',
+          ogImageAlt: 'Landscape Supply demo · Alejandro Hernández',
+        },
+        breadcrumb: { label: 'Breadcrumb', home: 'Home', work: 'Work' },
+        hero: {
+          title: 'From garden measurements to the cart, no phone call',
+          summary:
+            'Landscape Supply is a bulk mulch, stone and soil demo store I built to show how a materials yard sells online: the buyer measures, the store works out how much to order, says whether it delivers to their ZIP code and lets them pay or ask for a quote. The brand is fictional, and nothing is charged or shipped.',
+          facts: [
+            { label: 'Type', value: 'Demo · my own project' },
+            { label: 'Industry', value: 'Landscape materials' },
+            { label: 'Buyer', value: 'Homeowners and contractors' },
+            { label: 'Selling', value: 'Online checkout and quotes' },
+            { label: 'Language', value: 'English' },
+          ],
+        },
+        tryIt: {
+          title: 'Try it',
+          lead: 'The demo is live. These three tries take about two minutes.',
+          steps: [
+            {
+              title: 'Work out mulch for 200 ft²',
+              body: 'The page comes with the area filled in: the calculator rounds up to the half yard and puts the quantity in the cart in one click.',
+              cta: 'Open the calculator',
+            },
+            {
+              title: 'Check delivery',
+              body: 'Type 30301 or 30310 to see the two delivery zones, or 12345 to see what happens outside them. Pickup at the yard is always free.',
+              cta: 'Check a ZIP code',
+            },
+            {
+              title: 'Pay in test mode',
+              body: 'Add 3 yd³ to the cart, choose home delivery to 30301 and pay with card 1, which approves. Card 2 declines.',
+              cta: 'Open the product',
+            },
+          ],
+          note: 'This is a demonstration store: nothing is charged or shipped.',
+        },
+        overview: {
+          title: 'Overview',
+          client: {
+            label: 'Project',
+            value:
+              'My own store, built to show how a bulk materials supplier sells online: 16 products in 4 categories, sold by the yard, the ton or the bag, plus pavers sold by quote.',
+          },
+          problem: {
+            label: 'Problem',
+            value:
+              'The buyer knows the size of their garden, not how many yards to order, and doesn’t know whether the yard delivers to them or what delivery costs. With those doubts, they call or they don’t buy.',
+          },
+          role: {
+            label: 'My role',
+            value:
+              'Design and development end to end: the catalog, the calculator, the delivery zones, the cart, the checkout and the quotes.',
+          },
+          stackLabel: 'Tools',
+        },
+        features: {
+          title: 'What I built',
+          items: {
+            calculator: {
+              title: 'A quantity calculator',
+              body: 'The buyer enters length and width, a diameter or the area, plus the depth. The store works out the volume, rounds it up to the half yard or to whole bags, shows the math and fills the quantity in one click. When the order is more than a truckload, it offers a quote.',
+            },
+            delivery: {
+              title: 'Delivery by ZIP code',
+              body: 'From the ZIP code, the store says whether it delivers, what it costs and what the minimum order is, across two zones at $75 and $95. The cart shows how much is left to reach the minimum, and pickup at the yard is always free.',
+            },
+            checkout: {
+              title: 'Cart and checkout in test mode',
+              body: 'From the cart to payment in two steps, with delivery and the total in view before paying. In the demo the payment is simulated: card 1 approves, card 2 declines and card 3 shows an error.',
+            },
+            quoteOnly: {
+              title: 'Selling and quoting in one store',
+              body: 'Pavers have no fixed price: their page counts the units with 5% extra for cuts and adds them to a quote list. And any cart becomes a quote in one click.',
+            },
+            quality: {
+              title: 'Accessible and fast',
+              body: 'It works with a keyboard and a screen reader, announces the delivery result, respects “reduce motion” and doesn’t overflow on a 390 px phone. Pages are built ahead of time, so they load fast.',
+            },
+          },
+        },
+        closing: {
+          title: 'Do buyers call you to ask how much to order?',
+          body: 'In a 15-minute call we look at how you sell today and whether a store like this makes sense for your business.',
+          cta: 'Book a 15-minute call',
+        },
+        next: {
+          label: 'Next',
+          title: 'Services',
+          body: 'What your store includes, with real examples.',
+        },
+      },
+    },
   },
   demo: {
     title: 'Try it: this is not a screenshot',

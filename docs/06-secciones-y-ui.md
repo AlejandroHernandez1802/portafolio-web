@@ -60,11 +60,23 @@ Desde la reestructuración del 24-oct ([ADR-020](./14-decisiones.md#adr-020)) y 
 | 04 | Qué construí | `#que-construi` | `CaseFeatures` | `paper` | `features` | — |
 | 05 | Cierre y "siguiente" | `#cierre` | `CaseClosing` | `accent`, y la tarjeta "siguiente" en papel | `closing`, `next` | `book_call_click` (`case`) |
 
+**Página de un demo** (`kind: 'demo'`, [ADR-026](./14-decisiones.md#adr-026)): la misma plantilla, sin cifras ni antes y después. El enlace del hero dice "Abrir la demo" y cuenta como `demo_open` (`case`).
+
+| Índice | Sección | Ancla | Componente | Banda | Contenido (`cases.<id>.page`) | Eventos |
+|---|---|---|---|---|---|---|
+| — | Hero | `#inicio` | `CaseHero` | `paper` + cuadrícula | `hero`, `breadcrumb`, `visitSite` | `demo_open` (`case`) |
+| 01 | Pruébalo: 3 pasos con un enlace a esa página del demo | `#pruebalo` | `CaseTryIt` | `ink` | `tryIt`; las rutas en `CaseStudy.tryIt` | `demo_open` (`case`) |
+| 02 | Resumen | `#resumen` | `CaseOverview` | `paper` | `overview` | — |
+| 03 | Qué construí | `#que-construi` | `CaseFeatures` | `paper` | `features` | — |
+| 04 | Cierre y "siguiente" | `#cierre` | `CaseClosing` | `accent`, y la tarjeta "siguiente" en papel | `closing`, `next` | `book_call_click` (`case`) |
+
+Los casos van en el orden de `cases.ts`: Malone Road Belt, Industrial Parts y Landscape Supply. La tarjeta "siguiente" de cada uno lleva al siguiente, y la del último a Servicios.
+
 En la fase B, el teaser de 49 s entra entre "Qué construí" y el cierre ([ADR-022](./14-decisiones.md#adr-022)).
 
 Islas de cliente globales: `TrackingListener` y `CalLoader`, montadas una sola vez en el layout. `MenuCloser` va en la barra de cada página ([03 §5](./03-arquitectura.md#5-componentes-de-servidor-y-de-cliente)).
 
-**Índice visible.** El recuadro mono de cada encabezado (`SectionHeading index`) numera las secciones en el orden en pantalla, sin contar el hero: 01 a 05 en la home, uno por caso y el contacto en Trabajo, 01 a 08 en Servicios, 01 a 03 en Sobre mí y 01 a 05 en el caso. Los ids de `src/lib/routes.ts` (`SECTION`, `CASE_SECTION`, `ABOUT_SECTION`, `SERVICE_ANCHOR`) son la fuente de verdad. Un demo entra como un caso más, en la página de Trabajo y en el resumen de la home ([ADR-025](./14-decisiones.md#adr-025)).
+**Índice visible.** El recuadro mono de cada encabezado (`SectionHeading index`) numera las secciones en el orden en pantalla, sin contar el hero: 01 a 05 en la home, uno por caso y el contacto en Trabajo, 01 a 08 en Servicios, 01 a 03 en Sobre mí, 01 a 05 en un caso de cliente y 01 a 04 en un demo. Los ids de `src/lib/routes.ts` (`SECTION`, `CASE_SECTION`, `ABOUT_SECTION`, `SERVICE_ANCHOR`) son la fuente de verdad. Un demo entra como un caso más, en la página de Trabajo y en el resumen de la home ([ADR-025](./14-decisiones.md#adr-025)).
 
 ## 2. Contenido por sección
 
@@ -404,7 +416,7 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
   - Nada de fuentes de íconos, PNG ni emoji.
   - Las flechas son siempre el ícono, nunca el carácter "→".
 - **Marca:** sin logo. Es el nombre en Archivo 800 al 87,5 % de ancho, con el descriptor en `ink-2`. Por debajo de 330 px solo se ve "Alejandro", para no cortarlo a mitad de palabra.
-- **Favicon (26-oct):** monograma "AH" en `paper-1` sobre un cuadrado `ink-1` con radio de 4 px, y una barra `sun-400` debajo, como el marcador del titular. Las letras están dibujadas a mano en una cuadrícula de 32 px, no con la fuente, para que se lean a 16 px.
+- **Favicon (25-oct):** monograma "AH" en `paper-1` sobre un cuadrado `ink-1` con radio de 4 px, y una barra `sun-400` debajo, como el marcador del titular. Las letras están dibujadas a mano en una cuadrícula de 32 px, no con la fuente, para que se lean a 16 px.
   - **Fuente:** `src/app/icon.svg`, que Next sirve como favicon SVG.
   - **Derivados:** `pnpm media:icons` genera `favicon.ico` (16, 32 y 48 px, para navegadores sin SVG y para los resultados de Google, que piden múltiplos de 48 px) y `apple-icon.png` (180 px, a sangre, porque iOS redondea las esquinas). Hay que repetirlo cuando cambia `icon.svg`.
 

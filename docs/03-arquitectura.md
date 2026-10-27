@@ -183,7 +183,7 @@ sequenceDiagram
 | `/en/p/[slug]`, `/es/p/[slug]` (v1.1) | SSG con `generateStaticParams` y `dynamicParams = false` | CDN | `noindex` + `X-Robots-Tag` (vía `_headers`); un slug desconocido da 404 |
 | `/call`, `/llamada` | Redirección 307 externa en el Worker | Sin caché | Hacia `cal.com/tu-usuario/15min`, conserva los UTM |
 | `/api/contact` (v1.1) | Endpoint del Worker | Sin caché | Única parte dinámica |
-| `/sitemap.xml`, `/robots.txt` | Estáticos (`sitemap.ts`, `robots.ts` con `dynamic = 'force-static'`) | CDN | 12 URLs (home, Trabajo, Servicios, Sobre mí, política y caso, por idioma; [ADR-024](./14-decisiones.md#adr-024), [ADR-025](./14-decisiones.md#adr-025)); sin `/p/*` |
+| `/sitemap.xml`, `/robots.txt` | Estáticos (`sitemap.ts`, `robots.ts` con `dynamic = 'force-static'`) | CDN | 16 URLs (home, Trabajo, Servicios, Sobre mí, política y los 3 casos, por idioma; [ADR-024](./14-decisiones.md#adr-024), [ADR-025](./14-decisiones.md#adr-025), [ADR-026](./14-decisiones.md#adr-026)); sin `/p/*` |
 | Cualquier otra | `out/404.html`, generado desde `global-not-found.tsx` (flag experimental) y servido con estado 404 | CDN | 404 bilingüe ([ADR-013](./14-decisiones.md#adr-013)) |
 
 **Por qué no hay `proxy.ts`.** El export estático no lo soporta ([Next.js](https://nextjs.org/docs/app/guides/static-exports)), y Next 16 lo recomienda como último recurso. Además, `dynamicParams = false` en el layout `[locale]` impide el patrón `[...rest]` para el 404 localizado ([issue #87738](https://github.com/vercel/next.js/issues/87738)). Ver [ADR-002](./14-decisiones.md#adr-002) y [ADR-004](./14-decisiones.md#adr-004).
@@ -222,7 +222,7 @@ Code/
 │   │   │       └── opengraph-image.tsx
 │   │   ├── global-not-found.tsx   # 404 bilingüe → out/404.html
 │   │   ├── globals.css            # Tailwind + tokens del sistema visual (@theme), utilidades stretch-*, label-mono y text-price-long, reglas de mercado y foco
-│   │   ├── sitemap.ts             # 12 URLs con hreflang
+│   │   ├── sitemap.ts             # 16 URLs con hreflang
 │   │   ├── robots.ts
 │   │   ├── icon.svg               # favicon "AH" (docs/06 §3.6); favicon.ico y apple-icon.png salen de aquí
 │   │   ├── favicon.ico

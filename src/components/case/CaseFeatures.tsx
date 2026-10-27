@@ -10,7 +10,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { altFor, logoOf, mobileTwin, spreadOf } from './case-media'
 import './case.css'
 
-// Section 04, "What I built": one row per study.features entry, in order. From 1024 px each row
+// "What I built" (section 04, 03 on a demo): one row per study.features entry, in order. From 1024 px each row
 // is a 5/7 split, text and capture, and the capture switches sides row by row. The capture sits
 // on a blueprint plate (case.css) in the frame the data names:
 // - browser: the desktop capture; when it has a phone twin (product-desktop → product-mobile),
@@ -144,11 +144,13 @@ export function CaseFeatures({
   study,
   features,
   alts,
+  index,
 }: {
   lang: Locale
   study: CaseStudy
   features: CaseContent['page']['features']
   alts: Alts
+  index: number
 }) {
   // A row whose text uses a figure that is still null is skipped, and the count follows. Rows
   // with a capture alternate sides: the first has it on the left.
@@ -156,6 +158,7 @@ export function CaseFeatures({
   let captures = 0
   for (const feature of study.features) {
     const item = features.items[feature.id]
+    if (!item) throw new Error(`Missing copy for the "${feature.id}" row of ${study.id}`)
     const body = fillCase(item.body, study, lang)
     if (body === null) continue
     const captureLeft = feature.media !== null && captures++ % 2 === 0
@@ -164,7 +167,7 @@ export function CaseFeatures({
 
   return (
     <Section id={CASE_SECTION.features}>
-      <SectionHeading id={CASE_SECTION.features} index={4}>
+      <SectionHeading id={CASE_SECTION.features} index={index}>
         {features.title}
       </SectionHeading>
       <ol className="mt-12 grid gap-16 lg:mt-16 lg:gap-28">

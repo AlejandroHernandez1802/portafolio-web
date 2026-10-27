@@ -13,6 +13,41 @@ const DESKTOP = [640, 960, 1280, 1600]
 const PHONE = [300, 600, 780]
 
 /**
+ * A demo's sources: its viewport captures at the case widths, plus the full home page and its
+ * top square for the work card, as for MRB above. The hero (`home-desktop`) keeps MRB's budget.
+ */
+function demoSources(id, { desktop, phone }) {
+  return [
+    ...desktop.map((name) => ({
+      key: `${id}/${name}`,
+      src: `${id}/${name}.png`,
+      widths: DESKTOP,
+      budget: name === 'home-desktop' ? { width: 1280, kb: 80 } : { width: 1600, kb: 120 },
+    })),
+    {
+      key: `${id}/home-full-desktop`,
+      src: `${id}/home-full-desktop.png`,
+      widths: [960, 1440],
+      budget: { width: 1440, kb: 160 },
+    },
+    {
+      key: `${id}/home-full-top`,
+      src: `${id}/home-full-desktop.png`,
+      widths: [480, 720, 1100, 1440],
+      crop: [1, 1],
+      position: 'top',
+      budget: { width: 720, kb: 40 },
+    },
+    ...phone.map((name) => ({
+      key: `${id}/${name}`,
+      src: `${id}/${name}.png`,
+      widths: PHONE,
+      budget: { width: 600, kb: 45 },
+    })),
+  ]
+}
+
+/**
  * key: `<group>/<name>` (files: src/media/<group>/<name>-<width>.<ext>) · src: path under
  * media-raw/ · widths · crop: [w, h] aspect to cover-crop to · position: sharp crop gravity ·
  * optional: skipped cleanly when the source is missing · budget: max AVIF KB at that width.
@@ -96,6 +131,15 @@ export const SOURCES = [
     widths: [800, 1200, 1600],
     budget: { width: 1600, kb: 120 },
   },
+  // My demo stores (ADR-026), captured like MRB: the same widths and budgets per kind of shot
+  ...demoSources('landscape', {
+    desktop: ['home-desktop', 'product-desktop', 'checkout-desktop', 'pavers-desktop'],
+    phone: ['home-mobile', 'zip-mobile', 'product-mobile'],
+  }),
+  ...demoSources('industrial', {
+    desktop: ['home-desktop', 'search-desktop', 'product-desktop', 'quote-desktop'],
+    phone: ['home-mobile', 'search-mobile', 'product-mobile', 'miss-mobile'],
+  }),
   // Portrait (R-09): any of media-raw/portrait/portrait.{jpg,jpeg,png,heic}. About: 4:5 in a
   // 240 px column; the 1:1 for OG and JSON-LD; the 48 px avatar on the hero's trust line.
   {
