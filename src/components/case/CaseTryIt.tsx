@@ -10,7 +10,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 // to show, but it can be tried. On the same deep-navy band the hero capture straddles, the
 // steps of its own "How to test" page, each with a link that opens that page of the demo in a
 // new tab (demo_open from "case"), then the note that nothing is charged or shipped. Mono
-// numbers in sun yellow, like the results' markers.
+// numbers in on-ink-2 (sun is kept for the H1 marker, ADR-027).
 
 export function CaseTryIt({
   study,
@@ -45,7 +45,7 @@ export function CaseTryIt({
               href={study.client.url + paths[i]}
               target="_blank"
               rel="noopener"
-              className="mt-auto inline-flex min-h-11 items-center gap-2 self-start font-semibold text-on-ink-1 underline decoration-on-ink-2 decoration-2 underline-offset-4 hover:text-sun-400"
+              className="mt-auto inline-flex min-h-11 items-center gap-2 self-start font-semibold text-on-ink-1 underline decoration-on-ink-2 decoration-2 underline-offset-4 hover:decoration-on-ink-1"
               {...trackAttrs('demo_open', 'case')}
             >
               {step.cta}

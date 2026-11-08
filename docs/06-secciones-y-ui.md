@@ -332,9 +332,9 @@ Cada sección elige una banda con el `tone` de `Section`. Las bandas de color so
 - **Placas de plano:** las capturas de la tarjeta de Trabajo y de "Qué construí" se apoyan en una placa con tinte cobalto, la cuadrícula y marcas de esquina (`case-plate` en `case/case.css`), como piezas sobre la mesa de dibujo. Detrás de los marcos del hero hay un brillo cobalto y una línea de construcción discontinua.
 - **Sin imágenes de fondo:** no hay fotos de stock, texturas ni grano. Los fondos son degradados CSS, no archivos, así que no compiten por el LCP. Las únicas imágenes son trabajo real dentro de un marco (§4).
 
-**Mapa visual por sección:**
+**Mapa visual por sección** (la columna "Orden" es la posición en pantalla; desde [ADR-027](./14-decisiones.md#adr-027) los encabezados no muestran números):
 
-| Sección | Banda | Índice | Patrón |
+| Sección | Banda | Orden | Patrón |
 |---|---|---|---|
 | Barra | Papel translúcido | — | Nombre al 87,5 %, línea fina debajo. Desde 1024 px, enlaces con subrayado cobalto al pasar el mouse y el actual en `accent-700`; botón cobalto de 36 px. Debajo, botón "Menú" con contorno de tinta y dos barras que pasan a × |
 | Menú (< 1024 px) | `paper-0`, opaco | — | Panel bajo la barra con borde de tinta inferior y `shadow-2`; filas de 64 px sin índice (la sección actual en cobalto), la etiqueta en 28 px condensada y una flecha cobalto; fondo de tinta al 30 % sobre la página |
