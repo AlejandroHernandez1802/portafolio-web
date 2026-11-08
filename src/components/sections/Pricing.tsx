@@ -67,7 +67,7 @@ export function Pricing({
         ))}
       </ul>
       <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border border-t-0 border-ink-1 bg-accent-50 px-6 py-5 lg:px-8">
-        <BookCallLink lang={lang} location="pricing" iconEnd="arrow">
+        <BookCallLink lang={lang} location="pricing" iconStart="calendar">
           {pricing.cta}
         </BookCallLink>
         <ButtonLink variant="secondary" href={sectionHref(lang, SECTION.faq)}>

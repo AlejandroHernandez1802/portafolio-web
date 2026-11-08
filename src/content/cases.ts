@@ -64,8 +64,10 @@ export const cases: CaseStudy[] = [
       { id: 'brand', media: 'mrb/brochure', frame: 'plain' },
     ],
   },
-  // My demo stores, verified on their live sites on 2026-10-25 (ADR-026). Fictional brands,
-  // English only, nothing charged or shipped; captures from scripts/shots.config.mjs.
+  // My demo stores (ADR-026), first verified on their live sites on 2026-10-25 and again on
+  // 2026-11-08, when both had grown a Spanish version (/es), a video hero, product photos, an
+  // About page and sample reviews. Fictional brands, nothing charged or shipped; captures from
+  // scripts/shots.config.mjs.
   {
     id: 'industrial',
     kind: 'demo',
@@ -77,12 +79,11 @@ export const cases: CaseStudy[] = [
       domain: 'ecommerce-demo-industrial.netlify.app',
     },
     published: '2026-10-27',
-    updated: '2026-10-27',
+    updated: '2026-11-08', // copy and captures redone for the bilingual demo
     launched: '2026-10-25', // first verified live
     featured: true,
-    categories: ['catalog', 'quote'],
-    // A demo shows no figures (ADR-024): 8 products, 4 categories and 26 searchable numbers
-    // are said in its copy instead
+    categories: ['catalog', 'quote', 'languages'],
+    // A demo shows no figures (ADR-024): 8 products in 4 categories are said in its copy instead
     figures: {
       quotes: null,
       products: null,
@@ -92,7 +93,7 @@ export const cases: CaseStudy[] = [
       languages: null,
       weeks: null,
     },
-    languages: ['EN'],
+    languages: ['EN', 'ES'],
     stack: ['Next.js', 'Netlify'],
     media: {
       hero: 'industrial/home-desktop',
@@ -105,12 +106,14 @@ export const cases: CaseStudy[] = [
     examples: {
       catalog: { media: 'industrial/search-desktop', frame: 'browser' },
       quote: { media: 'industrial/product-desktop', frame: 'browser' },
+      languages: { media: 'industrial/search-es-desktop', frame: 'browser' },
     },
     features: [
       { id: 'search', media: 'industrial/search-desktop', frame: 'browser' },
       { id: 'references', media: 'industrial/product-desktop', frame: 'browser' },
       { id: 'quoteList', media: 'industrial/quote-desktop', frame: 'browser' },
       { id: 'miss', media: 'industrial/miss-mobile', frame: 'phone' },
+      { id: 'languages', media: 'industrial/search-es-desktop', frame: 'browser' },
       { id: 'quality', media: null, frame: 'plain' },
     ],
     tryIt: ['/search?q=ab%201234-x', '/p/gear-pump-16cc', '/quote'],
@@ -126,10 +129,10 @@ export const cases: CaseStudy[] = [
       domain: 'ecommerce-demo-landscape.netlify.app',
     },
     published: '2026-10-27',
-    updated: '2026-10-27',
+    updated: '2026-11-08', // copy and captures redone for the bilingual demo
     launched: '2026-10-25', // first verified live
     featured: true,
-    categories: ['store', 'quote', 'catalog'],
+    categories: ['store', 'quote', 'catalog', 'languages'],
     // A demo shows no figures (ADR-024): 16 products and 2 delivery zones are said in its copy
     figures: {
       quotes: null,
@@ -140,7 +143,7 @@ export const cases: CaseStudy[] = [
       languages: null,
       weeks: null,
     },
-    languages: ['EN'],
+    languages: ['EN', 'ES'],
     stack: ['Next.js', 'Netlify'],
     media: {
       hero: 'landscape/home-desktop',
@@ -153,16 +156,19 @@ export const cases: CaseStudy[] = [
     examples: {
       catalog: { media: 'landscape/product-desktop', frame: 'browser' },
       quote: { media: 'landscape/checkout-desktop', frame: 'browser' },
+      languages: { media: 'landscape/product-es-desktop', frame: 'browser' },
     },
     features: [
       { id: 'calculator', media: 'landscape/product-desktop', frame: 'browser' },
       { id: 'delivery', media: 'landscape/zip-mobile', frame: 'phone' },
       { id: 'checkout', media: 'landscape/checkout-desktop', frame: 'browser' },
       { id: 'quoteOnly', media: 'landscape/pavers-desktop', frame: 'browser' },
+      { id: 'languages', media: 'landscape/product-es-desktop', frame: 'browser' },
       { id: 'quality', media: null, frame: 'plain' },
     ],
-    // The calculator, the ZIP check, then 300 ft² (3 yd³) to clear Zone A's minimum and pay
-    tryIt: ['/p/hardwood-mulch?area=200', '/', '/p/hardwood-mulch?area=300'],
+    // The calculator, the cart's ZIP check (with the 2 yd³ of step 1: $16 short of Zone A's
+    // minimum), then 300 ft² (3 yd³) to clear it and pay
+    tryIt: ['/p/hardwood-mulch?area=200', '/cart', '/p/hardwood-mulch?area=300'],
   },
 ]
 

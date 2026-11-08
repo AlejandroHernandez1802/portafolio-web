@@ -15,7 +15,8 @@ import { altFor, isPortrait } from './case-media'
 // phones already saw that capture in the hero, and display:none keeps the lazy image unfetched.
 // Phase B turns the panels into the compare slider (ADR-023); without JS they stay as they are.
 
-// Before on sand with ink arrows, after on deep navy with sun checks. The light-to-dark shift
+// Before on sand with ink dashes (a list, not links: no arrows, docs/15 H3), after on deep
+// navy with sun checks. The light-to-dark shift
 // is the story, so the order never changes.
 const PANELS = {
   // Side by side, the seam side gets 48 px of padding: the 44 px arrow on the seam takes 22 px
@@ -23,7 +24,7 @@ const PANELS = {
   before: {
     box: 'bg-paper-2 text-ink-1 md:pr-12 lg:pl-10',
     accent: 'text-ink-2', // the label and the bullets
-    icon: 'arrow',
+    icon: 'dash',
   },
   after: {
     // Shares the before panel's ink border, so side by side the two read as one frame

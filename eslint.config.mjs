@@ -24,6 +24,7 @@ const eslintConfig = defineConfig([
     'worker/worker-configuration.d.ts',
     // Media sources and encoded video (scripts/media.config.mjs), gitignored
     'media-raw/**',
+    'shots/**',
     'media-out/**',
   ]),
 ])

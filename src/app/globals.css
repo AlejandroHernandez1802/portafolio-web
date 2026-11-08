@@ -4,6 +4,8 @@
    cobalt for every action, a sun-yellow marker. Contrast ratios are against --paper-1 unless
    stated. Plain :root so co-located CSS files (hook.css, section.css…) can always read them. */
 :root {
+  /* Light only (no dark theme, docs/06 §3.7): native controls and scrollbars stay light */
+  color-scheme: light;
   /* Paper: cream stock */
   --paper-0: #fffdf8; /* raised cards, stage product card */
   --paper-1: #faf6ee; /* page */

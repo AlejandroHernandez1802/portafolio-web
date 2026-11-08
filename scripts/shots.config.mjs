@@ -1,7 +1,8 @@
 // What `pnpm media:capture` takes from each live site (R-04, ADR-026): the MRB client site plus
 // its logo and brochure from the MRB project folder, and my two demo stores. Outputs land in
 // media-raw/<site>/ (gitignored); `pnpm media:images` turns them into the AVIF/WebP files in
-// src/media/. MRB facts verified on its live site on 2026-10-24, the demos on 2026-10-25.
+// src/media/. MRB facts verified on its live site on 2026-10-24, the demos on 2026-11-08 (both now in English
+// and Spanish, with a video hero; Landscape checks the ZIP on the product page and in the cart).
 
 import path from 'node:path'
 import { IPHONE_UA } from './lib/cdp.mjs'
@@ -45,10 +46,16 @@ const MRB_QUOTE = '/en/contact?product=bulldog-cleat&urgency=down-now'
 // - { goto: path } · { wait: ms } · { waitText: text }: waits until the page shows `text`
 // They never press a send, pay or submit button: the demos charge and ship nothing, but a sent
 // quote would still email the demo's inbox.
-const LANDSCAPE_ZIP = [
-  { type: ['input[name="postalCode"]', '30301'] },
-  { click: 'Check' },
-  { waitText: 'Zone A' },
+// The calculator's 200 ft² (2 yd³, $84) in the cart, checked against Zone A: "Add $16 more for
+// home delivery" (its minimum is $100), with free pickup still open
+const LANDSCAPE_SHORT_CART = [
+  { click: 'Use ' },
+  { click: 'Add to cart' },
+  { wait: 1500 },
+  { goto: '/cart' },
+  { type: ['main input[autocomplete="postal-code"]', '30301'] },
+  { click: 'Check', within: 'main' },
+  { waitText: 'Add $16 more' },
 ]
 // 300 ft² at 3 in = 2.78 yd³ → 3 yd³ ($126) clears Zone A's $100 minimum: $75 delivery, $201
 const LANDSCAPE_CHECKOUT = [
@@ -64,6 +71,9 @@ const LANDSCAPE_CHECKOUT = [
   { click: 'Checkout', within: 'main' },
   { waitText: 'Secure checkout' },
 ]
+// Both demos offer the other language when the browser's differs (headless Chrome is en-US):
+// the /es shots close that hint first
+const DISMISS_LANGUAGE_HINT = [{ waitText: 'No thanks' }, { click: 'No thanks' }, { wait: 400 }]
 const INDUSTRIAL_ADD_PUMP = [
   { click: 'Counter-clockwise' },
   { click: 'Increase quantity' },
@@ -111,8 +121,8 @@ export const SITES = {
   landscape: {
     baseUrl: 'https://ecommerce-demo-landscape.netlify.app',
     shots: [
-      // The hero with the delivery check answered: "Zone A · delivery $75, minimum order $100"
-      { name: 'home-desktop', path: '/', viewport: 'desktop', steps: LANDSCAPE_ZIP },
+      // The video hero (frozen on one frame); the ZIP check moved to the product page and the cart
+      { name: 'home-desktop', path: '/', viewport: 'desktop' },
       // Photo-heavy: 2,000 px (the hero and the materials) keeps the AVIF in budget
       {
         name: 'home-full-desktop',
@@ -122,13 +132,13 @@ export const SITES = {
         maxHeight: 2000,
       },
       { name: 'home-mobile', path: '/', viewport: 'mobile' },
-      // On a phone the answer sits below the hero: scrolled to the checker
+      // The cart on a phone: Zone A, $16 short of its delivery minimum, pickup free
       {
         name: 'zip-mobile',
-        path: '/',
+        path: '/p/hardwood-mulch?area=200',
         viewport: 'mobile',
-        steps: LANDSCAPE_ZIP,
-        scrollToText: { text: 'Do we deliver to you?', offset: 330 },
+        steps: LANDSCAPE_SHORT_CART,
+        scrollToText: { text: 'Delivery or pickup', offset: 90 },
       },
       // The calculator: 200 ft² at 3 in → 2 yd³, filled into the quantity
       {
@@ -158,6 +168,14 @@ export const SITES = {
         path: '/p/clay-brick-pavers?area=200',
         viewport: 'desktop',
         scrollToText: { text: 'Clay brick pavers', offset: 130 }, // the breadcrumb, then the H1
+      },
+      // The same calculator in Spanish, its own URL under /es
+      {
+        name: 'product-es-desktop',
+        path: '/es/p/hardwood-mulch?area=200',
+        viewport: 'desktop',
+        steps: [...DISMISS_LANGUAGE_HINT, { click: 'Usar ' }],
+        scrollToText: { text: '¿Cuánto necesito?', offset: 140 },
       },
     ],
   },
@@ -210,6 +228,13 @@ export const SITES = {
       },
       // A miss is not a dead end: it offers to quote the number as free text
       { name: 'miss-mobile', path: '/search?q=zzz999', viewport: 'mobile' },
+      // The same search in Spanish, its own URL under /es
+      {
+        name: 'search-es-desktop',
+        path: '/es/search?q=ab%201234-x',
+        viewport: 'desktop',
+        steps: DISMISS_LANGUAGE_HINT,
+      },
     ],
   },
 }

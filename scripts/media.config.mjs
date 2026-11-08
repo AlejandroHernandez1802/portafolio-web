@@ -133,11 +133,23 @@ export const SOURCES = [
   },
   // My demo stores (ADR-026), captured like MRB: the same widths and budgets per kind of shot
   ...demoSources('landscape', {
-    desktop: ['home-desktop', 'product-desktop', 'checkout-desktop', 'pavers-desktop'],
+    desktop: [
+      'home-desktop',
+      'product-desktop',
+      'checkout-desktop',
+      'pavers-desktop',
+      'product-es-desktop',
+    ],
     phone: ['home-mobile', 'zip-mobile', 'product-mobile'],
   }),
   ...demoSources('industrial', {
-    desktop: ['home-desktop', 'search-desktop', 'product-desktop', 'quote-desktop'],
+    desktop: [
+      'home-desktop',
+      'search-desktop',
+      'product-desktop',
+      'quote-desktop',
+      'search-es-desktop',
+    ],
     phone: ['home-mobile', 'search-mobile', 'product-mobile', 'miss-mobile'],
   }),
   // Portrait (R-09): any of media-raw/portrait/portrait.{jpg,jpeg,png,heic}. About: 4:5 in a

@@ -26,7 +26,18 @@ const TONES = {
 
 type SectionTone = keyof typeof TONES
 
-/** A page section with the vertical rhythm of docs/06 §3 (py-16 → py-24). */
+// Spacing by hierarchy, not one padding for every box (docs/15 H6): content on paper keeps
+// 64 → 96 px; a colored band already separates by its change of surface, so it breathes more
+const RHYTHM: Record<SectionTone, string> = {
+  paper: 'py-16 lg:py-24',
+  raised: 'py-16 lg:py-24',
+  sunken: 'py-20 lg:py-28',
+  tint: 'py-20 lg:py-28',
+  ink: 'py-20 lg:py-28',
+  accent: 'py-20 lg:py-28',
+}
+
+/** A page section with the vertical rhythm of docs/06 §3 (RHYTHM above). */
 export function Section({
   id,
   children,
@@ -51,7 +62,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={`relative py-16 lg:py-24 ${TONES[tone]} ${grid} ${className}`}
+      className={`relative ${RHYTHM[tone]} ${TONES[tone]} ${grid} ${className}`}
       {...rest}
     >
       <Container className={containerClassName}>{children}</Container>

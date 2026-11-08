@@ -7,5 +7,6 @@ worker/worker-configuration.d.ts
 AGENTS.md
 CLAUDE.md
 media-raw/
+shots/
 media-out/
 src/media/manifest.generated.ts

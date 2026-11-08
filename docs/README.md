@@ -74,6 +74,7 @@ Sitio en inglés y español que vende "tiendas y catálogos con cotizador" a pym
 | 12 | [Medición y analítica](./12-medicion-y-analitica.md) | Eventos, UTM, prueba de titulares y rutina de los viernes |
 | 13 | [Plan de implementación](./13-plan-de-implementacion.md) | Tareas con horas (también R-00 a R-19 de la reestructuración), calendario, ruta crítica y riesgos |
 | 14 | [Decisiones (ADR)](./14-decisiones.md) | Registro de decisiones y alternativas descartadas (ADR-001 a ADR-026) |
+| 15 | [Mejoras de diseño](./15-mejoras-de-diseno.md) | Auditoría del 8-nov con el skill frontend-craft: hallazgos, plan priorizado (D-01 a D-14) y borrador del ADR-027 |
 
 **Orden de lectura sugerido:** README → 01 → 13 → 03. Los demás docs se consultan cuando se trabaja en cada tarea.
 

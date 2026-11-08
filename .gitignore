@@ -33,3 +33,6 @@ next-env.d.ts
 # media sources and encoded video (scripts/, docs/06 §4): only src/media/ is versioned
 /media-raw/
 /media-out/
+
+# design review screenshots (pnpm design:shots, docs/15 H16)
+/shots/

@@ -305,7 +305,7 @@ La licencia es la OFL 1.1, sin nombre reservado, y va junto al archivo (`src/fon
 
 - **Base de 4 px.**
 - **Contenedor:** 72 rem como máximo, con 16 px de margen lateral (24 px desde 640).
-- **Secciones:** 64 px de padding vertical (96 px desde 1024). Del título al contenido hay 40 px.
+- **Secciones:** el padding vertical va por jerarquía ([15 H6](./15-mejoras-de-diseno.md#42-jerarquía-y-ritmo), 8-nov). Las secciones sobre papel (`paper`, `raised`) llevan 64 px (96 px desde 1024), y las bandas de color (`sunken`, `tint`, `ink`, `accent`) 80 px (112 px desde 1024), porque el cambio de superficie ya las separa. El hero de la home cierra con 64 px: la regla de tinta de la franja de cifras ya marca el corte. Del título al contenido hay 40 px.
 - **Barra fija:** 56 px (`--header-h`), con `scroll-padding-top: calc(var(--header-h) + 16px)` (72 px) en `html`. El hero de cada página empieza debajo de la barra.
 - **Cortes:** mobile first, con los de Tailwind (§6).
 
@@ -341,13 +341,13 @@ Cada sección elige una banda con el `tone` de `Section`. Las bandas de color so
 | Cómo trabajo | `ink` | 03 | Cada paso cuelga de una línea de tiempo con un nodo sol y un numeral gigante sol al 62 %, más un chip de duración con contorno. La línea es vertical en celular y continua a lo ancho desde 1024 px. Debajo, la actualización semanal y las rondas de cambios |
 | Precios | `paper` | 04 | Nota y selector USD / COP en una barra. Tabla de planes con bordes de tinta compartidos y bloque de precio entre dos reglas. El plan recomendado va en `paper-0` con una franja cobalto de 6 px. Cierra una fila de acción teñida, pegada a la tabla |
 | Sobre mí | `paper` | 05 | Entrada grande en primera persona sobre una tabla de datos con regla de tinta arriba y líneas finas entre filas. Con retrato: 4:5 con marco de tinta sobre un bloque sol desplazado |
-| Preguntas | `tint` | 06 | Filas con regla de tinta, número mono y flecha que gira 90° al abrir; título fijo desde 1024 px |
+| Preguntas | `tint` | 06 | Filas con regla de tinta, número mono y un chevron que se voltea al abrir (se despliega en el lugar: no lleva flecha); título fijo desde 1024 px |
 | Contacto | `accent` | 07 | Título enorme en blanco; botón sol de agenda y botones de contorno blancos |
 | Pie | Azul profundo | — | Navegación con índices mono en sol; texto de 14 px en `on-ink-2`; enlaces subrayados en el color del texto (7,5:1), que pasan a sol. `on-ink-line` no sirve para el subrayado: da 1,4:1 y los enlaces se confunden con el © |
 | Caso · hero | `paper` + cuadrícula | — | Miga mono, H1 condensado (`clamp(2.5rem, 6.4vw, 6rem)`), resumen y datos en celdas mono; la captura grande en marco de navegador, montada sobre la franja azul que abre los resultados |
 | Caso · resultados | `ink` | 01 | Cifras condensadas en blanco con banda sol y etiquetas mono, en una fila desde 1024 px |
 | Caso · resumen | `paper` | 02 | Título en columna lateral desde 1024 px, filas con regla y chips del stack |
-| Caso · antes/después | `tint` | 03 | Paneles enfrentados: "Antes" en arena con flechas de tinta, "Después" en azul profundo con checks sol y un celular que sale de su borde inferior; flecha cobalto redonda en la costura |
+| Caso · antes/después | `tint` | 03 | Paneles enfrentados: "Antes" en arena con guiones de tinta, "Después" en azul profundo con checks sol y un celular que sale de su borde inferior; flecha cobalto redonda en la costura |
 | Caso · qué construí | `paper` | 04 | Filas 5/7 que alternan lados; cada captura en su marco sobre una placa de plano; la analítica como una fila ancha de texto con regla |
 | Caso · cierre | `accent` + papel | 05 | Banda cobalto con botón sol; debajo, la tarjeta "Siguiente" entre reglas de tinta, con un círculo cobalto y flecha |
 
@@ -396,7 +396,7 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
   - Preguntas: se subraya la pregunta.
   - Pie: el subrayado pasa a sol.
 - **Presionado:** el botón baja 1 px y muestra una sombra interior. No se encoge.
-- **Transiciones:** de 120 ms en colores y de 200 ms en flechas y en el giro de la flecha de las preguntas. Solo corren con `motion-safe:`. Con "reducir movimiento" no hay desplazamiento de capturas, ni subida de marcos, ni entrada del menú.
+- **Transiciones:** de 120 ms en colores y de 200 ms en flechas y en el giro del chevron de las preguntas. Solo corren con `motion-safe:`. Con "reducir movimiento" no hay desplazamiento de capturas, ni subida de marcos, ni entrada del menú.
 - **Foco:** `:focus-visible` con un anillo de tinta de 2 px separado 2 px (16:1 sobre papel).
   - En las bandas azules el anillo es amarillo sol: proceso, resultados del caso, cierre y pie, que llevan la clase `on-ink`. Da 11,3:1 sobre `deep` y 5,8:1 sobre `accent-500`.
   - Cumple 2.4.7 y 1.4.11.
@@ -411,10 +411,11 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
 ### 3.6 Íconos y marca
 
 - **Íconos:**
-  - Set mínimo de 8 SVG inline en `ui/Icon.tsx`: buscar, estrella, carrito, WhatsApp, correo, calendario, check y flecha. Buscar y estrella quedaron sin uso cuando "Qué resuelvo" pasó al bento de Servicios.
+  - Set mínimo de SVG inline en `ui/Icon.tsx`: buscar, estrella, carrito, WhatsApp, correo, calendario, check, flecha, chevron, externo, LinkedIn y guion. Buscar y estrella quedaron sin uso cuando "Qué resuelvo" pasó al bento de Servicios.
   - Cuadrícula de 24 px, trazo de 2 px, `currentColor` y `aria-hidden`.
   - Nada de fuentes de íconos, PNG ni emoji.
   - Las flechas son siempre el ícono, nunca el carácter "→".
+  - **La flecha promete otra página** ([15 H3](./15-mejoras-de-diseno.md#41-mono-índices-flechas-y-sol-reservarlos-para-cuando-significan-algo), 8-nov). Va solo en enlaces que navegan. La agenda abre un popup, así que lleva el calendario al inicio; lo que se despliega lleva chevron, y una lista simple lleva guiones (`dash`).
 - **Marca:** sin logo. Es el nombre en Archivo 800 al 87,5 % de ancho, con el descriptor en `ink-2`. Por debajo de 330 px solo se ve "Alejandro", para no cortarlo a mitad de palabra.
 - **Favicon (25-oct):** monograma "AH" en `paper-1` sobre un cuadrado `ink-1` con radio de 4 px, y una barra `sun-400` debajo, como el marcador del titular. Las letras están dibujadas a mano en una cuadrícula de 32 px, no con la fuente, para que se lean a 16 px.
   - **Fuente:** `src/app/icon.svg`, que Next sirve como favicon SVG.
@@ -425,7 +426,7 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
 | Componente | Notas |
 |---|---|
 | `ButtonLink` (`ui/`) | Un `<a>` real con `variant`:<ul><li>`primary`: cobalto con texto blanco.</li><li>`secondary`: enlace con subrayado cobalto y flecha.</li><li>`outline`: contorno cobalto; blanco en la banda de cierre, con la variante `on-accent:`.</li><li>`sun`: sol con texto en tinta; es el botón principal sobre la banda cobalto.</li><li>`ink`, `light` y `outlineLight`: para bandas oscuras; hoy sin uso.</li></ul>`size` puede ser `md` (48 px de alto) o `sm` (36 px, solo en la barra, con un área táctil de 48 px que sobresale 6 px arriba y abajo). Con `iconStart` e `iconEnd` se agregan íconos: `secondary` termina en flecha por defecto, y `null` la quita. Acepta `data-track*` y `data-cal-*` |
-| `BookCallLink` (`booking/`) | `ButtonLink` conectado a Cal.com ([07 §2](./07-integraciones.md#2-agenda-con-calcom)). Acepta `variant`, `size`, `iconStart` e `iconEnd`: primario con flecha en el hero y en precios, sol con calendario en el cierre |
+| `BookCallLink` (`booking/`) | `ButtonLink` conectado a Cal.com ([07 §2](./07-integraciones.md#2-agenda-con-calcom)). Acepta `variant`, `size`, `iconStart` e `iconEnd`: siempre con el calendario al inicio y nunca con flecha (abre un popup, no navega): primario en el hero, en precios y en el menú, sol en el cierre |
 | `Container` | 72 rem con 16 o 24 px de margen |
 | `Section` (`ui/Container.tsx`) | `<section>` con `id`, `aria-labelledby="{id}-title"` y el ritmo vertical. `tone` y `backdrop` siguen §3.3. `containerClassName` recibe la rejilla interna |
 | `SectionHeading` | H2 con `id="{id}-title"`; hay un único H1 en la página. `index` dibuja el recuadro mono ("01") con la regla de tinta, oculto para lectores de pantalla. Ese recuadro también se exporta solo, como `SectionIndex`, que el 404 usa con "404". `tone`: `default`, `inverse` (sobre `deep`, con índice sol) o `accent` (cierre). `size`: `md`, o `xl` solo en el cierre |
@@ -459,7 +460,7 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
   - Política de privacidad: título condensado, fecha en mono y secciones con regla de tinta e índice mono.
   - 404: dos columnas, inglés con H1 y español con H2. Cada una tiene el recuadro índice "404", un título condensado y un botón primario hacia su inicio.
 
-**Fuera de alcance:** el modo oscuro. Las animaciones al hacer scroll fuera del escenario y las transiciones entre páginas son de la fase B (§3.5). Las transiciones de hover y foco no cuentan como animación.
+**Fuera de alcance:** el modo oscuro. Por eso `:root` declara `color-scheme: light` y el layout exporta `viewport` con `themeColor: '#faf6ee'` y `colorScheme: 'light'`: los controles nativos no se pintan oscuros y Safari tiñe sus barras con el papel ([15 H12](./15-mejoras-de-diseno.md#45-piso-de-calidad-pendientes-pequeños)). Las animaciones al hacer scroll fuera del escenario y las transiciones entre páginas son de la fase B (§3.5). Las transiciones de hover y foco no cuentan como animación.
 
 ## 4. Imágenes
 

@@ -236,7 +236,7 @@ export function Nav({
           >
             {nav.switchLanguage}
           </a>
-          <BookCallLink lang={lang} location="nav" iconEnd="arrow" className="mt-3">
+          <BookCallLink lang={lang} location="nav" iconStart="calendar" className="mt-3">
             {nav.bookCallFull}
           </BookCallLink>
         </Container>

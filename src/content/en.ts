@@ -450,9 +450,9 @@ export const en = {
       visitSite: 'Open the demo',
       alts: {
         'industrial/home-desktop':
-          'Home page of the Industrial Parts demo on a computer, with the part-number search',
+          'Home page of the Industrial Parts demo on a computer: the part-number search over a video of heavy machinery, beside the card of a typical part',
         'industrial/home-full-desktop':
-          'The full home page of the Industrial Parts demo, from the search to the footer',
+          'The Industrial Parts demo home page, from the search to the categories with photos, the most quoted parts, the reviews and the invitation to quote what is not in the catalog',
         'industrial/home-full-top':
           'The top of the Industrial Parts home page, with the part-number search',
         'industrial/home-mobile': 'The Industrial Parts home page on a phone',
@@ -460,45 +460,49 @@ export const en = {
           'A search for “ab 1234-x” on Industrial Parts: AB-1234-X as the exact match and AB-1234-XL as a number that starts the same',
         'industrial/search-mobile': 'The same part-number search on a phone',
         'industrial/product-desktop':
-          'A gear pump page with its OEM, manufacturer and cross-reference numbers, the chosen rotation and the notice that it was added to the quote list',
+          'A gear pump page with its photo, its OEM, manufacturer and cross-reference numbers, the chosen rotation and the notice that it was added to the quote list',
         'industrial/product-mobile':
           'The pump’s references table and the button to add it to the quote, on a phone',
         'industrial/quote-desktop':
           'The quote list with a pump, a 3 m hose and a number that is not in the catalog',
         'industrial/miss-mobile':
           'A search with no results that offers to add the number to the quote as free text, on a phone',
+        'industrial/search-es-desktop':
+          'The same “ab 1234-x” search on the Spanish version of Industrial Parts: 2 results, the exact match first',
       },
       card: {
         meta: 'Industrial Parts · Hydraulic parts · Demo',
         industry: 'Hydraulic parts',
         outcome: 'Find the part by any number, then ask for a quote',
         metrics: [],
-        built: ['Part-number search', 'Cross-references', 'Quote list'],
+        built: ['Part-number search', 'Cross-references', 'Quote list', 'English and Spanish'],
       },
       examples: {
         catalog:
           'Search on the Industrial Parts demo: “ab 1234-x” finds AB-1234-X, because spaces, dashes and capital letters don’t matter.',
         quote:
           'On each part’s page the buyer picks the option and the quantity and adds it to a quote list, with no prices and no cart.',
+        languages:
+          'The Industrial Parts demo in Spanish: the same part-number search, at its own address under /es.',
       },
       page: {
         meta: {
           title: 'Industrial Parts demo: parts by part number | Alejandro Hernández',
           description:
-            'A hydraulic parts demo store I built: search by OEM, manufacturer or cross-reference number, part pages with every reference, and a quote list.',
+            'A hydraulic parts demo store I built, in English and Spanish: search by OEM, manufacturer or cross-reference number, part pages with every reference, and a quote list.',
           ogImageAlt: 'Industrial Parts demo · Alejandro Hernández',
         },
         breadcrumb: { label: 'Breadcrumb', home: 'Home', work: 'Work' },
         hero: {
           title: 'Find the part with the number you already have',
           summary:
-            'Industrial Parts is a hydraulic parts demo store I built to show how a parts counter sells online: the buyer searches by the number on the nameplate, sees the part with all its references and asks for a quote. The brand is fictional, and nothing is charged or shipped.',
+            'Industrial Parts is a hydraulic parts demo store, in English and Spanish, that I built to show how a parts counter sells online: the buyer searches by the number on the nameplate, sees the part with all its references and asks for a quote. The brand is fictional, and nothing is charged or shipped.',
           facts: [
             { label: 'Type', value: 'Demo · my own project' },
             { label: 'Industry', value: 'Hydraulic parts' },
             { label: 'Buyer', value: 'Workshops and fleets' },
             { label: 'Selling', value: 'By quote only' },
-            { label: 'Language', value: 'English' },
+            { label: 'Languages', value: 'English and Spanish' },
           ],
         },
         tryIt: {
@@ -517,18 +521,18 @@ export const en = {
             },
             {
               title: 'Ask for something it doesn’t carry',
-              body: 'In the quote list, type a number that is not in the catalog: it goes in as one more line, with its own quantity.',
+              body: 'In the quote list, type a number that is not in the catalog: it goes in as one more line, with its own quantity. Send the request and the confirmation shows a reference like Q-2611-7KX3.',
               cta: 'Open the quote list',
             },
           ],
-          note: 'This is a demonstration store: nothing is charged or shipped.',
+          note: 'This is a demonstration store: nothing is charged or shipped, and its emails start with [DEMO] in the subject line.',
         },
         overview: {
           title: 'Overview',
           client: {
             label: 'Project',
             value:
-              'My own store, built to show how a hydraulic parts supplier sells online: 8 products in 4 categories, from pumps to hoses, all priced by quote.',
+              'My own store, built to show how a hydraulic parts supplier sells online: 8 products in 4 categories, from pumps to hoses, all priced by quote, in English and Spanish.',
           },
           problem: {
             label: 'Problem',
@@ -538,7 +542,7 @@ export const en = {
           role: {
             label: 'My role',
             value:
-              'Design and development end to end: the search, the part pages, the quote list and the form.',
+              'Design and development end to end: the search, the part pages, the quote list, the form and both language versions.',
           },
           stackLabel: 'Tools',
         },
@@ -551,15 +555,19 @@ export const en = {
             },
             references: {
               title: 'Part pages with every reference',
-              body: 'Each part lists its numbers in a table, with their type and manufacturer, plus its specs, its stock and its lead time. The buyer chooses the option, such as rotation or length, and the quantity.',
+              body: 'Each part lists its numbers in a table, with their type and manufacturer, plus its photos, specs, stock, lead time, PDF datasheet and related parts. The buyer chooses the option, such as rotation or length, and the quantity, or asks on WhatsApp.',
             },
             quoteList: {
               title: 'A quote list',
-              body: 'The buyer adds parts and quantities as in a cart, and each line keeps the number as it was searched. The list lasts 30 days without an account, and the form only asks for a name and an email.',
+              body: 'The buyer adds parts and quantities as in a cart, and each line keeps the number and the option chosen. The list lasts 30 days without an account, and the form only requires a name and an email, and asks whether to reply by email, phone or WhatsApp.',
             },
             miss: {
               title: 'Not in the catalog? Still quoted',
               body: 'A search with no results is not a dead end: it offers to add the number to the quote as free text, so the supplier can look for it.',
+            },
+            languages: {
+              title: 'English and Spanish',
+              body: 'Every page, part and search exists in both languages, each at its own address. When the visitor’s browser is set to the other language, the store offers it without redirecting them.',
             },
             quality: {
               title: 'Accessible and fast',
@@ -583,21 +591,24 @@ export const en = {
       visitSite: 'Open the demo',
       alts: {
         'landscape/home-desktop':
-          'Home page of the Landscape Supply demo on a computer, with ZIP code 30301 checked: Zone A, $75 delivery and a $100 minimum order',
+          'Home page of the Landscape Supply demo on a computer: “Mulch, stone & soil, delivered by the yard” over a video of a garden, with buttons to shop materials and get a quote',
         'landscape/home-full-desktop':
-          'The full home page of the Landscape Supply demo, from the delivery check to the footer',
+          'The Landscape Supply demo home page, from the hero to the materials with photos and the three steps of how it works',
         'landscape/home-full-top':
-          'The top of the Landscape Supply home page, with the delivery check',
+          'The top of the Landscape Supply home page, with the headline and the buttons to shop materials and get a quote',
         'landscape/home-mobile': 'The Landscape Supply home page on a phone',
-        'landscape/zip-mobile': 'The delivery check on a phone, with the answer for ZIP code 30301',
+        'landscape/zip-mobile':
+          'The cart on a phone with 2 yd³ and ZIP code 30301: $16 short of home delivery to Zone A, with pickup at the yard free',
         'landscape/product-desktop':
-          'The calculator on the mulch page: 200 ft² at 3 inches deep is 1.85 yd³, rounded up to 2 and filled into the quantity',
+          'The calculator on the mulch page, beside its photos: 200 ft² at 3 inches deep is 1.85 yd³, rounded up to 2 and filled into the quantity',
         'landscape/product-mobile':
           'The same calculator on a phone, with 2 yd³ ready to add to the cart',
         'landscape/checkout-desktop':
           'Checkout in test mode, with home delivery to Zone A and a $201 total',
         'landscape/pavers-desktop':
           'The pavers page, priced by quote, with the calculator counting 946 units including 5% extra for cuts',
+        'landscape/product-es-desktop':
+          'The same calculator on the Spanish version of the store: “¿Cuánto necesito?”, with 200 ft² at 3 inches rounded up to 2 yd³',
       },
       card: {
         meta: 'Landscape Supply · Landscape materials · Demo',
@@ -616,25 +627,27 @@ export const en = {
           'On the Landscape Supply demo, each product page works out the quantity from the buyer’s measurements: 200 ft² at 3 inches is 2 yd³.',
         quote:
           'Checkout in test mode: the cart, home delivery by ZIP code and the total, with nothing charged.',
+        languages:
+          'The Landscape Supply demo in Spanish: the same quantity calculator, at its own address under /es.',
       },
       page: {
         meta: {
           title: 'Landscape Supply demo: store with calculator and delivery | Alejandro Hernández',
           description:
-            'A landscape materials demo store I built: a quantity calculator, delivery by ZIP code, cart and checkout in test mode, and products sold by quote.',
+            'A landscape materials demo store I built, in English and Spanish: a quantity calculator, delivery by ZIP code, cart and checkout in test mode, and products sold by quote.',
           ogImageAlt: 'Landscape Supply demo · Alejandro Hernández',
         },
         breadcrumb: { label: 'Breadcrumb', home: 'Home', work: 'Work' },
         hero: {
           title: 'From garden measurements to the cart, no phone call',
           summary:
-            'Landscape Supply is a bulk mulch, stone and soil demo store I built to show how a materials yard sells online: the buyer measures, the store works out how much to order, says whether it delivers to their ZIP code and lets them pay or ask for a quote. The brand is fictional, and nothing is charged or shipped.',
+            'Landscape Supply is a bulk mulch, stone and soil demo store, in English and Spanish, that I built to show how a materials yard sells online: the buyer measures, the store works out how much to order, says whether it delivers to their ZIP code and lets them pay or ask for a quote. The brand is fictional, and nothing is charged or shipped.',
           facts: [
             { label: 'Type', value: 'Demo · my own project' },
             { label: 'Industry', value: 'Landscape materials' },
             { label: 'Buyer', value: 'Homeowners and contractors' },
             { label: 'Selling', value: 'Online checkout and quotes' },
-            { label: 'Language', value: 'English' },
+            { label: 'Languages', value: 'English and Spanish' },
           ],
         },
         tryIt: {
@@ -643,28 +656,28 @@ export const en = {
           steps: [
             {
               title: 'Work out mulch for 200 ft²',
-              body: 'The page comes with the area filled in: the calculator rounds up to the half yard and puts the quantity in the cart in one click.',
+              body: 'The page comes with the area filled in: the calculator shows 1.85 yd³ exact, suggests 2 and fills the quantity in one click. Add it to the cart.',
               cta: 'Open the calculator',
             },
             {
-              title: 'Check delivery',
-              body: 'Type 30301 or 30310 to see the two delivery zones, or 12345 to see what happens outside them. Pickup at the yard is always free.',
-              cta: 'Check a ZIP code',
+              title: 'Choose delivery or pickup',
+              body: 'In the cart, type 30301: with 2 yd³ ($84) you are $16 short of Zone A’s delivery minimum. Try 30310 (Zone B) or 12345 (outside the zones) too. Pickup at the yard is always free.',
+              cta: 'Open the cart',
             },
             {
               title: 'Pay in test mode',
-              body: 'Add 3 yd³ to the cart, choose home delivery to 30301 and pay with card 1, which approves. Card 2 declines.',
+              body: 'Add 3 yd³ to the cart, choose home delivery to 30301 and pay with card 1, which approves. Card 2 declines and card 3 returns an error.',
               cta: 'Open the product',
             },
           ],
-          note: 'This is a demonstration store: nothing is charged or shipped.',
+          note: 'This is a demonstration store: nothing is charged or shipped, and its emails start with [DEMO] in the subject line.',
         },
         overview: {
           title: 'Overview',
           client: {
             label: 'Project',
             value:
-              'My own store, built to show how a bulk materials supplier sells online: 16 products in 4 categories, sold by the yard, the ton or the bag, plus pavers sold by quote.',
+              'My own store, built to show how a bulk materials supplier sells online: 16 products in 4 categories, sold by the yard, the ton or the bag, plus pavers sold by quote, in English and Spanish.',
           },
           problem: {
             label: 'Problem',
@@ -674,7 +687,7 @@ export const en = {
           role: {
             label: 'My role',
             value:
-              'Design and development end to end: the catalog, the calculator, the delivery zones, the cart, the checkout and the quotes.',
+              'Design and development end to end: the catalog, the calculator, the delivery zones, the cart, the checkout, the quotes and both language versions.',
           },
           stackLabel: 'Tools',
         },
@@ -683,11 +696,11 @@ export const en = {
           items: {
             calculator: {
               title: 'A quantity calculator',
-              body: 'The buyer enters length and width, a diameter or the area, plus the depth. The store works out the volume, rounds it up to the half yard or to whole bags, shows the math and fills the quantity in one click. When the order is more than a truckload, it offers a quote.',
+              body: 'The buyer enters length and width, a diameter or the area, plus the depth. The store works out the volume, rounds it up to the half yard or to whole bags, shows the math and fills the quantity in one click. A bar shows how much of the per-order maximum (20 yd³, one truckload) it takes, and past it the store offers to quote the extra trips.',
             },
             delivery: {
               title: 'Delivery by ZIP code',
-              body: 'From the ZIP code, the store says whether it delivers, what it costs and what the minimum order is, across two zones at $75 and $95. The cart shows how much is left to reach the minimum, and pickup at the yard is always free.',
+              body: 'From the ZIP code, on the product page or in the cart, the store says whether it delivers, what it costs and what the minimum order is, across two zones at $75 and $95. The cart shows how much is left to reach the minimum, and pickup at the yard is always free.',
             },
             checkout: {
               title: 'Cart and checkout in test mode',
@@ -695,7 +708,11 @@ export const en = {
             },
             quoteOnly: {
               title: 'Selling and quoting in one store',
-              body: 'Pavers have no fixed price: their page counts the units with 5% extra for cuts and adds them to a quote list. And any cart becomes a quote in one click.',
+              body: 'Pavers have no fixed price: their page counts the units with 5% extra for cuts and adds them to a quote list. Any cart becomes a quote in one click, and the quote form takes the ZIP code and whether the buyer wants a reply by email, phone or WhatsApp.',
+            },
+            languages: {
+              title: 'English and Spanish',
+              body: 'Every page, product and calculator exists in both languages, each at its own address. When the visitor’s browser is set to the other language, the store offers it without redirecting them.',
             },
             quality: {
               title: 'Accessible and fast',

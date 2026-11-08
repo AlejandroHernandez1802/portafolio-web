@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { en } from '@/content/en'
 import { es } from '@/content/es'
 import { ButtonLink } from '@/components/ui/ButtonLink'
@@ -11,6 +11,12 @@ import './globals.css'
 // with status 404 (not_found_handling: "404-page"). Next adds the noindex meta automatically.
 export const metadata: Metadata = {
   title: `${en.notFound.title} · ${es.notFound.title}`,
+}
+
+// Same browser chrome as the [locale] layout, which this page bypasses
+export const viewport: Viewport = {
+  themeColor: '#faf6ee', // --paper-1
+  colorScheme: 'light',
 }
 
 // English first: the page has one H1, the Spanish column carries an H2
@@ -28,7 +34,7 @@ export default function GlobalNotFound() {
             <section key={lang} lang={lang}>
               {/* The spec-sheet callout of SectionHeading, with the status code as its index */}
               <SectionIndex index="404" className="mb-5" />
-              <Title className="text-[2rem] leading-none font-extrabold stretch-heading">
+              <Title className="stretch-heading text-[2rem] leading-none font-extrabold">
                 {copy.title}
               </Title>
               <p className="mt-4 text-ink-2">{copy.body}</p>

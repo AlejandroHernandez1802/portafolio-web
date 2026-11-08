@@ -455,9 +455,9 @@ export const es = {
       visitSite: 'Abrir la demo',
       alts: {
         'industrial/home-desktop':
-          'Página de inicio de la demo Industrial Parts en computador, con el buscador por número de parte',
+          'Página de inicio de la demo Industrial Parts en computador: el buscador por número de parte sobre un video de maquinaria y la ficha de una pieza típica',
         'industrial/home-full-desktop':
-          'La página de inicio completa de la demo Industrial Parts, desde el buscador hasta el pie',
+          'La página de inicio de la demo Industrial Parts, del buscador a las categorías con foto, los repuestos más cotizados, las reseñas y la invitación a cotizar lo que no está en el catálogo',
         'industrial/home-full-top':
           'La parte de arriba de la página de inicio de Industrial Parts, con el buscador por número de parte',
         'industrial/home-mobile': 'La página de inicio de Industrial Parts en celular',
@@ -465,45 +465,54 @@ export const es = {
           'La búsqueda de “ab 1234-x” en Industrial Parts: AB-1234-X como coincidencia exacta y AB-1234-XL como número que empieza igual',
         'industrial/search-mobile': 'La misma búsqueda por número de parte, en celular',
         'industrial/product-desktop':
-          'La ficha de una bomba de engranajes con sus números OEM, de fabricante y de referencia cruzada, la rotación elegida y el aviso de que se agregó a la cotización',
+          'La ficha de una bomba de engranajes con su foto, sus números OEM, de fabricante y de referencia cruzada, la rotación elegida y el aviso de que se agregó a la cotización',
         'industrial/product-mobile':
           'La tabla de referencias de la bomba y el botón para agregarla a la cotización, en celular',
         'industrial/quote-desktop':
           'La lista de cotización con una bomba, una manguera de 3 m y un número que no está en el catálogo',
         'industrial/miss-mobile':
           'Una búsqueda sin resultados que ofrece agregar el número a la cotización como texto libre, en celular',
+        'industrial/search-es-desktop':
+          'La misma búsqueda de “ab 1234-x” en la versión en español de Industrial Parts: 2 resultados, con la coincidencia exacta primero',
       },
       card: {
         meta: 'Industrial Parts · Repuestos hidráulicos · Demo',
         industry: 'Repuestos hidráulicos',
         outcome: 'Encontrar el repuesto con cualquier número y pedir la cotización',
         metrics: [],
-        built: ['Buscador por número de parte', 'Referencias cruzadas', 'Lista de cotización'],
+        built: [
+          'Buscador por número de parte',
+          'Referencias cruzadas',
+          'Lista de cotización',
+          'Inglés y español',
+        ],
       },
       examples: {
         catalog:
           'Búsqueda en la demo Industrial Parts: “ab 1234-x” encuentra AB-1234-X, porque los espacios, los guiones y las mayúsculas no importan.',
         quote:
           'En la ficha de cada repuesto, el comprador elige la opción y la cantidad y lo agrega a su lista de cotización, sin precios ni carrito.',
+        languages:
+          'La demo Industrial Parts en español: la misma búsqueda por número de parte, en su propia dirección bajo /es.',
       },
       page: {
         meta: {
           title: 'Demo Industrial Parts: repuestos por número de parte | Alejandro Hernández',
           description:
-            'Una tienda demo de repuestos hidráulicos que construí: buscador por número OEM, de fabricante o de referencia cruzada, fichas con sus referencias y lista de cotización.',
+            'Una tienda demo de repuestos hidráulicos que construí, en inglés y español: buscador por número OEM, de fabricante o de referencia cruzada, fichas con sus referencias y lista de cotización.',
           ogImageAlt: 'Demo Industrial Parts · Alejandro Hernández',
         },
         breadcrumb: { label: 'Ruta de navegación', home: 'Inicio', work: 'Trabajo' },
         hero: {
           title: 'Encontrar el repuesto con el número que ya tienes',
           summary:
-            'Industrial Parts es una tienda demo de repuestos hidráulicos que construí para mostrar cómo vende en línea un mostrador de repuestos: el comprador busca por el número de la placa, ve la ficha con todas sus referencias y pide la cotización. La marca es ficticia y no se cobra ni se despacha nada.',
+            'Industrial Parts es una tienda demo de repuestos hidráulicos, en inglés y español, que construí para mostrar cómo vende en línea un mostrador de repuestos: el comprador busca por el número de la placa, ve la ficha con todas sus referencias y pide la cotización. La marca es ficticia y no se cobra ni se despacha nada.',
           facts: [
             { label: 'Tipo', value: 'Demo · proyecto propio' },
             { label: 'Industria', value: 'Repuestos hidráulicos' },
             { label: 'Comprador', value: 'Talleres y flotas' },
             { label: 'Venta', value: 'Solo por cotización' },
-            { label: 'Idioma', value: 'Inglés' },
+            { label: 'Idiomas', value: 'Inglés y español' },
           ],
         },
         tryIt: {
@@ -522,18 +531,18 @@ export const es = {
             },
             {
               title: 'Pide algo que no está',
-              body: 'En la lista de cotización, escribe un número que no esté en el catálogo: entra como una línea más, con su cantidad.',
+              body: 'En la lista de cotización, escribe un número que no esté en el catálogo: entra como una línea más, con su cantidad. Al enviar la solicitud, la confirmación muestra una referencia como Q-2611-7KX3.',
               cta: 'Abrir la lista de cotización',
             },
           ],
-          note: 'Es una tienda de demostración: no se cobra ni se despacha nada.',
+          note: 'Es una tienda de demostración: no se cobra ni se despacha nada, y sus correos llevan [DEMO] en el asunto.',
         },
         overview: {
           title: 'Resumen',
           client: {
             label: 'Proyecto',
             value:
-              'Una tienda propia para mostrar cómo vende en línea un proveedor de repuestos hidráulicos: 8 productos en 4 categorías, de bombas a mangueras, todos con precio a cotizar.',
+              'Una tienda propia para mostrar cómo vende en línea un proveedor de repuestos hidráulicos: 8 productos en 4 categorías, de bombas a mangueras, todos con precio a cotizar, en inglés y español.',
           },
           problem: {
             label: 'Problema',
@@ -543,7 +552,7 @@ export const es = {
           role: {
             label: 'Mi papel',
             value:
-              'Diseño y desarrollo completos: el buscador, las fichas, la lista de cotización y el formulario.',
+              'Diseño y desarrollo completos: el buscador, las fichas, la lista de cotización, el formulario y las dos versiones de idioma.',
           },
           stackLabel: 'Herramientas',
         },
@@ -556,15 +565,19 @@ export const es = {
             },
             references: {
               title: 'Fichas con todas sus referencias',
-              body: 'Cada repuesto muestra sus números en una tabla, con el tipo y el fabricante, además de sus especificaciones, el stock y el tiempo de despacho. El comprador elige la opción, como la rotación o el largo, y la cantidad.',
+              body: 'Cada repuesto muestra sus números en una tabla, con el tipo y el fabricante, además de sus fotos, sus especificaciones, el stock, el tiempo de despacho, la ficha técnica en PDF y los repuestos relacionados. El comprador elige la opción, como la rotación o el largo, y la cantidad, o pregunta por WhatsApp.',
             },
             quoteList: {
               title: 'Una lista de cotización',
-              body: 'El comprador suma repuestos y cantidades como en un carrito, y cada línea guarda el número tal como lo buscó. La lista dura 30 días sin crear una cuenta, y el formulario solo pide nombre y correo.',
+              body: 'El comprador suma repuestos y cantidades como en un carrito, y cada línea guarda el número y la opción que eligió. La lista dura 30 días sin crear una cuenta, y el formulario solo exige nombre y correo, y pregunta si prefiere respuesta por correo, teléfono o WhatsApp.',
             },
             miss: {
               title: 'Si no está, igual se cotiza',
               body: 'Una búsqueda sin resultados no es un callejón sin salida: ofrece agregar el número a la cotización como texto libre, para que el proveedor lo busque.',
+            },
+            languages: {
+              title: 'Inglés y español',
+              body: 'Cada página, ficha y búsqueda existe en los dos idiomas, cada uno con su propia dirección. Si el navegador del visitante está en el otro idioma, la tienda se lo ofrece sin redirigirlo.',
             },
             quality: {
               title: 'Accesible y rápida',
@@ -588,22 +601,24 @@ export const es = {
       visitSite: 'Abrir la demo',
       alts: {
         'landscape/home-desktop':
-          'Página de inicio de la demo Landscape Supply en computador, con el código postal 30301 comprobado: Zona A, envío de US$75 y pedido mínimo de US$100',
+          'Página de inicio de la demo Landscape Supply en computador: “Mulch, stone & soil, delivered by the yard” sobre un video de un jardín, con los botones para ver materiales y pedir cotización',
         'landscape/home-full-desktop':
-          'La página de inicio completa de la demo Landscape Supply, desde el comprobador de envío hasta el pie',
+          'La página de inicio de la demo Landscape Supply, del hero a los materiales con foto y los tres pasos de cómo funciona',
         'landscape/home-full-top':
-          'La parte de arriba de la página de inicio de Landscape Supply, con el comprobador de envío',
+          'La parte de arriba de la página de inicio de Landscape Supply, con el titular y los botones para ver materiales y pedir cotización',
         'landscape/home-mobile': 'La página de inicio de Landscape Supply en celular',
         'landscape/zip-mobile':
-          'El comprobador de envío en celular, con la respuesta para el código postal 30301',
+          'El carrito en celular con 2 yd³ y el código postal 30301: faltan US$16 para el envío a domicilio de la Zona A, y retirar en el patio es gratis',
         'landscape/product-desktop':
-          'La calculadora en la ficha del mulch: 200 ft² a 3 pulgadas de profundidad dan 1,85 yd³, redondeadas a 2 y pasadas a la cantidad',
+          'La calculadora en la ficha del mulch, junto a sus fotos: 200 ft² a 3 pulgadas de profundidad dan 1,85 yd³, redondeadas a 2 y pasadas a la cantidad',
         'landscape/product-mobile':
           'La misma calculadora en celular, con 2 yd³ listas para agregar al carrito',
         'landscape/checkout-desktop':
           'El pago en modo de prueba, con envío a domicilio a la Zona A y un total de US$201',
         'landscape/pavers-desktop':
           'La ficha de los adoquines, con precio a cotizar y la calculadora que cuenta 946 unidades con un 5 % extra para cortes',
+        'landscape/product-es-desktop':
+          'La misma calculadora en la versión en español de la tienda: “¿Cuánto necesito?”, con 200 ft² a 3 pulgadas redondeadas a 2 yd³',
       },
       card: {
         meta: 'Landscape Supply · Materiales de paisajismo · Demo',
@@ -622,25 +637,27 @@ export const es = {
           'En la demo Landscape Supply, cada ficha calcula la cantidad con las medidas del comprador: 200 ft² a 3 pulgadas son 2 yd³.',
         quote:
           'El pago en modo de prueba: carrito, envío a domicilio según el código postal y total, sin cobrar nada.',
+        languages:
+          'La demo Landscape Supply en español: la misma calculadora de cantidades, en su propia dirección bajo /es.',
       },
       page: {
         meta: {
           title: 'Demo Landscape Supply: tienda con calculadora y envío | Alejandro Hernández',
           description:
-            'Una tienda demo de materiales de paisajismo que construí: calculadora de cantidades, envío por código postal, carrito y pago en modo de prueba, y productos que se cotizan.',
+            'Una tienda demo de materiales de paisajismo que construí, en inglés y español: calculadora de cantidades, envío por código postal, carrito y pago en modo de prueba, y productos que se cotizan.',
           ogImageAlt: 'Demo Landscape Supply · Alejandro Hernández',
         },
         breadcrumb: { label: 'Ruta de navegación', home: 'Inicio', work: 'Trabajo' },
         hero: {
           title: 'De las medidas del jardín al carrito, sin llamar',
           summary:
-            'Landscape Supply es una tienda demo de mulch, piedra y tierra a granel que construí para mostrar cómo vende en línea un patio de materiales: el comprador mide, la tienda calcula cuánto pedir, le dice si hay envío a su código postal y le deja pagar o pedir una cotización. La marca es ficticia y no se cobra ni se despacha nada.',
+            'Landscape Supply es una tienda demo de mulch, piedra y tierra a granel, en inglés y español, que construí para mostrar cómo vende en línea un patio de materiales: el comprador mide, la tienda calcula cuánto pedir, le dice si hay envío a su código postal y le deja pagar o pedir una cotización. La marca es ficticia y no se cobra ni se despacha nada.',
           facts: [
             { label: 'Tipo', value: 'Demo · proyecto propio' },
             { label: 'Industria', value: 'Materiales de paisajismo' },
             { label: 'Comprador', value: 'Hogares y contratistas' },
             { label: 'Venta', value: 'Pago en línea y cotización' },
-            { label: 'Idioma', value: 'Inglés' },
+            { label: 'Idiomas', value: 'Inglés y español' },
           ],
         },
         tryIt: {
@@ -649,28 +666,28 @@ export const es = {
           steps: [
             {
               title: 'Calcula el mulch para 200 ft²',
-              body: 'La ficha ya trae el área: la calculadora redondea hacia arriba a media yarda y pasa la cantidad al carrito con un clic.',
+              body: 'La ficha ya trae el área: la calculadora muestra 1,85 yd³ exactas, sugiere 2 y las pasa a la cantidad con un clic. Agrégalas al carrito.',
               cta: 'Abrir la calculadora',
             },
             {
-              title: 'Comprueba el envío',
-              body: 'Escribe 30301 o 30310 para ver las dos zonas de envío, o 12345 para ver qué pasa fuera de ellas. Retirar en el patio siempre es gratis.',
-              cta: 'Comprobar un código postal',
+              title: 'Elige envío o retiro',
+              body: 'En el carrito, escribe 30301: con 2 yd³ (US$84) te faltan US$16 para el mínimo de envío de la Zona A. Prueba también 30310 (Zona B) o 12345 (fuera de las zonas). Retirar en el patio siempre es gratis.',
+              cta: 'Abrir el carrito',
             },
             {
               title: 'Paga en modo de prueba',
-              body: 'Agrega 3 yd³ al carrito, elige envío a domicilio al 30301 y paga con la tarjeta 1, que aprueba. La 2 rechaza.',
+              body: 'Agrega 3 yd³ al carrito, elige envío a domicilio al 30301 y paga con la tarjeta 1, que aprueba. La 2 rechaza y la 3 da un error.',
               cta: 'Abrir el producto',
             },
           ],
-          note: 'Es una tienda de demostración: no se cobra ni se despacha nada.',
+          note: 'Es una tienda de demostración: no se cobra ni se despacha nada, y sus correos llevan [DEMO] en el asunto.',
         },
         overview: {
           title: 'Resumen',
           client: {
             label: 'Proyecto',
             value:
-              'Una tienda propia para mostrar cómo vende en línea un proveedor de materiales a granel: 16 productos en 4 categorías, vendidos por yarda, por tonelada o por bolsa, y adoquines que se cotizan.',
+              'Una tienda propia para mostrar cómo vende en línea un proveedor de materiales a granel: 16 productos en 4 categorías, vendidos por yarda, por tonelada o por bolsa, y adoquines que se cotizan, en inglés y español.',
           },
           problem: {
             label: 'Problema',
@@ -680,7 +697,7 @@ export const es = {
           role: {
             label: 'Mi papel',
             value:
-              'Diseño y desarrollo completos: el catálogo, la calculadora, las zonas de envío, el carrito, el pago y la cotización.',
+              'Diseño y desarrollo completos: el catálogo, la calculadora, las zonas de envío, el carrito, el pago, la cotización y las dos versiones de idioma.',
           },
           stackLabel: 'Herramientas',
         },
@@ -689,11 +706,11 @@ export const es = {
           items: {
             calculator: {
               title: 'Una calculadora de cantidades',
-              body: 'El comprador escribe el largo y el ancho, el diámetro o el área, y la profundidad. La tienda calcula el volumen, lo redondea hacia arriba a media yarda o a bolsas enteras, muestra la cuenta y lo pasa a la cantidad con un clic. Si el pedido no cabe en un camión, ofrece cotizarlo.',
+              body: 'El comprador escribe el largo y el ancho, el diámetro o el área, y la profundidad. La tienda calcula el volumen, lo redondea hacia arriba a media yarda o a bolsas enteras, muestra la cuenta y lo pasa a la cantidad con un clic. Una barra indica cuánto del máximo por pedido (20 yd³, un camión) lleva, y si se pasa, ofrece cotizar los viajes extra.',
             },
             delivery: {
               title: 'Envío según el código postal',
-              body: 'Con el código postal, la tienda dice si hay envío, cuánto cuesta y cuál es el pedido mínimo, en dos zonas de US$75 y US$95. En el carrito avisa cuánto falta para llegar al mínimo, y retirar en el patio siempre es gratis.',
+              body: 'Con el código postal, en la ficha o en el carrito, la tienda dice si hay envío, cuánto cuesta y cuál es el pedido mínimo, en dos zonas de US$75 y US$95. En el carrito avisa cuánto falta para llegar al mínimo, y retirar en el patio siempre es gratis.',
             },
             checkout: {
               title: 'Carrito y pago en modo de prueba',
@@ -701,7 +718,11 @@ export const es = {
             },
             quoteOnly: {
               title: 'Vender y cotizar en la misma tienda',
-              body: 'Los adoquines no tienen precio fijo: su ficha calcula las unidades con un 5 % extra para cortes y las agrega a una lista de cotización. Y cualquier carrito se convierte en cotización con un clic.',
+              body: 'Los adoquines no tienen precio fijo: su ficha calcula las unidades con un 5 % extra para cortes y las agrega a una lista de cotización. Cualquier carrito se convierte en cotización con un clic, y el formulario recibe el código postal y si el comprador prefiere respuesta por correo, teléfono o WhatsApp.',
+            },
+            languages: {
+              title: 'Inglés y español',
+              body: 'Cada página, ficha y calculadora existe en los dos idiomas, cada uno con su propia dirección. Si el navegador del visitante está en el otro idioma, la tienda se lo ofrece sin redirigirlo.',
             },
             quality: {
               title: 'Accesible y rápida',

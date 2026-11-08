@@ -7,8 +7,9 @@ import { ButtonLink, type ButtonLinkProps } from '@/components/ui/ButtonLink'
 import { CAL_NAMESPACE } from './cal'
 
 // Every booking CTA (docs/07 §2.2): a real link to Cal.com that opens in a new tab without JS.
-// CalLoader turns it into the popup once the embed has loaded. Looks are ButtonLink's, e.g.
-// primary + arrow in the hero and pricing, sun + calendar on the cobalt closing band.
+// CalLoader turns it into the popup once the embed has loaded. Looks are ButtonLink's: always
+// a leading calendar, never the arrow, which promises another page (docs/15 H3), e.g. primary
+// in the hero and pricing, sun on the cobalt closing band.
 export function BookCallLink({
   lang,
   location,

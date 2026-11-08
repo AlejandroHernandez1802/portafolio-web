@@ -46,7 +46,7 @@ export function Hero({
     <Section
       id="inicio"
       backdrop="grid"
-      className="overflow-x-clip pt-[calc(var(--header-h)+2rem)] pb-16 lg:pt-[calc(var(--header-h)+4rem)] lg:pb-24"
+      className="overflow-x-clip pt-[calc(var(--header-h)+2rem)] pb-16 lg:pt-[calc(var(--header-h)+4rem)] lg:pb-16"
       containerClassName="grid grid-cols-1 gap-y-6 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-12"
     >
       <HeroHeadline id="inicio-title" className="min-w-0 lg:col-span-12">
@@ -55,7 +55,7 @@ export function Hero({
       <div className="flex min-w-0 flex-col gap-6 lg:col-span-5 lg:row-start-2 lg:gap-7">
         <p className="max-w-[52ch] text-lead text-ink-2">{hero.subtitle}</p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <BookCallLink lang={lang} location="hero" iconEnd="arrow">
+          <BookCallLink lang={lang} location="hero" iconStart="calendar">
             {hero.primaryCta}
           </BookCallLink>
           <ButtonLink variant="secondary" href={secondary.href} {...secondary.track}>

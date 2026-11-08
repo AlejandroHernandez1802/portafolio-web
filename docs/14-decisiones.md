@@ -800,6 +800,7 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
     - **Industrial Parts** (`ecommerce-demo-industrial.netlify.app`): repuestos hidráulicos que se buscan por cualquier número de parte y se venden solo por cotización.
     - **Landscape Supply** (`ecommerce-demo-landscape.netlify.app`): materiales de paisajismo a granel, con calculadora, envío por código postal, carrito y pago en modo de prueba, y adoquines que se cotizan.
   - Las dos están en línea, solo en inglés, con marcas ficticias y sin cobrar ni despachar nada. Se revisaron el 25-oct.
+  - **(8-nov)** Se volvieron a revisar después de que mejoraste los dos demos. Ahora están en inglés y español (`/es`), con video en el hero, fotos de producto, página "About", reseñas de ejemplo, WhatsApp y canal de contacto preferido en las cotizaciones. En Landscape, el comprobador de código postal salió de la home: está en la ficha y en el carrito. Se rehicieron las capturas y el copy de ambos casos, se sumó la fila "Inglés y español" a "Qué construí" (con una captura en español de cada demo), y el paso 2 de "Pruébalo" de Landscape abre el carrito, igual que en "How to test". La decisión no cambia.
   - La página de caso de [ADR-020](#adr-020) se pensó para un cliente: abre con resultados y tiene un antes y después. Un demo no tiene ni lo uno ni lo otro, y ADR-024 ya dice que nunca muestra cifras.
   - El pipeline de capturas (R-04) solo conocía malonebelt.com.
 - **Decisión:**

@@ -7,7 +7,8 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 
 // Section 04 of the home (ADR-024): native <details>, no JavaScript (docs/06 §1). At most 8 questions. On the light
 // cobalt band; from 1024 px the title sticks beside the list (5/7 columns). Each row (design
-// system FaqItem) is an ink rule with a mono number, and its arrow turns 90° when open.
+// system FaqItem) is an ink rule with a mono number, and its chevron flips when open: it
+// unfolds in place, so no arrow, which promises another page (docs/15 H3).
 export function Faq({ faq }: { faq: SiteContent['faq'] }) {
   return (
     <Section
@@ -34,8 +35,8 @@ export function Faq({ faq }: { faq: SiteContent['faq'] }) {
                 {item.q}
               </span>
               <Icon
-                name="arrow"
-                className="size-4 shrink-0 text-ink-1 group-open:rotate-90 motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out"
+                name="chevron"
+                className="size-5 shrink-0 text-ink-1 group-open:rotate-180 motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out"
               />
             </summary>
             <p className="max-w-[65ch] pr-8 pb-6 pl-10 text-ink-2">{item.a}</p>

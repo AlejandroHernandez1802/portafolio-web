@@ -9,7 +9,8 @@ const PATHS = {
   mail: 'M4 6h16v12H4V6Zm0 0 8 7 8-7',
   calendar: 'M5 5h14v15H5V5Zm0 5h14M9 3v4m6-4v4',
   check: 'm5 12.5 4.5 4.5L19 7.5',
-  arrow: 'M5 12h14m-6-6 6 6-6 6',
+  arrow: 'M5 12h14m-6-6 6 6-6 6', // only on links to another page (docs/15 H3)
+  dash: 'M6 12h12', // the bullets of a plain list
   chevron: 'm7 10 5 5 5-5', // the dropdowns of the bar
   external: 'M14 4h6v6m0-6-9 9m7 1v6H4V6h6', // a link that opens a new tab
   linkedin: 'M4 4h16v16H4V4Zm4.5 6.5V16m0-8.5v.01M12 16v-5.5m0 2.75a2.5 2.5 0 0 1 5 0V16',

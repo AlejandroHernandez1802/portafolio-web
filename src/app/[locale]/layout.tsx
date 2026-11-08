@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { site } from '@/content/site'
 import { CalLoader } from '@/components/booking/CalLoader'
 import { TrackingListener } from '@/components/analytics/TrackingListener'
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   // noindex on every page whenever site.indexable is false (pre-launch until F1-10)
   robots: site.indexable ? undefined : { index: false, follow: false },
+}
+
+// The browser's own UI matches the page (docs/15 H12): Safari tints its bars with the paper, and
+// form controls stay light, since the site has no dark theme (docs/06 §3.7)
+export const viewport: Viewport = {
+  themeColor: '#faf6ee', // --paper-1
+  colorScheme: 'light',
 }
 
 export default async function RootLayout({ children }: LayoutProps<'/[locale]'>) {

@@ -13,7 +13,8 @@
     "media:capture": "node scripts/capture-screens.mjs",
     "media:images": "node scripts/build-images.mjs",
     "media:og": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-og.mjs",
-    "media:icons": "node scripts/build-icons.mjs"
+    "media:icons": "node scripts/build-icons.mjs",
+    "design:shots": "node scripts/design-shots.mjs"
   },
   "dependencies": {
     "next": "16.3.8",
