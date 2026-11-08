@@ -7,7 +7,7 @@ import { DeviceFrame } from '@/components/media/DeviceFrame'
 import { ResponsiveImage } from '@/components/media/ResponsiveImage'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Chip } from '@/components/ui/Chip'
-import { SectionIndex } from '@/components/ui/SectionHeading'
+import { HeadingRule } from '@/components/ui/SectionHeading'
 
 // A featured case, results first (docs/14 ADR-020). From 1024 px a 7/5 split: the live site in a
 // browser frame on a blueprint plate, then the meta line, the outcome (H2), the first 3 metrics
@@ -16,8 +16,8 @@ import { SectionIndex } from '@/components/ui/SectionHeading'
 // (data-device-hover, device-frame.css); touch screens, which never hover, get only its top
 // square (media.cardTop), half the bytes. The plate repeats the case link for the pointer
 // only: aria-hidden and out of the tab order, like the hero stage (docs/05 §7). The cards live on
-// the work page (ADR-025): numbered like the blocks of the services page, the outcome as their
-// H2 under the page's H1. `reverse` puts the plate on the right from 1024 px (every other card,
+// the work page (ADR-025), the outcome as their H2 under the page's H1, and the featured client
+// case also opens the home's work section, as an H3 under its H2 (ADR-027). `reverse` puts the plate on the right from 1024 px (every other card,
 // ADR-024); a demo store carries the "Demo · my own project" chip over its meta line and never
 // shows client figures.
 
@@ -33,18 +33,20 @@ export function CaseCard({
   study,
   copy,
   labels,
-  index,
   headingId,
+  headingLevel = 'h2',
   reverse = false,
 }: {
   lang: Locale
   study: CaseStudy
   copy: CaseContent
   labels: SiteContent['work']['card']
-  index: number // its number on the work page, from 1
-  headingId: string // the H2, which names the card's section
+  headingId: string // the title, which names the card's section
+  /** h2 on the work page; h3 inside the home's work section */
+  headingLevel?: 'h2' | 'h3'
   reverse?: boolean
 }) {
+  const Title = headingLevel
   const { card } = copy
   const href = casePath(lang, study.id)
   // A demo store has no client results to show, whatever its copy lists
@@ -80,22 +82,22 @@ export function CaseCard({
       </a>
 
       <div className="flex min-w-0 flex-col lg:py-2">
-        <SectionIndex index={index} className="mb-5" />
+        <HeadingRule className="mb-5" />
         {study.kind === 'demo' && (
           <Chip tone="ink" className="mb-3 self-start">
             {labels.demoBadge}
           </Chip>
         )}
-        <p className="label-mono leading-[1.5] text-ink-2">{card.meta}</p>
-        <h2
+        <p className="text-caption text-ink-2">{card.meta}</p>
+        <Title
           id={headingId}
           className="mt-4 stretch-heading text-[clamp(1.75rem,3.2vw,2.5rem)] leading-[1.02] font-extrabold tracking-[-0.01em]"
         >
           {card.outcome}
-        </h2>
+        </Title>
 
         {/* Rows on a shared 2-column subgrid so the numbers line up whatever their width.
-            The sun marker under each number is the final state of the phase B reveal (ADR-023) */}
+            No marker under the numbers: the sun stays on the H1 (ADR-027) */}
         {metrics.length > 0 && (
           <dl className="mt-8 grid grid-cols-[max-content_minmax(0,1fr)] border-t border-ink-1">
             {metrics.map((m) => (
@@ -103,11 +105,9 @@ export function CaseCard({
                 key={m.id}
                 className="col-span-2 grid grid-cols-subgrid items-center gap-x-5 border-b border-paper-3 py-4"
               >
-                <dt className="col-start-2 row-start-1 label-mono leading-[1.5] text-ink-2">
-                  {m.label}
-                </dt>
+                <dt className="col-start-2 row-start-1 text-caption text-ink-2">{m.label}</dt>
                 <dd className="col-start-1 row-start-1">
-                  <span className="relative isolate stretch-display text-[clamp(2.75rem,5vw,4rem)] leading-[0.85] font-extrabold tabular-nums before:absolute before:inset-x-[-0.08em] before:bottom-[0.14em] before:-z-10 before:h-[0.3em] before:bg-sun-400">
+                  <span className="stretch-display text-[clamp(2.75rem,5vw,4rem)] leading-[0.85] font-extrabold tabular-nums">
                     {m.value}
                   </span>
                 </dd>
@@ -116,7 +116,7 @@ export function CaseCard({
           </dl>
         )}
 
-        <h3 className="mt-8 label-mono text-ink-2">{labels.builtLabel}</h3>
+        <h3 className="mt-8 text-caption text-ink-2">{labels.builtLabel}</h3>
         <ul className="mt-3 flex flex-wrap gap-2">
           {card.built.map((item) => (
             <Chip key={item} as="li">

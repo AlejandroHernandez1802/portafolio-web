@@ -4,7 +4,6 @@ import { site } from '@/content/site'
 import type { CaseStudy, Locale, ServiceTileId, SiteContent } from '@/content/types'
 import { trackAttrs } from '@/lib/analytics'
 import { fillCase } from '@/lib/cases'
-import { pad2 } from '@/lib/format'
 import { dictionary } from '@/lib/i18n'
 import { publicFileExists } from '@/lib/links'
 import {
@@ -29,14 +28,14 @@ import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Icon } from '@/components/ui/Icon'
 import { Price } from '@/components/ui/Price'
 import { Section } from '@/components/ui/Container'
-import { SectionIndex } from '@/components/ui/SectionHeading'
+import { HeadingRule } from '@/components/ui/SectionHeading'
 import '@/components/case/case.css'
 
 // The services page, shared by /en/services and /es/servicios (docs/14 ADR-024). The home bento
 // is its summary; here each service gets a block, in the bento's order and under the anchor the
 // "Services" dropdown links to (SERVICE_ANCHOR):
-// - hero: breadcrumb, H1, lead and the 7 blocks as a numbered index;
-// - one block per service: number, outcome, title (H2), the bento body plus a longer intro, and
+// - hero: breadcrumb, H1, lead and the 7 blocks as an index (unnumbered: not a sequence);
+// - one block per service: rule, title (H2), outcome, the bento body plus a longer intro, and
 //   what it includes; beside it, the example of every featured case that has one (cases.ts →
 //   examples), the capture on a blueprint plate with its caption and a link to the case. A demo
 //   store's example is labelled as a demo; a print piece (design, ADR-025) sits under the case's
@@ -122,8 +121,8 @@ function Example({
         </div>
       )}
       <figcaption className="mt-4 grid gap-2">
-        <span className="flex items-start gap-2.5 label-mono leading-[1.5] text-ink-1">
-          <span aria-hidden="true" className="mt-[5px] size-2 shrink-0 bg-sun-400" />
+        <span className="flex items-start gap-2.5 text-caption text-ink-1">
+          <span aria-hidden="true" className="mt-[6px] size-2 shrink-0 bg-ink-1" />
           {label}
         </span>
         <span className="max-w-[60ch] text-ink-2">{fillCase(caption, study, lang) ?? caption}</span>
@@ -166,17 +165,17 @@ function ServiceBlock({
       containerClassName="grid gap-10 lg:grid-cols-12 lg:gap-x-12"
     >
       <div className={`min-w-0 lg:col-span-5 ${examplesLeft ? 'lg:order-last' : ''}`}>
-        <SectionIndex index={index + 1} className="mb-5" />
-        <p className="label-mono leading-[1.5] text-accent-700">{tile.outcome}</p>
+        <HeadingRule className="mb-5" />
         <h2
           id={`${anchor}-title`}
-          className="mt-3 stretch-heading text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.02] font-extrabold tracking-[-0.01em]"
+          className="stretch-heading text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.02] font-extrabold tracking-[-0.01em]"
         >
           {tile.title}
         </h2>
+        <p className="mt-2 text-caption text-accent-700">{tile.outcome}</p>
         <p className="mt-5 text-lead text-ink-1">{tile.body}</p>
         <p className="mt-4 text-ink-2">{item.intro}</p>
-        <h3 className="mt-8 label-mono text-ink-2">{content.servicesPage.includedLabel}</h3>
+        <h3 className="mt-8 text-caption text-ink-2">{content.servicesPage.includedLabel}</h3>
         <ul className="mt-3 grid gap-3 border-t border-ink-1 pt-4">
           {item.included.map((line) => (
             <li key={line} className="flex gap-2.5 leading-[1.45]">
@@ -193,7 +192,7 @@ function ServiceBlock({
         {care && (
           // No capture for the care plan: the plan itself, as a sheet of the pricing table
           <div className="border border-ink-1 bg-paper-0 px-6 pt-8 pb-7 sm:px-8">
-            <p className="label-mono text-ink-3">{content.servicesPage.care.planLabel}</p>
+            <p className="text-caption text-ink-2">{content.servicesPage.care.planLabel}</p>
             <h3 className="mt-3.5 text-[1.375rem] leading-[1.15] font-bold tracking-[-0.01em] stretch-title">
               {plan.name}
             </h3>
@@ -245,15 +244,12 @@ export function ServicesPage({ lang }: { lang: Locale }) {
         <p className="mt-6 max-w-[60ch] text-lead text-ink-2">{page.lead}</p>
         <nav aria-label={page.indexLabel} className="mt-10">
           <ol className="grid border-t border-ink-1 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICE_ORDER.map((id, i) => (
+            {SERVICE_ORDER.map((id) => (
               <li key={id} className="border-b border-paper-3">
                 <a
                   href={anchorHref(here, SERVICE_ANCHOR[id], here)}
                   className="group flex min-h-16 items-center gap-4 py-3 pr-4 text-ink-1 no-underline"
                 >
-                  <span aria-hidden="true" className="label-mono text-ink-3">
-                    {pad2(i + 1)}
-                  </span>
                   <span className="font-semibold underline decoration-transparent decoration-2 underline-offset-4 group-hover:decoration-accent-500">
                     {content.services.tiles[id].title}
                   </span>
@@ -266,7 +262,7 @@ export function ServicesPage({ lang }: { lang: Locale }) {
       {SERVICE_ORDER.map((id, i) => (
         <ServiceBlock key={id} lang={lang} id={id} index={i} content={content} />
       ))}
-      <Closing lang={lang} closing={content.closing} index={SERVICE_ORDER.length + 1} />
+      <Closing lang={lang} closing={content.closing} />
     </PageShell>
   )
 }

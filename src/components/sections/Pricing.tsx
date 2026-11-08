@@ -1,5 +1,4 @@
 import type { Locale, SiteContent } from '@/content/types'
-import { pad2 } from '@/lib/format'
 import { ABOUT_SECTION, SECTION, sectionHref } from '@/lib/routes'
 import { BookCallLink } from '@/components/booking/BookCallLink'
 import { MarketToggle } from '@/components/market/MarketToggle'
@@ -9,44 +8,31 @@ import { Price } from '@/components/ui/Price'
 import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
-// The About page's section 02 (ADR-024): starting prices by visitor market (docs/04 §8, docs/06 §2). The plans form one
+// The About page's pricing section (ADR-024): starting prices by visitor market (docs/04 §8, docs/06 §2). The plans form one
 // ruled table (design system PlanCard): shared 1 px ink borders, and from 1024 px each column
-// is a 5-row subgrid so names, prices and lists line up. The recommended plan is raised paper
+// is a 4-row subgrid (name, description, price, list) so names, prices and lists line up. The recommended plan is raised paper
 // with a 6 px cobalt band on top. The table closes with an action row that shares its ink
 // border: the prototype is requested on the booking call, and the link answers payments and
 // timing in the FAQ, which stays on the home.
 
 // Mobile stacks the columns (no top border after the first); desktop sets them side by side
 const PLAN =
-  'relative flex min-w-0 flex-col border border-ink-1 px-6 pt-8 pb-7 not-first:border-t-0 lg:row-span-5 lg:grid lg:grid-rows-subgrid lg:content-start lg:not-first:border-t lg:not-first:border-l-0'
+  'relative flex min-w-0 flex-col border border-ink-1 px-6 pt-8 pb-7 not-first:border-t-0 lg:row-span-4 lg:grid lg:grid-rows-subgrid lg:content-start lg:not-first:border-t lg:not-first:border-l-0'
 const FEATURED =
   'bg-paper-0 before:absolute before:-inset-x-px before:-top-px before:h-1.5 before:bg-accent-500'
 
-export function Pricing({
-  lang,
-  pricing,
-  index,
-}: {
-  lang: Locale
-  pricing: SiteContent['pricing']
-  index: number
-}) {
+export function Pricing({ lang, pricing }: { lang: Locale; pricing: SiteContent['pricing'] }) {
   return (
     <Section id={ABOUT_SECTION.pricing}>
-      <SectionHeading id={ABOUT_SECTION.pricing} index={index}>
-        {pricing.title}
-      </SectionHeading>
+      <SectionHeading id={ABOUT_SECTION.pricing}>{pricing.title}</SectionHeading>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
         <p className="text-ink-2">{pricing.note}</p>
         <MarketToggle {...pricing.currencyToggle} />
       </div>
-      <ul className="mt-10 grid lg:grid-cols-3 lg:grid-rows-[repeat(5,auto)]">
+      <ul className="mt-10 grid lg:grid-cols-3 lg:grid-rows-[repeat(4,auto)]">
         {pricing.plans.map((plan, i) => (
           <li key={plan.name} className={`${PLAN} ${i === 1 ? FEATURED : 'bg-paper-1'}`}>
-            <span aria-hidden="true" className="label-mono text-ink-3">
-              {pad2(i + 1)}
-            </span>
-            <h3 className="mt-3.5 text-[1.375rem] leading-[1.15] font-bold tracking-[-0.01em] stretch-title">
+            <h3 className="text-[1.375rem] leading-[1.15] font-bold tracking-[-0.01em] stretch-title">
               {plan.name}
             </h3>
             <p className="mt-2.5 text-ink-2">{plan.description}</p>

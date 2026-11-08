@@ -77,8 +77,7 @@ export function HeroShowcase({
           </DeviceFrame>
         </div>
       ) : null}
-      <figcaption className="showcase__caption inline-flex max-w-full items-center gap-2 rounded-xs bg-deep px-3 py-2 label-mono leading-[1.3] text-on-ink-1">
-        <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-sun-400" />
+      <figcaption className="showcase__caption inline-flex max-w-full items-center gap-2 rounded-xs bg-deep px-3 py-2 text-caption text-on-ink-1">
         {label}
       </figcaption>
       {/* People click the screenshots: the whole figure opens the case. Hidden from assistive

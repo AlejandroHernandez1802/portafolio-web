@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import type { CaseContent, CaseStudy, KnownMediaKey, Locale } from '@/content/types'
 import { fillCase } from '@/lib/cases'
-import { pad2 } from '@/lib/format'
 import { CASE_SECTION } from '@/lib/routes'
 import { DeviceFrame } from '@/components/media/DeviceFrame'
 import { ResponsiveImage } from '@/components/media/ResponsiveImage'
@@ -10,7 +9,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { altFor, logoOf, mobileTwin, spreadOf } from './case-media'
 import './case.css'
 
-// "What I built" (section 04, 03 on a demo): one row per study.features entry, in order. From 1024 px each row
+// "What I built": one row per study.features entry, in order. From 1024 px each row
 // is a 5/7 split, text and capture, and the capture switches sides row by row. The capture sits
 // on a blueprint plate (case.css) in the frame the data names:
 // - browser: the desktop capture; when it has a phone twin (product-desktop → product-mobile),
@@ -144,13 +143,11 @@ export function CaseFeatures({
   study,
   features,
   alts,
-  index,
 }: {
   lang: Locale
   study: CaseStudy
   features: CaseContent['page']['features']
   alts: Alts
-  index: number
 }) {
   // A row whose text uses a figure that is still null is skipped, and the count follows. Rows
   // with a capture alternate sides: the first has it on the left.
@@ -167,18 +164,10 @@ export function CaseFeatures({
 
   return (
     <Section id={CASE_SECTION.features}>
-      <SectionHeading id={CASE_SECTION.features} index={index}>
-        {features.title}
-      </SectionHeading>
-      <ol className="mt-12 grid gap-16 lg:mt-16 lg:gap-28">
-        {rows.map((row, i) => {
-          // Decorative counter: the <ol> already gives the position
-          const counter = (
-            <span aria-hidden="true" className="label-mono text-accent-700">
-              {pad2(i + 1)} / {pad2(rows.length)}
-            </span>
-          )
-
+      <SectionHeading id={CASE_SECTION.features}>{features.title}</SectionHeading>
+      {/* Not a sequence, so no "01 / 06" counter (ADR-027) */}
+      <ul className="mt-12 grid gap-16 lg:mt-16 lg:gap-28">
+        {rows.map((row) => {
           if (row.media === null) {
             return (
               <li
@@ -187,8 +176,7 @@ export function CaseFeatures({
                 className="grid gap-4 border-y border-ink-1 py-10 lg:grid-cols-12 lg:gap-8 lg:py-14"
               >
                 <div className="lg:col-span-5">
-                  {counter}
-                  <h3 className={`mt-4 ${TITLE}`}>{row.title}</h3>
+                  <h3 className={TITLE}>{row.title}</h3>
                 </div>
                 <p className="max-w-[60ch] text-lead text-ink-2 lg:col-span-7 lg:pt-8">
                   {row.body}
@@ -206,8 +194,7 @@ export function CaseFeatures({
               className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12"
             >
               <div className="lg:col-span-5">
-                {counter}
-                <h3 className={`mt-4 ${TITLE}`}>{row.title}</h3>
+                <h3 className={TITLE}>{row.title}</h3>
                 <p className="mt-4 max-w-[52ch] text-lead text-ink-2">{row.body}</p>
               </div>
               <div className={`min-w-0 lg:col-span-7 ${row.captureLeft ? 'lg:order-first' : ''}`}>
@@ -221,7 +208,7 @@ export function CaseFeatures({
             </li>
           )
         })}
-      </ol>
+      </ul>
     </Section>
   )
 }

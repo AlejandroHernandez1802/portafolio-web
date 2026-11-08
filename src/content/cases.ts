@@ -5,8 +5,7 @@ import type { CaseId, CaseStudy, Locale } from './types'
 // source of each one is noted next to it, and null hides every place that uses it.
 // Order = order of the cards on the work page, the "Work" menu and the examples. A demo store
 // is one more entry with kind 'demo' (ADR-024): no figures (all null), no before/after, and a
-// "Try it" band with the pages of the demo to open instead of the results (ADR-026). Its
-// categories and industry join the home's work summary (ADR-025).
+// "Try it" band with the pages of the demo to open instead of the results (ADR-026).
 export const cases: CaseStudy[] = [
   {
     id: 'mrb',
@@ -22,7 +21,6 @@ export const cases: CaseStudy[] = [
     updated: '2026-10-25', // bump when the case changes
     launched: '2026-08-25', // full site live (MRB repo, src/data/launch.ts)
     featured: true,
-    categories: ['catalog', 'quote', 'languages', 'design'],
     figures: {
       quotes: null, // REVIEW(R-08): quote requests since 27 Aug (Vercel Analytics) + OK to publish
       // Verified on malonebelt.com/en/products on 24 Oct 2026: 3 Standard + 2 Heavy-Duty + 10 CleatMax
@@ -82,7 +80,6 @@ export const cases: CaseStudy[] = [
     updated: '2026-11-08', // copy and captures redone for the bilingual demo
     launched: '2026-10-25', // first verified live
     featured: true,
-    categories: ['catalog', 'quote', 'languages'],
     // A demo shows no figures (ADR-024): 8 products in 4 categories are said in its copy instead
     figures: {
       quotes: null,
@@ -132,7 +129,6 @@ export const cases: CaseStudy[] = [
     updated: '2026-11-08', // copy and captures redone for the bilingual demo
     launched: '2026-10-25', // first verified live
     featured: true,
-    categories: ['store', 'quote', 'catalog', 'languages'],
     // A demo shows no figures (ADR-024): 16 products and 2 delivery zones are said in its copy
     figures: {
       quotes: null,

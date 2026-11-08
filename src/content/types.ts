@@ -70,9 +70,6 @@ export type DeviceKind = 'browser' | 'phone'
 /** How a capture is shown: in a device, or as print material (the brochure) under the logo */
 export type CaptureFrame = DeviceKind | 'plain'
 
-/** What a project was, for the work summary on the home (ADR-025): its copy is work.categories */
-export type WorkCategory = 'catalog' | 'quote' | 'store' | 'languages' | 'design'
-
 /** Client work, or one of my own demo stores: a demo never shows client figures (ADR-024) */
 export type CaseKind = 'client' | 'demo'
 
@@ -86,8 +83,6 @@ export type CaseStudy = {
   updated: string // ISO date, dateModified in JSON-LD
   launched: string // ISO date the client's site went live ({launched} in copy)
   featured: boolean // a card on the work page, an item of the "Work" menu and an example in /services
-  /** Shown as chips in the home's work summary, merged across cases in work.categories order */
-  categories: WorkCategory[]
   /** Verified numbers only; null hides every metric, cell or line that uses it */
   figures: Record<CaseFigureId, number | null>
   languages: string[] // codes shown in mono, e.g. EN · PT · ES
@@ -119,7 +114,7 @@ export type CaseContent = {
   alts: Partial<Record<KnownMediaKey, string>>
   card: {
     meta: string // "Malone Road Belt · Industrial belts · U.S."
-    industry: string // a chip of the home's work summary; cases sharing one show it once
+    industry: string // under the name in the home's compact rows (ADR-027)
     outcome: string // H3 of the card
     metrics: Metric[] // the first 3 that resolve are shown
     built: string[] // chips
@@ -222,10 +217,6 @@ export type SiteContent = {
   work: {
     title: string
     lead: string // what I do
-    categoriesLabel: string
-    categories: Record<WorkCategory, string> // the order of the chips
-    industriesLabel: string
-    projectsLabel: string // the list of cases, each linking to its page
     allWork: string // the button to the work page
     card: {
       viewCase: string

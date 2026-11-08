@@ -5,7 +5,7 @@ import { Icon } from '@/components/ui/Icon'
 import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
-// The About page's section 01 (ADR-024): four steps with their duration chip, then the weekly update and the rounds of
+// The About page's process (ADR-024): four steps with their duration chip, then the weekly update and the rounds of
 // changes (docs/06 §2), on the deep-navy band. Each step hangs from the timeline with a sun node
 // and a giant condensed numeral (StepCard). The timeline is a vertical rail on phones; from
 // 768 px the steps have no column gap, so their top rules join into one line per row (one line
@@ -17,10 +17,10 @@ const STEP =
 const NODE =
   'before:absolute before:top-1.5 before:left-0 before:size-[9px] before:bg-sun-400 md:before:-top-[5px] after:absolute after:top-[15px] after:-bottom-1.5 after:left-1 after:w-px after:bg-on-ink-line last:after:hidden md:after:hidden'
 
-export function Process({ process, index }: { process: SiteContent['process']; index: number }) {
+export function Process({ process }: { process: SiteContent['process'] }) {
   return (
     <Section id={ABOUT_SECTION.process} tone="ink">
-      <SectionHeading id={ABOUT_SECTION.process} index={index} tone="inverse">
+      <SectionHeading id={ABOUT_SECTION.process} tone="inverse">
         {process.title}
       </SectionHeading>
       <ol className="mt-12 grid md:grid-cols-2 md:gap-y-12 lg:mt-14 lg:grid-cols-4">
@@ -40,11 +40,11 @@ export function Process({ process, index }: { process: SiteContent['process']; i
       </ol>
       <ul className="mt-14 grid border border-on-ink-line font-medium sm:grid-cols-2">
         <li className="flex items-center gap-3 px-5 py-4">
-          <Icon name="calendar" className="size-5 shrink-0 text-sun-400" />
+          <Icon name="calendar" className="size-5 shrink-0 text-on-ink-2" />
           {process.weeklyUpdate}
         </li>
         <li className="flex items-center gap-3 border-t border-on-ink-line px-5 py-4 sm:border-t-0 sm:border-l">
-          <Icon name="check" className="size-5 shrink-0 text-sun-400" />
+          <Icon name="check" className="size-5 shrink-0 text-on-ink-2" />
           {process.changes}
         </li>
       </ul>

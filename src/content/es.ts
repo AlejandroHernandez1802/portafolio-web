@@ -75,8 +75,9 @@ export const es = {
         {
           kind: 'price',
           label: 'por una tienda o catálogo con cotizador',
-          // Shown while the prices are hidden (ADR-025)
-          fallback: { value: '100 %', label: 'del dominio, el hosting y las cuentas, a tu nombre' },
+          // Shown while the prices are hidden (ADR-025). "A tu nombre" lives in the bento and the
+          // FAQ, so the strip says how fast I answer instead (docs/15 H8, D-10)
+          fallback: { value: '1 día hábil', label: 'como máximo para responderte, desde Colombia' },
         },
       ],
     },
@@ -86,16 +87,6 @@ export const es = {
   work: {
     title: 'Trabajo reciente',
     lead: 'Diseño y construyo catálogos, cotizadores y tiendas en línea para negocios que venden productos, desde la marca y la interfaz hasta el sitio publicado en tu dominio. Cada proyecto tiene su caso completo.',
-    categoriesLabel: 'Qué he construido',
-    categories: {
-      catalog: 'Catálogos de productos',
-      quote: 'Cotizadores en línea',
-      store: 'Tiendas con carrito y pago',
-      languages: 'Sitios en varios idiomas',
-      design: 'Diseño web y de marca',
-    },
-    industriesLabel: 'Industrias',
-    projectsLabel: 'Proyectos',
     allWork: 'Ver todo mi trabajo',
     card: {
       viewCase: 'Ver el caso completo',

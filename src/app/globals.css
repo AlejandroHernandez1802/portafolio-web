@@ -121,6 +121,11 @@
   --text-lead--line-height: 1.5;
   --text-label: 0.75rem;
   --text-label--line-height: 1;
+  /* Descriptive labels and short phrases (ADR-027): Archivo 500 at 14 px, sentence case, in
+     ink-2 (7.4:1). Mono stays for data that is written in mono in the client's world */
+  --text-caption: 0.875rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--font-weight: 500;
 
   --leading-display: 0.95;
   --leading-heading: 0.98;
@@ -203,7 +208,8 @@
   }
 }
 
-/* Mono = data: section indexes, price labels, references, "Antes / Después". Always 500, the
+/* Mono = data (ADR-027): references, codes, step numbers, price labels, "Antes / Después".
+   Short only (≤ 3 words); phrases and descriptive labels use text-caption. Always 500, the
    only weight loaded. A leading-* utility next to it wins over its line-height of 1. */
 @utility label-mono {
   font-family: var(--font-mono);

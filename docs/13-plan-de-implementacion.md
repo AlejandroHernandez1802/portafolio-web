@@ -221,12 +221,12 @@ Video y movimiento, después de publicar ([ADR-022](./14-decisiones.md#adr-022) 
 | R-13 | Grabas los 3 clips con la grabación de pantalla de macOS, siguiendo el guion: `oem-search` (8 s), `language` (6 s) y `quote-mobile` (10 s). Luego `encode-video` y `upload-media`. El teaser se re-renderiza a 1280 × 720 | 2 | R-12; ffmpeg instalado con Homebrew | 9–11 nov | `ffprobe` confirma los códecs, que no hay audio y que `moov` va al inicio. Pesos dentro de ADR-022. El clip del cotizador se grabó en el entorno local de MRB, con Resend apagado | [ADR-022](./14-decisiones.md#adr-022) |
 | R-14 | `LoopVideo`, clips en el hero, en el bento y en el caso, y `media-src` en la CSP | 1 | R-13 | 11–12 nov | Reproduce solo en vista y después de `load`. Pausa visible. Con "reducir movimiento" o Save-Data, solo la portada. La consola no muestra reportes de CSP | [09 §2](./09-seguridad-y-privacidad.md#2-encabezados-http), [ADR-022](./14-decisiones.md#adr-022) |
 | R-15 | `CompareSlider` en el antes/después. **Solo si aparece una imagen de "antes"**; si no, se descarta | 0,5 | R-11 | 12–13 nov | Se usa con teclado; sin JS se ven los paneles enfrentados; envía `compare_use` | [ADR-023](./14-decisiones.md#adr-023) |
-| R-16 | Revelados al hacer scroll, en CSS | 0,75 | R-11 | 12–13 nov | Con "reducir movimiento" y en Firefox, el contenido se ve completo y sin efectos | [ADR-023](./14-decisiones.md#adr-023) |
+| R-16 | Revelado al hacer scroll, en CSS: solo la línea de tiempo del proceso ([ADR-027](./14-decisiones.md#adr-027)) | 0,25 | R-11 | 12–13 nov | Con "reducir movimiento" y en Firefox, el contenido se ve completo y sin efectos | [ADR-023](./14-decisiones.md#adr-023) |
 | R-17 | Transiciones de vista entre la home y el caso | 0,5 | R-11 | 13 nov | Sin transición con "reducir movimiento" | [ADR-023](./14-decisiones.md#adr-023) |
 | R-18 | Teaser con clic para reproducir, portada, "Descripción del video" y `video_play` | 1 | R-12, R-13 | 13–14 nov | Safari en Mac y en iPhone lo reproduce en línea; la descripción se entiende sin ver el video | [12 §3](./12-medicion-y-analitica.md#3-taxonomía-de-eventos), [ADR-022](./14-decisiones.md#adr-022) |
 | R-19 | Docs, QA y PSI de la fase B | 1,5 | R-14 a R-18 | 14–15 nov | Safari en Mac y en iPhone, "reducir movimiento", sin JS y Firefox revisados; consola sin reportes de CSP; PSI sin regresiones frente a R-11 | [11](./11-calidad-rendimiento-y-accesibilidad.md) |
 
-**Total de la fase B: ~8 h.** Si la semana no alcanza, se cortan en este orden R-15, R-17 y R-16: ninguna bloquea otra tarea.
+**Total de la fase B: ~8 h.** Si la semana no alcanza, se cortan en este orden R-15, R-16 y R-17 ([ADR-027](./14-decisiones.md#adr-027)): ninguna bloquea otra tarea.
 
 ### 5.3 Ruta crítica y lo que depende de ti
 
@@ -348,7 +348,7 @@ Esta es la ruta crítica original de la v1. La de la reestructuración, que term
 | La cifra de cotizaciones de MRB no llega | Media | Bajo | Celda opcional que se omite sin hueco | Sin cifra al empezar R-08 |
 | Las imágenes del hero empujan el LCP móvil | Media | Alto | En celular el LCP es texto y las imágenes van después de los CTAs; el marco de navegador no se descarga en celular ([ADR-021](./14-decisiones.md#adr-021)) | Lighthouse móvil en R-06 y R-11 |
 | El JS de primera carga pasa de 150 KB | Media | Medio | Las islas nuevas suman ≤ ~3 KB; se mide en cada fase ([ADR-020](./14-decisiones.md#adr-020)) | Reporte del build en R-11 y R-19 |
-| La fase B no cabe en su semana | Alta | Bajo | Se cortan R-15, R-17 y R-16, en ese orden; no bloquean nada ([§5.2](#52-reestructuración-fase-b-9-al-15-de-noviembre)) | R-19 sin terminar el 15-nov |
+| La fase B no cabe en su semana | Alta | Bajo | Se cortan R-15, R-16 y R-17, en ese orden; no bloquean nada ([§5.2](#52-reestructuración-fase-b-9-al-15-de-noviembre)) | R-19 sin terminar el 15-nov |
 | Safari no reproduce los clips | Baja | Medio | R2 con respuestas `206`, MP4 H.264 con `+faststart` como respaldo y portada siempre visible ([ADR-022](./14-decisiones.md#adr-022)) | Prueba de `Range` en R-12; Safari en R-19 |
 | Aparecen datos reales de clientes en capturas o clips, o un correo real llega a MRB | Baja | Alto | Datos ficticios; el cotizador de producción nunca se envía; el clip del cotizador se graba en local con Resend apagado | Revisión de cada captura en R-04 y de cada clip en R-13 |
 | R2 cobra un excedente | Muy baja | Bajo | Unos 15 MB de video frente a 10 GB gratis; alerta de facturación en US$1 | Correo de la alerta |

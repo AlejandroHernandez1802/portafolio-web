@@ -80,14 +80,13 @@ export function WorkPage({ lang }: { lang: Locale }) {
               study={study}
               copy={content.cases[study.id]}
               labels={content.work.card}
-              index={i + 1}
               headingId={`${anchor}-title`}
               reverse={i % 2 === 1}
             />
           </Section>
         )
       })}
-      <Closing lang={lang} closing={content.closing} index={featuredCases.length + 1} />
+      <Closing lang={lang} closing={content.closing} />
     </PageShell>
   )
 }

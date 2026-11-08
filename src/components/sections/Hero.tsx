@@ -79,9 +79,7 @@ export function Hero({
           <p className="text-[0.9375rem] leading-[1.35]">
             <span className="block font-semibold text-ink-1">{trust}</span>
             {trustMeta.length > 0 ? (
-              <span className="mt-1.5 block label-mono leading-[1.3] text-ink-2">
-                {trustMeta.join(' · ')}
-              </span>
+              <span className="mt-1 block text-caption text-ink-2">{trustMeta.join(' · ')}</span>
             ) : null}
           </p>
         </div>

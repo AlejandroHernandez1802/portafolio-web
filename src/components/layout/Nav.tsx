@@ -1,6 +1,5 @@
 import type { Locale, NavGroup, SiteContent } from '@/content/types'
 import { trackAttrs } from '@/lib/analytics'
-import { pad2 } from '@/lib/format'
 import type { Alternates } from '@/lib/routes'
 import { BookCallLink } from '@/components/booking/BookCallLink'
 import { ResponsiveImage } from '@/components/media/ResponsiveImage'
@@ -62,9 +61,7 @@ function DropdownPanel({ group }: { group: NavGroupModel }) {
               )}
               <span className="flex min-w-0 flex-col gap-1.5">
                 {item.badge && <Chip className="self-start">{item.badge}</Chip>}
-                {item.kicker && (
-                  <span className="label-mono leading-[1.5] text-accent-700">{item.kicker}</span>
-                )}
+                {item.kicker && <span className="text-caption text-accent-700">{item.kicker}</span>}
                 <span className="text-[1.0625rem] leading-[1.25] font-bold stretch-title underline decoration-transparent decoration-2 underline-offset-4 group-hover:decoration-accent-500 group-aria-[current=page]:decoration-accent-500">
                   {item.title}
                   {item.newTab && (
@@ -187,11 +184,11 @@ export function Nav({
       </button>
 
       {/* Right after its button in the DOM, so Tab goes from the button into the panel in every
-          browser. Each group is a 56 px row with its mono index (01–03), then its items. */}
+          browser. Each group is a 56 px row (unnumbered, ADR-027), then its items. */}
       <nav id={MENU_ID} popover="auto" aria-label={nav.menu.label} className="site-menu lg:hidden">
         <Container className="flex flex-col pt-2 pb-6">
           <ul>
-            {groups.map((group, i) => (
+            {groups.map((group) => (
               <li key={group.key} className="border-b border-paper-3 pb-3">
                 <a
                   href={group.href}
@@ -199,13 +196,7 @@ export function Nav({
                   data-current={isCurrent(group.key)}
                   className="group flex min-h-14 items-center gap-4 pt-2 text-ink-1 no-underline"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="border border-current px-1.5 py-1 label-mono text-ink-3 group-data-current:border-sun-400 group-data-current:bg-sun-400 group-data-current:text-ink-1"
-                  >
-                    {pad2(i + 1)}
-                  </span>
-                  <span className="stretch-heading text-[1.5rem] leading-heading font-extrabold tracking-heading group-hover:text-accent-700">
+                  <span className="stretch-heading text-[1.5rem] leading-heading font-extrabold tracking-heading group-hover:text-accent-700 group-data-current:text-accent-700">
                     {group.label}
                   </span>
                   <Icon
@@ -213,7 +204,7 @@ export function Nav({
                     className="ml-auto size-5 shrink-0 text-accent-500 motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-safe:group-hover:translate-x-[3px]"
                   />
                 </a>
-                <ul className="pl-12">
+                <ul>
                   {group.items.map((item) => (
                     <li key={item.href}>
                       <a

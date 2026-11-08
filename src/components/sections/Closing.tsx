@@ -9,22 +9,14 @@ import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
 // The last section of the home, the services page and the About page: the cobalt band, once per
-// page (`index` is its number on each). Booking first, on sun yellow; email and WhatsApp
+// page. Booking first, on sun yellow; email and WhatsApp
 // are outline buttons, which turn white on this band. In Colombia WhatsApp moves ahead of email
 // (docs/06 §5) through data-market-order, handled in globals.css next to the other market rules.
-export function Closing({
-  lang,
-  closing,
-  index,
-}: {
-  lang: Locale
-  closing: SiteContent['closing']
-  index: number
-}) {
+export function Closing({ lang, closing }: { lang: Locale; closing: SiteContent['closing'] }) {
   const whatsapp = whatsappHref(closing.whatsapp.prefilledMessage) // null until F0-13
   return (
     <Section id={SECTION.contact} tone="accent">
-      <SectionHeading id={SECTION.contact} index={index} tone="accent" size="xl">
+      <SectionHeading id={SECTION.contact} tone="accent" size="xl">
         {closing.title}
       </SectionHeading>
       <p className="mt-6 max-w-[46ch] text-lead">{closing.body}</p>

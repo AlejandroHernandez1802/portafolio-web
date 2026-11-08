@@ -82,7 +82,7 @@ export default async function Home() {
         linkedin={content.linkedin}
       />
       <Faq faq={content.faq} />
-      <Closing lang={lang} closing={content.closing} index={5} />
+      <Closing lang={lang} closing={content.closing} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}

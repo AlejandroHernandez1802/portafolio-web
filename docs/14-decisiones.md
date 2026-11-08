@@ -1,6 +1,6 @@
 # 14 · Registro de decisiones (ADR)
 
-Estas son las decisiones de arquitectura del portafolio, con su contexto, las alternativas que se descartaron y sus consecuencias. Se tomaron el **3 de octubre de 2026**, con la información verificada ese día. El **4 de octubre** cambiaron el hosting y la analítica ([ADR-017](#adr-017) y [ADR-018](#adr-018)), y se ajustaron los ADR afectados. El **24 de octubre** se agregó el sistema visual ([ADR-019](#adr-019)) y, el mismo día, se decidió la reestructuración del sitio: la estructura con páginas de caso ([ADR-020](#adr-020)), los medios reales ([ADR-021](#adr-021)), el video en R2 ([ADR-022](#adr-022)) y el movimiento ([ADR-023](#adr-023)). El **25 de octubre** se sumaron las páginas de Servicios y Sobre mí, los menús desplegables y los demos como casos ([ADR-024](#adr-024)) y, el mismo día, la página de Trabajo, el servicio de diseño y los precios ocultos con LinkedIn en su lugar ([ADR-025](#adr-025)). Esa misma noche entraron las dos tiendas demo como casos, con su propia página ([ADR-026](#adr-026)). ADR-022 y ADR-023 se aplican en la fase B ([13 §5.2](./13-plan-de-implementacion.md#52-reestructuración-fase-b-9-al-15-de-noviembre)).
+Estas son las decisiones de arquitectura del portafolio, con su contexto, las alternativas que se descartaron y sus consecuencias. Se tomaron el **3 de octubre de 2026**, con la información verificada ese día. El **4 de octubre** cambiaron el hosting y la analítica ([ADR-017](#adr-017) y [ADR-018](#adr-018)), y se ajustaron los ADR afectados. El **24 de octubre** se agregó el sistema visual ([ADR-019](#adr-019)) y, el mismo día, se decidió la reestructuración del sitio: la estructura con páginas de caso ([ADR-020](#adr-020)), los medios reales ([ADR-021](#adr-021)), el video en R2 ([ADR-022](#adr-022)) y el movimiento ([ADR-023](#adr-023)). El **25 de octubre** se sumaron las páginas de Servicios y Sobre mí, los menús desplegables y los demos como casos ([ADR-024](#adr-024)) y, el mismo día, la página de Trabajo, el servicio de diseño y los precios ocultos con LinkedIn en su lugar ([ADR-025](#adr-025)). Esa misma noche entraron las dos tiendas demo como casos, con su propia página ([ADR-026](#adr-026)). El **8 de noviembre**, tras la auditoría con el skill `frontend-craft` ([15](./15-mejoras-de-diseno.md)), se acordó la disciplina del sistema visual ([ADR-027](#adr-027)), que ajusta ADR-019, ADR-023 y ADR-025. ADR-022 y ADR-023 se aplican en la fase B ([13 §5.2](./13-plan-de-implementacion.md#52-reestructuración-fase-b-9-al-15-de-noviembre)).
 
 **Regla:** si una tarea necesita cambiar una de estas decisiones, se agrega o actualiza el ADR en el mismo PR. Los estados posibles son *Aceptada*, *Plan B* (alternativa lista si la aceptada falla) y *Reemplazada*.
 
@@ -24,14 +24,15 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
 | [ADR-016](#adr-016) | Aceptación de rendimiento con PSI en producción | Aceptada |
 | [ADR-017](#adr-017) | Hosting en Cloudflare Workers Free con export estático | Aceptada |
 | [ADR-018](#adr-018) | Analítica con Umami Cloud Hobby | Aceptada |
-| [ADR-019](#adr-019) | Sistema visual "plano técnico" | Aceptada (24-oct; ajustada por ADR-020, ADR-021 y ADR-023) |
+| [ADR-019](#adr-019) | Sistema visual "plano técnico" | Aceptada (24-oct; ajustada por ADR-020, ADR-021, ADR-023 y ADR-027) |
 | [ADR-020](#adr-020) | Estructura: home + páginas de caso tipadas | Aceptada (24-oct) |
 | [ADR-021](#adr-021) | Medios reales: capturas locales, marcos en CSS y LCP de texto en celular | Aceptada (24-oct) |
 | [ADR-022](#adr-022) | Video del trabajo real en Cloudflare R2 | Aceptada (24-oct; se aplica en la fase B) |
-| [ADR-023](#adr-023) | Movimiento: revelados al hacer scroll, transiciones entre páginas y deslizador | Aceptada (24-oct; se aplica en la fase B) |
+| [ADR-023](#adr-023) | Movimiento: revelados al hacer scroll, transiciones entre páginas y deslizador | Aceptada (24-oct; se aplica en la fase B; R-16 recortado por ADR-027) |
 | [ADR-024](#adr-024) | Páginas de sección, menús desplegables y demos como casos | Aceptada (25-oct; ajusta ADR-012 y ADR-020; ajustada por ADR-025; completada por ADR-026) |
-| [ADR-025](#adr-025) | Página de Trabajo, servicio de diseño y precios ocultos | Aceptada (25-oct; ajusta ADR-024 y pone en pausa la parte visible de ADR-005) |
+| [ADR-025](#adr-025) | Página de Trabajo, servicio de diseño y precios ocultos | Aceptada (25-oct; ajusta ADR-024 y pone en pausa la parte visible de ADR-005; resumen de la home cambiado por ADR-027) |
 | [ADR-026](#adr-026) | Página de caso de una tienda demo y capturas de varios sitios | Aceptada (27-oct; completa ADR-024) |
+| [ADR-027](#adr-027) | Disciplina del sistema visual | Aceptada (8-nov; ajusta ADR-019, ADR-023 y ADR-025) |
 
 ---
 
@@ -440,7 +441,7 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
   - **Archivo es un archivo del repositorio** (`src/fonts/`, licencia OFL), no una descarga de `next/font/google`: si Google la actualiza, no llega sola. Cómo regenerarla, en [06 §3.2](./06-secciones-y-ui.md#32-tipografía).
   - **Primera visita lenta:** mientras Archivo llega se ve un respaldo de Arial (Roboto en Android) ajustado al ancho de cada rol, con las mismas líneas en el H1. Al llegar cambia el dibujo de las letras, no el layout.
   - **Contrastes recalculados sobre papel crema:** todos cumplen AA ([06 §3.1](./06-secciones-y-ui.md#31-color)). `ink-3` solo puede ir sobre `paper-0` y `paper-1`.
-  - **Índices visibles 01–07:** cuando llegue la demo (v2), hay que renumerar las secciones que quedan después de ella.
+  - ~~**Índices visibles 01–07:** cuando llegue la demo (v2), hay que renumerar las secciones que quedan después de ella.~~ (8-nov) Ya no hay índices de sección ([ADR-027](#adr-027)).
   - **La variante `a` del titular se ve distinta de `b` y `c`:** solo ella lleva tachado y marcador. Esto afecta la prueba de titulares ([12 §6](./12-medicion-y-analitica.md#6-prueba-secuencial-de-titulares)).
   - **El design system no se sincroniza solo:** el código es la fuente de verdad. Si el design system cambia, el cambio se lleva a mano a `globals.css` y a los componentes.
   - **Las imágenes OG** de F0-11 todavía no existen. Conviene diseñarlas con la paleta y la tipografía nuevas.
@@ -639,7 +640,7 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
     - El H1 conserva el tachado y el marcador. Sin el escenario al lado, se re-temporizan a ~0,4 s y ~1,0 s.
     - Al pasar el mouse, la captura de la tarjeta del caso se desplaza lentamente (también con el foco del teclado), los marcos del hero suben 4 px, los bloques del bento cambian su regla a cobalto y las flechas se mueven 3 px. El menú de celular entra en 200 ms. Son transiciones, y solo corren sin "reducir movimiento".
   - **Fase B:**
-    - **Revelados con CSS ligado al scroll** (R-16): la regla de tinta de cada H2 se dibuja, un marcador sol pasa bajo cada cifra, la línea de tiempo del proceso se llena y las capturas suben 16 px.
+    - **Revelados con CSS ligado al scroll** (R-16): la regla de tinta de cada H2 se dibuja, un marcador sol pasa bajo cada cifra, la línea de tiempo del proceso se llena y las capturas suben 16 px. **(8-nov, [ADR-027](#adr-027))** R-16 queda solo en la línea de tiempo del proceso: el marcador de las cifras ya no existe, y la regla de los H2 y la subida de las capturas no comunican nada. El orden de recorte de la fase B pasa a ser R-15, R-16 y R-17.
     - **Transiciones de vista entre la home y el caso** (R-17): `@view-transition { navigation: auto }` y un `view-transition-name` compartido entre la tarjeta del caso y el hero de su página. Funcionan con los `<a>` de siempre.
     - **Deslizador antes/después** (R-15): la isla `CompareSlider`, accesible con teclado. Sin JS se ven los paneles enfrentados. Envía el evento `compare_use`.
   - **Fuera:** parallax, contadores, carruseles, scroll secuestrado y animaciones en el texto de cuerpo, los precios o las preguntas. Nada que pueda ser el elemento LCP se anima.
@@ -750,7 +751,7 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
     - La ruta de navegación de cada caso y su `BreadcrumbList` llevan a esta página, no a `/#trabajo`. El menú de Trabajo y su enlace "Todo el trabajo" también.
   - **Resumen en la home (01 Trabajo):**
     - A la izquierda, lo que haces y el botón "Ver todo mi trabajo".
-    - A la derecha, una hoja de datos con tres filas: las categorías (`CaseStudy.categories`, con los textos de `work.categories`), las industrias (`cases.<id>.card.industry`, sin repetir) y una fila por proyecto, con miniatura, que lleva a su caso.
+    - A la derecha, una hoja de datos con tres filas: las categorías (`CaseStudy.categories`, con los textos de `work.categories`), las industrias (`cases.<id>.card.industry`, sin repetir) y una fila por proyecto, con miniatura, que lleva a su caso. **(8-nov, [ADR-027](#adr-027))** Reemplazado: el caso de cliente destacado entra como tarjeta completa y los demás como filas compactas; las categorías y las industrias salen.
     - Un demo suma sus categorías y su industria al entrar en `cases.ts`.
   - **Barra:** solo lleva el nombre. El lema sigue en el pie, en la imagen OG y en los datos estructurados.
   - **Servicios, ahora 7:**
@@ -840,3 +841,28 @@ Estas son las decisiones de arquitectura del portafolio, con su contexto, las al
   - **Medios:** 19 imágenes nuevas (AVIF y WebP), todas dentro de su presupuesto.
   - **Copy:** revisado y aprobado el 27-oct (R-30).
   - Las demos están en `*.netlify.app` y no en un subdominio tuyo. Si las mueves, cambia `client.url` y `client.domain` en `cases.ts` y vuelve a correr las capturas.
+
+<a id="adr-027"></a>
+
+## ADR-027 · Disciplina del sistema visual
+
+- **Fecha:** 8 de noviembre de 2026. Ajusta [ADR-019](#adr-019), [ADR-023](#adr-023) y [ADR-025](#adr-025). Aprobado por ti ese día, a partir del borrador de [15 §7](./15-mejoras-de-diseno.md#7-borrador-adr-027--disciplina-del-sistema-visual).
+- **Contexto:**
+  - La auditoría del 8-nov con el skill `frontend-craft` ([15](./15-mejoras-de-diseno.md)) encontró que los recursos del "plano técnico" se aplicaban en casi todas las superficies, y que así perdían su significado y se parecían a plantillas genéricas: 37 usos de etiquetas mono en mayúsculas, índices "01–05" sobre cada sección, preguntas y pie numerados, y el amarillo sol en ocho lugares.
+  - R-16 iba a animar dos de esos recursos: la regla de cada H2 y el marcador bajo las cifras.
+  - En la home, la sección Trabajo mostraba chips y miniaturas de 80 px: el trabajo real casi no se veía.
+- **Decisión:**
+  - **Mono** solo para datos cortos que en el mundo del cliente se escriben en mono: referencias, direcciones, medidas, monedas, duraciones, números de pasos y etiquetas de precio. Las frases y las etiquetas descriptivas usan el token nuevo `text-caption` (14 px, Archivo 500, en tipo oración, `ink-2`). Los chips pasan a Archivo, sin mayúsculas.
+  - **Numeración** solo para secuencias reales: el proceso, los pasos de "Cómo trabajo", los de "Pruébalo" y las cláusulas de la política de privacidad. Salen los índices de los encabezados de sección (queda la regla de tinta sobre el H2), los de las tarjetas de Trabajo y los bloques de Servicios, los del menú de celular, los de las preguntas, los del pie, los de los planes y el contador "01 / 06" de "Qué construí". El recuadro índice queda solo en el 404.
+  - **Sol** reservado para el marcador del H1, el botón principal sobre cobalto, los numerales y nodos del proceso, el foco sobre azul, la selección, el favicon y el punto amarillo del marco del navegador. Sale de las cifras (franja del hero, tarjeta del caso y resultados), las viñetas del bento y de los ejemplos, la leyenda del hero, el bloque de propiedad del bento, los numerales y enlaces de "Pruébalo", el panel "Después", los íconos del proceso, el subrayado del pie y el bloque detrás del retrato.
+  - **Trabajo en la home:** el caso de cliente destacado entra como `CaseCard` completa (con su título como H3) y los demás casos como filas compactas con miniatura de 160 px y su industria. Salen las filas de categorías e industrias, y con ellas `CaseStudy.categories`, `WorkCategory` y los textos `work.categories`, `categoriesLabel`, `industriesLabel` y `projectsLabel`. **Esto revierte lo que pediste el 25-oct** (ADR-025: "un resumen de lo que haces, las categorías y las industrias"), a favor de mostrar el trabajo.
+  - **R-16** se reduce a la línea de tiempo del proceso. Nuevo orden de recorte de la fase B: R-15, R-16 y R-17, porque las transiciones de vista dan continuidad espacial y valen más que los revelados.
+  - **Copy (D-10):** mientras los precios estén ocultos, la cuarta cifra del hero pasa de "100 % a tu nombre" a "1 día hábil" de respuesta. "A tu nombre" queda en el bento y en la primera pregunta.
+- **Alternativas descartadas:**
+  - **Dejarlo como estaba:** el sitio seguía correcto, pero su identidad se diluía.
+  - **Cambiar la paleta o la tipografía:** no hacía falta. La dirección es buena, y cambiarla rehace las mediciones de fuentes y LCP de ADR-019.
+- **Consecuencias:**
+  - Menos ruido visual y un H1 con más protagonismo.
+  - La primera pantalla del celular ya no usa mono en las etiquetas de las cifras ni en la línea de confianza. Falta medir si Plex Mono sale de la ruta crítica (D-12).
+  - ~0,5 h menos en R-16.
+  - Hay que actualizar a mano el design system de `Design system/`, como dice ADR-019.

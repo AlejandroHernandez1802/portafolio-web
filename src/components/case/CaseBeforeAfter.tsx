@@ -7,7 +7,7 @@ import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { altFor, isPortrait } from './case-media'
 
-// Before / after (section 03, client cases only) as facing panels (design system CompareCard) on the cobalt tint,
+// Before / after (client cases only) as facing panels (design system CompareCard) on the cobalt tint,
 // where both the sand and the navy panel stand out. "Before" is the buying process, as text:
 // archive.org has no snapshot of an older MRB site (ADR-021). From 1024 px the "after" panel
 // is wider and its phone capture (the portrait one of study.media.after; the desktop one is
@@ -16,7 +16,7 @@ import { altFor, isPortrait } from './case-media'
 // Phase B turns the panels into the compare slider (ADR-023); without JS they stay as they are.
 
 // Before on sand with ink dashes (a list, not links: no arrows, docs/15 H3), after on deep
-// navy with sun checks. The light-to-dark shift
+// navy with checks (sun is kept for the H1 marker, ADR-027). The light-to-dark shift
 // is the story, so the order never changes.
 const PANELS = {
   // Side by side, the seam side gets 48 px of padding: the 44 px arrow on the seam takes 22 px
@@ -29,7 +29,7 @@ const PANELS = {
   after: {
     // Shares the before panel's ink border, so side by side the two read as one frame
     box: 'bg-deep text-on-ink-1 md:border-l-0 md:pl-12 lg:pr-10',
-    accent: 'text-sun-400',
+    accent: 'text-on-ink-2',
     icon: 'check',
   },
 } as const
@@ -41,12 +41,10 @@ export function CaseBeforeAfter({
   study,
   beforeAfter,
   alts,
-  index,
 }: {
   study: CaseStudy
   beforeAfter: NonNullable<CaseContent['page']['beforeAfter']>
   alts: CaseContent['alts']
-  index: number
 }) {
   const phone = study.media.after.find(isPortrait)
   const sides = [
@@ -55,9 +53,7 @@ export function CaseBeforeAfter({
   ]
   return (
     <Section id={CASE_SECTION.beforeAfter} tone="tint">
-      <SectionHeading id={CASE_SECTION.beforeAfter} index={index}>
-        {beforeAfter.title}
-      </SectionHeading>
+      <SectionHeading id={CASE_SECTION.beforeAfter}>{beforeAfter.title}</SectionHeading>
       <p className="mt-5 max-w-[60ch] text-lead text-ink-2">{beforeAfter.lead}</p>
 
       <div

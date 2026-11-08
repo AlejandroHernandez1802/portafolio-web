@@ -2,7 +2,6 @@ import { site } from '@/content/site'
 import { featuredCases } from '@/content/cases'
 import type { Locale, SiteContent } from '@/content/types'
 import { trackAttrs } from '@/lib/analytics'
-import { pad2 } from '@/lib/format'
 import { postalAddress } from '@/lib/links'
 import { casePath, homePath, privacyPath, type Alternates } from '@/lib/routes'
 import { navGroups } from '@/components/layout/nav-items'
@@ -10,13 +9,12 @@ import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
 
 // The deep-navy band that closes every page (docs/06 §2, docs/14 ADR-020, ADR-024): the brand,
-// the 3 groups of the bar repeated with their mono indexes (sun yellow, as in SectionIndex on
-// ink), one link per case, LinkedIn (a new tab, ADR-025), privacy and language, then © and the
+// the 3 groups of the bar repeated (unnumbered, ADR-027), one link per case, LinkedIn (a new tab, ADR-025), privacy and language, then © and the
 // postal address (CAN-SPAM, the same as the outreach emails). on-ink gives every link the
 // sun-yellow focus ring. All links are ≥ 44 px tall. A link to this very page is aria-current
 // and untracked: a click on its own case link is not a case_open.
 const LINK =
-  'inline-flex min-h-11 items-center underline decoration-current hover:text-on-ink-1 hover:decoration-sun-400 motion-safe:transition-colors motion-safe:duration-120'
+  'inline-flex min-h-11 items-center underline decoration-current hover:text-on-ink-1 hover:decoration-on-ink-1 motion-safe:transition-colors motion-safe:duration-120'
 
 export function Footer({
   lang,
@@ -51,17 +49,14 @@ export function Footer({
             className="grid gap-8 sm:grid-cols-2 lg:col-span-7 lg:col-start-6"
           >
             <ul>
-              {groups.map((group, i) => (
+              {groups.map((group) => (
                 <li key={group.key}>
                   <a
                     href={group.href}
                     aria-current={group.href === here ? 'page' : undefined}
-                    className="group inline-flex min-h-11 items-center gap-3 text-base font-semibold text-on-ink-1 no-underline"
+                    className="group inline-flex min-h-11 items-center text-base font-semibold text-on-ink-1 no-underline"
                   >
-                    <span aria-hidden="true" className="w-5 label-mono text-sun-400">
-                      {pad2(i + 1)}
-                    </span>
-                    <span className="underline decoration-transparent group-hover:decoration-sun-400">
+                    <span className="underline decoration-transparent group-hover:decoration-on-ink-1">
                       {group.label}
                     </span>
                   </a>

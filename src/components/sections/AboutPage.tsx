@@ -55,13 +55,13 @@ export function AboutPage({ lang }: { lang: Locale }) {
         breadcrumb={content.aboutPage.breadcrumb}
         crumb={content.nav.links.about}
       />
-      <Process process={content.process} index={1} />
+      <Process process={content.process} />
       {site.features.pricing ? (
-        <Pricing lang={lang} pricing={content.pricing} index={2} />
+        <Pricing lang={lang} pricing={content.pricing} />
       ) : (
-        <LinkedIn linkedin={content.linkedin} index={2} />
+        <LinkedIn linkedin={content.linkedin} />
       )}
-      <Closing lang={lang} closing={content.closing} index={3} />
+      <Closing lang={lang} closing={content.closing} />
     </PageShell>
   )
 }

@@ -11,7 +11,7 @@ export function Breadcrumb({
 }) {
   return (
     <nav aria-label={label}>
-      <ol className="flex flex-wrap items-center gap-x-2.5 label-mono text-ink-2">
+      <ol className="flex flex-wrap items-center gap-x-2.5 text-caption text-ink-2">
         {trail.map((step) => (
           <li key={step.href} className="contents">
             <span>

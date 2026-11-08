@@ -47,7 +47,7 @@ export function About({
         className={`mt-10 lg:mt-14 ${portrait ? 'grid gap-12 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-start lg:gap-16' : ''}`}
       >
         {portrait && (
-          <div className="relative isolate mr-3 mb-3 max-w-sm before:absolute before:inset-0 before:-z-10 before:translate-3 before:bg-sun-400">
+          <div className="relative isolate mr-3 mb-3 max-w-sm before:absolute before:inset-0 before:-z-10 before:translate-3 before:bg-accent-100">
             <ResponsiveImage
               image={PORTRAIT}
               alt={about.photo.alt}
@@ -70,7 +70,7 @@ export function About({
                 key={fact.label}
                 className="grid gap-1.5 border-b border-paper-3 py-4 sm:grid-cols-[200px_minmax(0,1fr)] sm:items-baseline sm:gap-8 sm:py-5"
               >
-                <dt className="label-mono leading-[1.5] text-ink-2">{fact.label}</dt>
+                <dt className="text-caption text-ink-2">{fact.label}</dt>
                 <dd className="text-[1.0625rem] leading-[1.45] font-medium">{fact.value}</dd>
               </div>
             ))}

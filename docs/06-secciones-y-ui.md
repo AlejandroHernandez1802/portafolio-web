@@ -16,7 +16,7 @@ Desde la reestructuración del 24-oct ([ADR-020](./14-decisiones.md#adr-020)) y 
 |---|---|---|---|---|---|---|---|
 | — | Barra fija con el nombre (sin lema) y 3 menús desplegables (Trabajo, Servicios, Sobre mí) | — | `Header` + `Nav` + `nav-items.ts` (+ `MenuCloser`) | Papel translúcido | `nav`, los casos destacados y `services.tiles` | `book_call_click` (`header`; `nav` en el menú); `case_open` y `linkedin_open` (`nav`) | Fase A |
 | — | Hero | `#inicio` | `Hero` + `HeroHeadline` + `HeroShowcase` + `FiguresStrip` | `paper` + cuadrícula | `hero`, el caso destacado y `pricing` (o el `fallback` de la celda de precio) | `book_call_click` y `case_open` (`hero`); `demo_open` (`hero`, v2) | v1 / fase A |
-| 01 | Trabajo, resumen de la página: lo que hago, categorías, industrias y proyectos | `#trabajo` | `Work` | `paper` | `work`, `CaseStudy.categories`, `cases.<id>.card` | `case_mrb_view` (`data-track-view`); `case_open` (`work`) | Fase A |
+| 01 | Trabajo: lo que hago, la tarjeta completa del caso de cliente y filas de los demás casos | `#trabajo` | `Work` + `CaseCard` | `paper` | `work`, `cases.<id>.card` | `case_mrb_view` (`data-track-view`); `case_open` (`work`) | Fase A |
 | 02 | Servicios ("Qué incluye tu tienda"), resumen de la página | `#servicios` | `Services` + `HookStage` | `sunken` | `services` | — | Fase A |
 | 03 | Sobre mí, resumen de la página: presentación, 4 pasos y los 3 precios o la tarjeta de LinkedIn | `#sobre-mi` | `AboutTeaser` + `Price` o `LinkedInCard` | `paper` | `about`, `aboutTeaser`, `process.steps`, `pricing.plans`, `linkedin` | `linkedin_open` (`about`) | Fase A |
 | 04 | Preguntas frecuentes | `#preguntas` | `Faq` | `tint` | `faq` (máx. 8) | — | v1 |
@@ -76,7 +76,7 @@ En la fase B, el teaser de 49 s entra entre "Qué construí" y el cierre ([ADR-0
 
 Islas de cliente globales: `TrackingListener` y `CalLoader`, montadas una sola vez en el layout. `MenuCloser` va en la barra de cada página ([03 §5](./03-arquitectura.md#5-componentes-de-servidor-y-de-cliente)).
 
-**Índice visible.** El recuadro mono de cada encabezado (`SectionHeading index`) numera las secciones en el orden en pantalla, sin contar el hero: 01 a 05 en la home, uno por caso y el contacto en Trabajo, 01 a 08 en Servicios, 01 a 03 en Sobre mí, 01 a 05 en un caso de cliente y 01 a 04 en un demo. Los ids de `src/lib/routes.ts` (`SECTION`, `CASE_SECTION`, `ABOUT_SECTION`, `SERVICE_ANCHOR`) son la fuente de verdad. Un demo entra como un caso más, en la página de Trabajo y en el resumen de la home ([ADR-025](./14-decisiones.md#adr-025)).
+**Sin índice visible** ([ADR-027](./14-decisiones.md#adr-027), 8-nov). La columna "Índice" de estas tablas es solo el orden en pantalla: los encabezados ya no muestran números, porque las secciones no son pasos. Cada H2 lleva una regla de tinta encima. Los ids de `src/lib/routes.ts` (`SECTION`, `CASE_SECTION`, `ABOUT_SECTION`, `SERVICE_ANCHOR`) son la fuente de verdad. Un demo entra como un caso más, en la página de Trabajo y en el resumen de la home ([ADR-025](./14-decisiones.md#adr-025)).
 
 ## 2. Contenido por sección
 
@@ -104,23 +104,25 @@ El titular usa comillas tipográficas “ ”: `HeroHeadline` tacha la primera f
 
 **01 Trabajo** ("Trabajo reciente" / "Recent work"), resumen de la página de Trabajo ([ADR-025](./14-decisiones.md#adr-025)):
 
-- **Izquierda (5 columnas desde 1024 px):** una entrada grande con lo que hago y el botón "Ver todo mi trabajo".
-- **Derecha (7 columnas):** una hoja de datos con regla de tinta y tres filas: "Qué he construido" (chips de `work.categories` que tiene algún caso), "Industrias" (chips oscuros con `cases.<id>.card.industry`, sin repetir) y "Proyectos" (una fila por caso con su miniatura, su nombre y su resultado, que lleva a su página).
-- **En celular:** una columna, con el texto y el botón primero.
+Desde el 8-nov ([ADR-027](./14-decisiones.md#adr-027)), el trabajo es lo que se muestra:
 
-**Tarjeta de caso** (`CaseCard`), en la página de Trabajo: una por caso destacado (`featuredCases`), numerada, con el resultado como H2 y los resultados primero:
+- **Arriba:** la entrada con lo que hago y, a la derecha, el botón "Ver todo mi trabajo".
+- **El caso de cliente destacado** como `CaseCard` completa (abajo), con su resultado como H3.
+- **Los demás casos** como filas compactas, de a dos desde `md`: miniatura de 160 px (112 px en celular), la etiqueta de demo, el nombre, el resultado y la industria (`cases.<id>.card.industry`), con una flecha hacia su página.
+
+**Tarjeta de caso** (`CaseCard`), en la página de Trabajo: una por caso destacado (`featuredCases`), con el resultado como H2 (H3 en la home) y los resultados primero:
 
 - **Izquierda (7 columnas desde 1024 px):** la captura completa de la home de MRB (`mrb/home-full-desktop`) en un marco de navegador con pantalla cuadrada, sobre una placa cobalto con la cuadrícula de plano. Se desplaza hacia abajo en ~3 s mientras se pasa el mouse o el foco por cualquier parte de la tarjeta (`data-device-hover`). En pantallas táctiles (`hover: none`), que nunca la desplazan, se descarga solo su cuadrado superior (`mrb/home-full-top`).
 - **Derecha (5 columnas):**
-  - la línea mono "Malone Road Belt · Correas industriales · EE. UU.";
+  - la línea "Malone Road Belt · Correas industriales · EE. UU." en `text-caption`;
   - el resultado como H3: "De cotizar por teléfono a recibir solicitudes en línea, en 3 idiomas";
-  - las 3 primeras métricas con valor, como filas: un número grande sobre la banda sol y su etiqueta mono (hoy 3 idiomas, 15 productos y 29 marcas OEM; la de cotizaciones entra primero cuando exista);
+  - las 3 primeras métricas con valor, como filas: un número grande y su etiqueta en `text-caption` (hoy 3 idiomas, 15 productos y 29 marcas OEM; la de cotizaciones entra primero cuando exista);
   - 4 chips de lo que se construyó;
   - el botón "Ver el caso completo" (`case_open`, `work`) y el enlace "Visitar malonebelt.com" (pestaña nueva, `noopener`).
 - **En celular:** la imagen primero y luego el texto.
 - **Demos:** entran como casos con `kind: 'demo'`, con el chip "Demo · proyecto propio" y sin cifras ([ADR-024](./14-decisiones.md#adr-024)).
 
-**02 Servicios** ("Qué incluye tu tienda" / "What your store includes"). Absorbe "Qué resuelvo": sus tres frases son ahora las etiquetas de resultado de los bloques. Es una cuadrícula *bento*:
+**02 Servicios** ("Qué incluye tu tienda" / "What your store includes"). Absorbe "Qué resuelvo": sus tres frases son ahora las etiquetas de resultado de los bloques. Es una cuadrícula *bento*. Desde el 8-nov la etiqueta de resultado va debajo del título, en `text-caption` cobalto, y no como ceja en mayúsculas encima ([ADR-027](./14-decisiones.md#adr-027)):
 
 | Bloque | Desde 1024 px | Etiqueta (ES) | Título | Media o prueba |
 |---|---|---|---|---|
@@ -128,8 +130,8 @@ El titular usa comillas tipográficas “ ”: `HeroHeadline` tacha la primera f
 | B · `quote` | 1 × 2 | Que te compren o coticen | Cotizador o carrito | El escenario del hook A ([05 §5.1](./05-hero-animacion.md#51-escenario-hookstage)) |
 | G · `design` | 2 × 1 | Que te recuerden | Diseño de tu sitio y tu marca | El folleto abierto de MRB (`mrb/brochure-spread`) al lado del texto; "Sitio, logo y folleto de Malone Road Belt" |
 | C · `languages` | 1 × 1 | Que te entiendan | Varios idiomas | La home de MRB en portugués (`mrb/home-pt-desktop`); "{languages} idiomas en Malone Road Belt" |
-| D · `seo` | 1 × 1 | Que te encuentren | Google y respuestas de IA | Lista mono: páginas de producto, datos estructurados, sitemap y hreflang, perfil de Google Business |
-| E · `analytics` | 1 × 1 | Que sepas qué te piden | Analítica de cotizaciones | Lista mono: solicitudes por semana, pedidos si vendes en línea, productos por los que te preguntan |
+| D · `seo` | 1 × 1 | Que te encuentren | Google y respuestas de IA | Lista en `text-caption`: páginas de producto, datos estructurados, sitemap y hreflang, perfil de Google Business |
+| E · `analytics` | 1 × 1 | Que sepas qué te piden | Analítica de cotizaciones | Lista en `text-caption`: solicitudes por semana, pedidos si vendes en línea, productos por los que te preguntan |
 | F · `care` | 1 × 1 | Que siga mejorando | Plan mensual de cuidado | El precio por mercado, solo con `site.features.pricing` |
 | O | 3 × 1, azul profundo | — | "Dominio, hosting y cuentas a tu nombre." | "Ver precios" a `/sobre-mi#precios`, o "Ver cómo trabajo" a `/sobre-mi#proceso` mientras los precios estén ocultos |
 
@@ -177,20 +179,20 @@ En la v1.1 se suma el formulario en un panel.
 
 **Pie.** Una banda azul profunda en todas las páginas:
 
-- **Arriba:** el nombre y el descriptor; la navegación repetida (`footer.navLabel`), con índices mono en sol; el enlace al caso (`case_open`, `footer`), LinkedIn (pestaña nueva, `linkedin_open`), la política de privacidad y el idioma.
+- **Arriba:** el nombre y el descriptor; la navegación repetida (`footer.navLabel`), sin índices; el enlace al caso (`case_open`, `footer`), LinkedIn (pestaña nueva, `linkedin_open`), la política de privacidad y el idioma.
 - **Abajo:** una línea fina, el © y la dirección postal (la misma de los correos a EE. UU.). Mientras `site.legal.postalAddress` sea el marcador "Por definir", la dirección no se muestra.
 - Todos los enlaces miden 44 px de alto.
 
 **Página del caso** (`cases.mrb.page`; todo el copy lleva `REVIEW(R-08)`):
 
 1. **Hero:**
-   - miga mono "Trabajo / Malone Road Belt", que vuelve a la página de Trabajo (`/en/work`, `/es/trabajos`; el JSON-LD sí incluye Inicio);
+   - miga "Trabajo / Malone Road Belt" en `text-caption`, que vuelve a la página de Trabajo (`/en/work`, `/es/trabajos`; el JSON-LD sí incluye Inicio);
    - el resultado como único H1: "De cotizar por teléfono a recibir solicitudes en línea";
    - el resumen a la izquierda (8 de 12 columnas) y "Visitar malonebelt.com" a la derecha;
-   - los datos en celdas mono bajo una regla de tinta: cliente, industria, mercado, alcance, duración y en línea desde. La duración se omite mientras `weeks` sea `null`;
+   - los datos en celdas con etiqueta `text-caption` bajo una regla de tinta: cliente, industria, mercado, alcance, duración y en línea desde. La duración se omite mientras `weeks` sea `null`;
    - **desde 768 px,** la home de MRB en un marco de navegador a todo el ancho, que es el elemento LCP de la página. Su 30 % inferior se apoya en una franja azul profunda que sigue en la banda de resultados;
    - **en menos de 768 px,** la home en un marco de celular, después del texto y los datos.
-2. **01 Resultados:** cifras grandes en blanco con una banda sol debajo y etiquetas mono, sobre azul profundo: 15 productos en 4 líneas, 29 marcas OEM y 6 máquinas en el buscador, y 3 idiomas. La de cotizaciones y su frase de fuente aparecen solo cuando exista la cifra. Debajo, la nota de fuente: "Cifras del catálogo tomadas de malonebelt.com en octubre de 2026."
+2. **01 Resultados:** cifras grandes en blanco con etiquetas en `text-caption`, sobre azul profundo: 15 productos en 4 líneas, 29 marcas OEM y 6 máquinas en el buscador, y 3 idiomas. La de cotizaciones y su frase de fuente aparecen solo cuando exista la cifra. Debajo, la nota de fuente: "Cifras del catálogo tomadas de malonebelt.com en octubre de 2026."
 3. **02 Resumen:** cliente, problema y mi papel como filas con regla (diseño y desarrollo del sitio, más la marca: logo, folleto y video de producto), y el stack como chips: Next.js, Vercel y Resend. Sin pagos.
 4. **03 Antes y después:** paneles enfrentados. "Antes" cuenta el proceso de compra en texto, porque archive.org no guarda el sitio anterior ([ADR-021](./14-decisiones.md#adr-021)). Desde 1024 px, el panel "Después" es más ancho y muestra la home en celular, que sale de su borde inferior. En la fase B pueden volverse un deslizador, solo si aparece una captura de "antes" ([ADR-023](./14-decisiones.md#adr-023)).
 5. **04 Qué construí:** 6 filas, en el orden de `study.features`, que alternan lados desde 1024 px:
@@ -243,7 +245,7 @@ La paleta de Tailwind se reemplaza entera (`--color-*: initial`): no hay grises,
 | | `accent-600` | `#1F3597` | Hover; final del degradado de cierre | Blanco encima: 10,4:1 |
 | | `accent-700` | `#182A78` | Cobalto como texto sobre papel | 11,9:1 |
 | | `deep` | `#141C4F` | Bandas oscuras: proceso, resultados del caso, pie, panel "Después", bloque O del bento y la leyenda de los marcos del hero | — |
-| Sol | `sun-400` | `#FFD43B` | Marcador del H1, numerales e índices sobre `deep`, botón principal del cierre, selección de texto. Lleva texto en tinta y nunca es texto sobre papel | Tinta encima: 12,2:1. Sobre `deep`: 11,3:1 |
+| Sol | `sun-400` | `#FFD43B` | Reservado ([ADR-027](./14-decisiones.md#adr-027)): marcador del H1, botón principal del cierre, numerales y nodos del proceso, foco sobre azul, selección de texto, favicon y el punto del marco del navegador. Lleva texto en tinta y nunca es texto sobre papel | Tinta encima: 12,2:1. Sobre `deep`: 11,3:1 |
 | | `sun-300` | `#FFE37A` | Hover del botón sol | — |
 | Éxito | `ok-600` | `#176B4B` | Checks y "Pedido recibido" | 6,0:1 |
 | | `ok-100` | `#DBF1E6` | Fondo de éxito (disponible, hoy sin uso) | — |
@@ -294,7 +296,8 @@ La licencia es la OFL 1.1, sin nombre reservado, y va junto al archivo (`src/fon
 | `text-numeral` | `clamp(3.5rem, 7vw, 5.5rem)` | 0,85 | 800 | Numerales 01–04 del proceso |
 | `text-price` | `clamp(2rem, 3.2vw, 2.75rem)` | 1 | 800 | Precios |
 | `text-lead` | `clamp(1.0625rem, 1.5vw, 1.25rem)` | 1,5 | — | Subtítulo del hero, resúmenes, Sobre mí, cierre |
-| `label-mono` | 0,75 rem, mayúsculas, +0,08 em | 1 | 500 | Etiquetas de datos |
+| `label-mono` | 0,75 rem, mayúsculas, +0,08 em | 1 | 500 | Datos cortos (≤ 3 palabras) que en el mundo del cliente se escriben en mono: referencias, números de pasos, etiquetas de precio, "Antes / Después" ([ADR-027](./14-decisiones.md#adr-027)) |
+| `text-caption` | 0,875 rem, tipo oración, Archivo | 1,4 | 500 | Etiquetas descriptivas y frases cortas: rótulos de datos, etiquetas de cifras, miga, línea de confianza, meta de las tarjetas. En `ink-2` (7,4:1) |
 | Cuerpo (`body`) | 1 rem | 1,6 | 400 | — |
 
 - **Ajuste de líneas:** `text-wrap: balance` en `h1`–`h3` y en las etiquetas de los botones, y `pretty` en `p` y `li`. Así no quedan palabras solas en la última línea.
@@ -334,20 +337,20 @@ Cada sección elige una banda con el `tone` de `Section`. Las bandas de color so
 | Sección | Banda | Índice | Patrón |
 |---|---|---|---|
 | Barra | Papel translúcido | — | Nombre al 87,5 %, línea fina debajo. Desde 1024 px, enlaces con subrayado cobalto al pasar el mouse y el actual en `accent-700`; botón cobalto de 36 px. Debajo, botón "Menú" con contorno de tinta y dos barras que pasan a × |
-| Menú (< 1024 px) | `paper-0`, opaco | 01–05 | Panel bajo la barra con borde de tinta inferior y `shadow-2`; filas de 64 px con índice mono en recuadro (sol en la sección actual), la etiqueta en 28 px condensada y una flecha cobalto; fondo de tinta al 30 % sobre la página |
+| Menú (< 1024 px) | `paper-0`, opaco | — | Panel bajo la barra con borde de tinta inferior y `shadow-2`; filas de 64 px sin índice (la sección actual en cobalto), la etiqueta en 28 px condensada y una flecha cobalto; fondo de tinta al 30 % sobre la página |
 | Hero | `paper` + cuadrícula | — | H1 a todo el ancho; texto (5) y marcos de dispositivo (7) debajo; franja de cifras entre reglas de tinta ([05 §2](./05-hero-animacion.md#2-composición-y-wireframes)) |
-| Trabajo | `paper` | 01 | Tarjeta 7/5: la captura completa en un marco de navegador sobre una placa de plano cobalto; a la derecha, la línea mono, el resultado, las métricas como números grandes con banda sol, chips y enlaces |
+| Trabajo | `paper` | 01 | Tarjeta 7/5: la captura completa en un marco de navegador sobre una placa de plano cobalto; a la derecha, la línea de meta, el resultado, las métricas como números grandes, chips y enlaces. En la home, la tarjeta del caso de cliente y filas compactas de los demás |
 | Servicios | `sunken` | 02 | Bento: bloques que cuelgan de una regla de tinta de 2 px, que pasa a cobalto al pasar el mouse. A y C con tinte cobalto y capturas recortadas por el borde del bloque; B con el escenario; O en azul profundo |
 | Cómo trabajo | `ink` | 03 | Cada paso cuelga de una línea de tiempo con un nodo sol y un numeral gigante sol al 62 %, más un chip de duración con contorno. La línea es vertical en celular y continua a lo ancho desde 1024 px. Debajo, la actualización semanal y las rondas de cambios |
 | Precios | `paper` | 04 | Nota y selector USD / COP en una barra. Tabla de planes con bordes de tinta compartidos y bloque de precio entre dos reglas. El plan recomendado va en `paper-0` con una franja cobalto de 6 px. Cierra una fila de acción teñida, pegada a la tabla |
-| Sobre mí | `paper` | 05 | Entrada grande en primera persona sobre una tabla de datos con regla de tinta arriba y líneas finas entre filas. Con retrato: 4:5 con marco de tinta sobre un bloque sol desplazado |
-| Preguntas | `tint` | 06 | Filas con regla de tinta, número mono y un chevron que se voltea al abrir (se despliega en el lugar: no lleva flecha); título fijo desde 1024 px |
+| Sobre mí | `paper` | 05 | Entrada grande en primera persona sobre una tabla de datos con regla de tinta arriba y líneas finas entre filas. Con retrato: 4:5 con marco de tinta sobre un bloque `accent-100` desplazado |
+| Preguntas | `tint` | 06 | Filas con regla de tinta, sin número, y un chevron que se voltea al abrir (se despliega en el lugar: no lleva flecha); título fijo desde 1024 px |
 | Contacto | `accent` | 07 | Título enorme en blanco; botón sol de agenda y botones de contorno blancos |
-| Pie | Azul profundo | — | Navegación con índices mono en sol; texto de 14 px en `on-ink-2`; enlaces subrayados en el color del texto (7,5:1), que pasan a sol. `on-ink-line` no sirve para el subrayado: da 1,4:1 y los enlaces se confunden con el © |
+| Pie | Azul profundo | — | Navegación sin índices; texto de 14 px en `on-ink-2`; enlaces subrayados en el color del texto (7,5:1), que pasan a `on-ink-1`. `on-ink-line` no sirve para el subrayado: da 1,4:1 y los enlaces se confunden con el © |
 | Caso · hero | `paper` + cuadrícula | — | Miga mono, H1 condensado (`clamp(2.5rem, 6.4vw, 6rem)`), resumen y datos en celdas mono; la captura grande en marco de navegador, montada sobre la franja azul que abre los resultados |
-| Caso · resultados | `ink` | 01 | Cifras condensadas en blanco con banda sol y etiquetas mono, en una fila desde 1024 px |
+| Caso · resultados | `ink` | 01 | Cifras condensadas en blanco con etiquetas en `text-caption`, en una fila desde 1024 px |
 | Caso · resumen | `paper` | 02 | Título en columna lateral desde 1024 px, filas con regla y chips del stack |
-| Caso · antes/después | `tint` | 03 | Paneles enfrentados: "Antes" en arena con guiones de tinta, "Después" en azul profundo con checks sol y un celular que sale de su borde inferior; flecha cobalto redonda en la costura |
+| Caso · antes/después | `tint` | 03 | Paneles enfrentados: "Antes" en arena con guiones de tinta, "Después" en azul profundo con checks en `on-ink-2` y un celular que sale de su borde inferior; flecha cobalto redonda en la costura |
 | Caso · qué construí | `paper` | 04 | Filas 5/7 que alternan lados; cada captura en su marco sobre una placa de plano; la analítica como una fila ancha de texto con regla |
 | Caso · cierre | `accent` + papel | 05 | Banda cobalto con botón sol; debajo, la tarjeta "Siguiente" entre reglas de tinta, con un círculo cobalto y flecha |
 
@@ -370,7 +373,7 @@ Cada sección elige una banda con el `tone` de `Section`. Las bandas de color so
 - **Lo redondeado es solo lo que se dibuja como objeto:**
   - Marco de navegador: 8 px. Marco de celular: 36 px de cuerpo (26 px en el hero de escritorio), con la isla dinámica.
   - Dentro del escenario: ficha 8 px, burbujas 16 px, carrito e insignia en píldora.
-  - Fuera de esos objetos, solo los círculos: la flecha de la costura del antes/después, la flecha de la tarjeta "Siguiente", el avatar y el punto sol de la leyenda.
+  - Fuera de esos objetos, solo los círculos: la flecha de la costura del antes/después, la flecha de la tarjeta "Siguiente", y el avatar.
 - **Translucidez:** solo en la barra, con papel al 92 % y un desenfoque de 8 px.
 
 ### 3.5 Movimiento, estados y foco
@@ -382,7 +385,7 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
   - **El escenario del bloque B** se reproduce una vez al entrar en vista, solo con CSS ([05 §4](./05-hero-animacion.md#4-implementación-el-estado-final-primero)). Es la única animación ligada al scroll de la fase A.
   - **El menú** entra en 200 ms con `opacity` y `translate`, con `@starting-style`.
   - Curva `--ease-out`, `cubic-bezier(.2, .7, .2, 1)`, sin rebotes ni resortes.
-- **Fase B** (R-16 y R-17): la regla de tinta de cada H2 se dibuja, la banda sol pasa bajo cada cifra, la línea de tiempo del proceso se llena y las capturas suben 16 px, todo con CSS ligado al scroll. Entre la home y el caso, transiciones de vista. Firefox y "reducir movimiento" ven el estado final.
+- **Fase B** (R-16 y R-17): la línea de tiempo del proceso se llena con CSS ligado al scroll (R-16, recortado por [ADR-027](./14-decisiones.md#adr-027)). Entre la home y el caso, transiciones de vista. Firefox y "reducir movimiento" ven el estado final.
 - **Fuera siempre:** parallax, contadores, carruseles, scroll secuestrado y animaciones en el texto de cuerpo, los precios o las preguntas. Nada que pueda ser el elemento LCP se anima.
 - **Hover:**
   - Botón `primary`: oscurece a `accent-600`.
@@ -394,7 +397,7 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
   - **Marcos del hero:** suben 4 px.
   - **Bloques del bento:** su regla superior pasa a cobalto.
   - Preguntas: se subraya la pregunta.
-  - Pie: el subrayado pasa a sol.
+  - Pie: el subrayado pasa a `on-ink-1`.
 - **Presionado:** el botón baja 1 px y muestra una sombra interior. No se encoge.
 - **Transiciones:** de 120 ms en colores y de 200 ms en flechas y en el giro del chevron de las preguntas. Solo corren con `motion-safe:`. Con "reducir movimiento" no hay desplazamiento de capturas, ni subida de marcos, ni entrada del menú.
 - **Foco:** `:focus-visible` con un anillo de tinta de 2 px separado 2 px (16:1 sobre papel).
@@ -429,9 +432,9 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
 | `BookCallLink` (`booking/`) | `ButtonLink` conectado a Cal.com ([07 §2](./07-integraciones.md#2-agenda-con-calcom)). Acepta `variant`, `size`, `iconStart` e `iconEnd`: siempre con el calendario al inicio y nunca con flecha (abre un popup, no navega): primario en el hero, en precios y en el menú, sol en el cierre |
 | `Container` | 72 rem con 16 o 24 px de margen |
 | `Section` (`ui/Container.tsx`) | `<section>` con `id`, `aria-labelledby="{id}-title"` y el ritmo vertical. `tone` y `backdrop` siguen §3.3. `containerClassName` recibe la rejilla interna |
-| `SectionHeading` | H2 con `id="{id}-title"`; hay un único H1 en la página. `index` dibuja el recuadro mono ("01") con la regla de tinta, oculto para lectores de pantalla. Ese recuadro también se exporta solo, como `SectionIndex`, que el 404 usa con "404". `tone`: `default`, `inverse` (sobre `deep`, con índice sol) o `accent` (cierre). `size`: `md`, o `xl` solo en el cierre |
+| `SectionHeading` | H2 con `id="{id}-title"`; hay un único H1 en la página. Lleva encima una regla de tinta (`HeadingRule`, también exportada para las tarjetas y los bloques de Servicios), oculta para lectores de pantalla. Sin número desde [ADR-027](./14-decisiones.md#adr-027); el recuadro índice sobrevive solo como `SectionIndex`, que el 404 usa con "404". `tone`: `default`, `inverse` (sobre `deep`) o `accent` (cierre). `size`: `md`, o `xl` solo en el cierre |
 | `Price` | Renderiza las dos monedas con `data-only-market` ([04 §8.2](./04-i18n-contenido-y-precios.md#82-render-sin-saltos)). Cada una tiene una etiqueta mono ("Desde"), el importe en `text-price` al 62 % y el periodo mono ("/ mes"). `reserveLabel` reserva la línea de la etiqueta para que los importes queden alineados en la tabla |
-| `Chip` | Etiqueta de pieza, mono en mayúsculas con borde cobalto. `tone`: `default`, `ink` o `accent`; `accent` va como máximo una vez por vista. Con `as="li"` se usa dentro de listas. No es interactiva |
+| `Chip` | Etiqueta de pieza en Archivo, en tipo oración, con borde cobalto ([ADR-027](./14-decisiones.md#adr-027)). `tone`: `default`, `ink` o `accent`; `accent` va como máximo una vez por vista. Con `as="li"` se usa dentro de listas. No es interactiva |
 | `Icon` | §3.6 |
 | `HeroHeadline` (`hero/`) | El H1 del hero. Es un Server Component. Con dos frases entre comillas tipográficas, tacha la primera y marca la segunda; con menos, es texto plano ([05 §4](./05-hero-animacion.md#4-implementación-el-estado-final-primero)) |
 | `HookStage` (`hero/`) | El escenario animado, en el bloque B de Servicios. Recibe `stage`, `href` y un `className` para ubicarse en el bloque ([05 §5](./05-hero-animacion.md#5-estructura-del-componente)) |
@@ -457,7 +460,7 @@ Las reglas de [ADR-006](./14-decisiones.md#adr-006) siguen: estado final primero
   - Las clases siguen BEM con prefijo por componente: `hook__*`, `headline__*`, `showcase__*`, `figures__*`, `device__*`, `site-menu`, `case-plate`, `section--grid`.
   - En `globals.css` están las utilidades propias (`stretch-*`, `label-mono`, `text-price-long` para importes largos como "COP 250.000–500.000") y la variante `on-accent:`.
 - **Páginas secundarias:**
-  - Política de privacidad: título condensado, fecha en mono y secciones con regla de tinta e índice mono.
+  - Política de privacidad: título condensado, fecha en mono y secciones con regla de tinta e índice mono (son cláusulas que se citan por número: se quedan con ADR-027).
   - 404: dos columnas, inglés con H1 y español con H2. Cada una tiene el recuadro índice "404", un título condensado y un botón primario hacia su inicio.
 
 **Fuera de alcance:** el modo oscuro. Por eso `:root` declara `color-scheme: light` y el layout exporta `viewport` con `themeColor: '#faf6ee'` y `colorScheme: 'light'`: los controles nativos no se pintan oscuros y Safari tiñe sus barras con el papel ([15 H12](./15-mejoras-de-diseno.md#45-piso-de-calidad-pendientes-pequeños)). Las animaciones al hacer scroll fuera del escenario y las transiciones entre páginas son de la fase B (§3.5). Las transiciones de hover y foco no cuentan como animación.
@@ -536,7 +539,7 @@ Pesos en AVIF por ancho, al 24-oct. El presupuesto se mide en el ancho indicado.
   - Color natural, sin filtros ni duotonos.
   - Las capturas van siempre en un marco: navegador o celular, con `shadow-2`. En la tarjeta de Trabajo y en "Qué construí", el marco se apoya en una placa de plano cobalto.
   - El folleto va como pieza impresa sobre la placa, debajo del logo.
-  - El retrato va en una columna 4:5 con marco de tinta, sobre un bloque sol desplazado.
+  - El retrato va en una columna 4:5 con marco de tinta, sobre un bloque `accent-100` desplazado.
 - **Fase B:** cada captura que tendrá un clip queda como su portada: la imagen dentro del `DeviceFrame` es donde entra `LoopVideo` (cotizador en el hero, bloques A y C, filas de búsqueda, idiomas y cotizador del caso, marcadas con `data-feature`) ([ADR-022](./14-decisiones.md#adr-022)).
 
 ## 5. WhatsApp y contacto según mercado
@@ -567,7 +570,7 @@ Pesos en AVIF por ancho, al 24-oct. El presupuesto se mide en el ancho indicado.
 - **Cómo trabajo:** 1, 2 y 4 columnas (móvil, `md` y `lg`). En celular, una línea vertical con nodos sol; desde `md` los pasos no tienen espacio entre columnas, así que sus reglas superiores se unen en una sola línea por fila.
 - **Precios:**
   - En móvil, los planes se apilan y la barra de nota y selector se parte en dos líneas.
-  - Desde `lg`, la tabla tiene 3 columnas. Cada plan es un `subgrid` de 5 filas (índice, nombre, descripción, precio y lista), así que nombres, precios y listas quedan alineados.
+  - Desde `lg`, la tabla tiene 3 columnas. Cada plan es un `subgrid` de 4 filas (nombre, descripción, precio y lista), así que nombres, precios y listas quedan alineados.
   - Los importes largos ("COP 250.000–500.000") usan `text-price-long`, un paso más chico, para que no se partan.
 - **Sobre mí:** con retrato, columna 4:5 al lado del texto. Sin retrato, la entrada y la tabla ocupan todo el ancho.
 - **Preguntas frecuentes:** desde `lg`, 5/7 columnas, con el título fijo (`sticky`) a 88 px del borde superior: el alto de la barra más 32 px.

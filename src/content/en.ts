@@ -72,8 +72,12 @@ export const en = {
         {
           kind: 'price',
           label: 'for a store or catalog with quote system',
-          // Shown while the prices are hidden (ADR-025)
-          fallback: { value: '100%', label: 'of the domain, hosting and accounts in your name' },
+          // Shown while the prices are hidden (ADR-025). "In your name" lives in the bento and the
+          // FAQ, so the strip says how fast I answer instead (docs/15 H8, D-10)
+          fallback: {
+            value: '1 business day',
+            label: 'at most to hear back from me, from Colombia',
+          },
         },
       ],
     },
@@ -83,16 +87,6 @@ export const en = {
   work: {
     title: 'Recent work',
     lead: 'I design and build product catalogs, quote systems and online stores for businesses that sell products, from the brand and the interface to the site live on your domain. Every project has its full case.',
-    categoriesLabel: 'What I’ve built',
-    categories: {
-      catalog: 'Product catalogs',
-      quote: 'Online quote systems',
-      store: 'Stores with cart and checkout',
-      languages: 'Multilingual sites',
-      design: 'Web and brand design',
-    },
-    industriesLabel: 'Industries',
-    projectsLabel: 'Projects',
     allWork: 'See all my work',
     card: {
       viewCase: 'See the full case',

@@ -6,8 +6,7 @@ import '@/components/hero/figures.css'
 
 // The hero's figures strip (R-06, docs/14 ADR-021): a ruled spec table across the container, 4
 // cells in a row from 1024 px and 2 × 2 below. Each value is a big condensed number with its
-// unit beside it on the baseline and a sun marker under the number (static now; phase B draws
-// it on scroll, ADR-023), over a mono label. A fact whose figure is still null shows its
+// unit beside it on the baseline, over a caption (no sun marker: ADR-027 keeps it on the H1). A fact whose figure is still null shows its
 // fallback in the same place, or is skipped, so there is never a gap (the quote count). The
 // price cell is the store plan's starting price in both currencies, shown per market by CSS
 // (docs/04 §8.2); while site.features.pricing is off it shows its fallback fact instead
@@ -75,7 +74,7 @@ export function FiguresStrip({
     >
       {cells.map((cell) => (
         <div key={cell.label} className={CELL}>
-          <dt className="row-start-2 label-mono leading-[1.5] text-ink-2">{cell.label}</dt>
+          <dt className="row-start-2 text-caption text-ink-2">{cell.label}</dt>
           <dd className="figures__value row-start-1 self-end">
             {cell.value === null ? (
               <Price price={price} lang={lang} labels={priceLabels} />

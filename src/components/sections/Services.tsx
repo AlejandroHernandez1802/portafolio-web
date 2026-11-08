@@ -20,7 +20,7 @@ import { Price } from '@/components/ui/Price'
 import { Section } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
-// Section 02, "What your store includes" (docs/14 ADR-020): a bento of the 7 services, whose
+// The home's "What your store includes" (docs/14 ADR-020): a bento of the 7 services, whose
 // outcome labels are the old "What I solve" lines. Desktop, 3 columns:
 //   A A B      A (2 × 2) the catalog search on MRB, in a browser frame cropped by the tile
 //   A A B      B (1 × 2) the hook stage, played once in view (hook.css)
@@ -85,20 +85,21 @@ function TileText({
 }) {
   return (
     <>
-      <p className="label-mono leading-[1.5] text-accent-700">{tile.outcome}</p>
       <h3
         className={
           large
-            ? 'mt-4 max-w-[28ch] stretch-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.02] font-extrabold tracking-[-0.01em]'
-            : 'mt-3 text-[1.375rem] leading-[1.15] font-bold tracking-[-0.01em] stretch-title'
+            ? 'max-w-[28ch] stretch-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.02] font-extrabold tracking-[-0.01em]'
+            : 'text-[1.375rem] leading-[1.15] font-bold tracking-[-0.01em] stretch-title'
         }
       >
         {tile.title}
       </h3>
+      {/* The outcome, under the title rather than as an all-caps eyebrow (ADR-027) */}
+      <p className="mt-2 text-caption text-accent-700">{tile.outcome}</p>
       <p className={`mt-3 text-ink-2 ${large ? 'max-w-[52ch] text-lead' : ''}`}>{tile.body}</p>
       {proof && (
-        <p className="mt-5 flex items-start gap-2.5 label-mono leading-[1.5] text-ink-1">
-          <span aria-hidden="true" className="mt-[5px] size-2 shrink-0 bg-sun-400" />
+        <p className="mt-5 flex items-start gap-2.5 text-caption text-ink-1">
+          <span aria-hidden="true" className="mt-[6px] size-2 shrink-0 bg-ink-1" />
           {proof}
         </p>
       )}
@@ -127,9 +128,7 @@ export function Services({
 }) {
   return (
     <Section id={SECTION.services} tone="sunken">
-      <SectionHeading id={SECTION.services} index={2}>
-        {services.title}
-      </SectionHeading>
+      <SectionHeading id={SECTION.services}>{services.title}</SectionHeading>
       <div className="mt-5 flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
         <p className="max-w-[60ch] text-lead text-ink-2">{services.lead}</p>
         <ButtonLink variant="secondary" href={pagePath(lang, 'services')}>
@@ -156,7 +155,7 @@ export function Services({
                   {tile.list.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-3 border-b border-paper-3 py-3 label-mono leading-[1.4]"
+                      className="flex items-start gap-3 border-b border-paper-3 py-3 text-caption"
                     >
                       {/* On the first line: (16.8 px line − 6 px square) / 2 */}
                       <span
@@ -218,7 +217,7 @@ export function Services({
         })}
         {/* The closing note spans the last row; ownership is part of every build */}
         <li
-          className={`${TILE} on-ink justify-between gap-6 bg-deep text-on-ink-1 before:bg-sun-400 md:col-span-2 lg:col-span-3 lg:flex-row lg:items-end`}
+          className={`${TILE} on-ink justify-between gap-6 bg-deep text-on-ink-1 before:bg-on-ink-line md:col-span-2 lg:col-span-3 lg:flex-row lg:items-end`}
         >
           {/* Set a step above the tile titles: it is the one statement of the grid, and at
               tile size it left the navy block half empty */}

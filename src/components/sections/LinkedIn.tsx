@@ -38,25 +38,19 @@ export function LinkedInCard({
           {linkedin.cta}
           <span className="sr-only"> {linkedin.newTab}</span>
         </span>
-        <span className="label-mono leading-[1.5] wrap-anywhere text-ink-2">{PROFILE}</span>
+        <span className="label-mono leading-[1.5] wrap-anywhere text-ink-2 normal-case">
+          {PROFILE}
+        </span>
       </span>
       <Icon name="external" className="ml-auto size-5 shrink-0 text-accent-500" />
     </a>
   )
 }
 
-export function LinkedIn({
-  linkedin,
-  index,
-}: {
-  linkedin: SiteContent['linkedin']
-  index: number
-}) {
+export function LinkedIn({ linkedin }: { linkedin: SiteContent['linkedin'] }) {
   return (
     <Section id={ABOUT_SECTION.linkedin}>
-      <SectionHeading id={ABOUT_SECTION.linkedin} index={index}>
-        {linkedin.title}
-      </SectionHeading>
+      <SectionHeading id={ABOUT_SECTION.linkedin}>{linkedin.title}</SectionHeading>
       <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-x-12">
         <p className="max-w-[42ch] text-[clamp(1.25rem,2.2vw,1.75rem)] leading-[1.3] font-medium tracking-[-0.005em] stretch-title lg:col-span-7">
           {linkedin.body}

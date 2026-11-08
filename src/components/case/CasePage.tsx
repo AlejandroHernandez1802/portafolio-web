@@ -93,10 +93,6 @@ export function CasePage({ lang, slug }: { lang: Locale; slug: string }) {
   const { page } = copy
   const jsonLd = caseJsonLd(lang, study, copy, ogImage(lang, study.id))
   const demo = study.kind === 'demo'
-  // Sections are numbered in the order they render: a demo has no before/after
-  let index = 0
-  const next = () => ++index
-
   // Order of the plan (§1): hero → results → overview → before/after → what I built →
   // closing. The 49 s teaser goes between "what I built" and the closing in phase B (R-18).
   // Bands: paper (grid) → ink → paper → tint → paper → accent. The hero and the results stay
@@ -114,33 +110,15 @@ export function CasePage({ lang, slug }: { lang: Locale; slug: string }) {
         visitSite={copy.visitSite}
       />
       {demo && page.tryIt && (
-        <CaseTryIt
-          study={study}
-          tryIt={page.tryIt}
-          newTab={content.linkedin.newTab}
-          index={next()}
-        />
+        <CaseTryIt study={study} tryIt={page.tryIt} newTab={content.linkedin.newTab} />
       )}
-      {!demo && page.results && (
-        <CaseResults lang={lang} study={study} results={page.results} index={next()} />
-      )}
-      <CaseOverview study={study} overview={page.overview} index={next()} />
+      {!demo && page.results && <CaseResults lang={lang} study={study} results={page.results} />}
+      <CaseOverview study={study} overview={page.overview} />
       {!demo && page.beforeAfter && (
-        <CaseBeforeAfter
-          study={study}
-          beforeAfter={page.beforeAfter}
-          alts={copy.alts}
-          index={next()}
-        />
+        <CaseBeforeAfter study={study} beforeAfter={page.beforeAfter} alts={copy.alts} />
       )}
-      <CaseFeatures
-        lang={lang}
-        study={study}
-        features={page.features}
-        alts={copy.alts}
-        index={next()}
-      />
-      <CaseClosing lang={lang} closing={page.closing} next={nextLink(lang, study)} index={next()} />
+      <CaseFeatures lang={lang} study={study} features={page.features} alts={copy.alts} />
+      <CaseClosing lang={lang} closing={page.closing} next={nextLink(lang, study)} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}

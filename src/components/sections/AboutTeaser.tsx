@@ -12,7 +12,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { PORTRAIT } from './About'
 import { LinkedInCard } from './LinkedIn'
 
-// Section 03 of the home (docs/14 ADR-024): the summary of the About page, where process and
+// The home's About section (docs/14 ADR-024): the summary of the About page, where process and
 // pricing now live. The prices stay one scroll away from the hero, as in the portfolios that
 // convert (ADR-020): the first-person lead, the 4 steps on one line (mono numbers, arrows
 // between them), the 3 plans with their price per market, and two links into the About page.
@@ -39,14 +39,12 @@ export function AboutTeaser({
   const aboutPath = pagePath(lang, 'about')
   return (
     <Section id={SECTION.about}>
-      <SectionHeading id={SECTION.about} index={3}>
-        {about.title}
-      </SectionHeading>
+      <SectionHeading id={SECTION.about}>{about.title}</SectionHeading>
       <div
         className={`mt-10 lg:mt-12 ${portrait ? 'grid gap-10 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:items-start lg:gap-16' : ''}`}
       >
         {portrait && (
-          <div className="relative isolate mr-3 mb-3 max-w-xs before:absolute before:inset-0 before:-z-10 before:translate-3 before:bg-sun-400">
+          <div className="relative isolate mr-3 mb-3 max-w-xs before:absolute before:inset-0 before:-z-10 before:translate-3 before:bg-accent-100">
             <ResponsiveImage
               image={PORTRAIT}
               alt={about.photo.alt}
@@ -61,7 +59,7 @@ export function AboutTeaser({
             {teaser.lead}
           </p>
 
-          <h3 className="mt-10 label-mono text-ink-2">{teaser.stepsLabel}</h3>
+          <h3 className="mt-10 text-caption text-ink-2">{teaser.stepsLabel}</h3>
           <ol className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-3">
             {steps.map((step, i) => (
               <li key={step.title} className="flex items-center gap-2">
@@ -80,7 +78,7 @@ export function AboutTeaser({
 
           {site.features.pricing ? (
             <>
-              <h3 className="mt-10 label-mono text-ink-2">{teaser.pricesLabel}</h3>
+              <h3 className="mt-10 text-caption text-ink-2">{teaser.pricesLabel}</h3>
               <ul className="mt-3 grid border-t border-ink-1 sm:grid-cols-3">
                 {pricing.plans.map((plan) => (
                   <li
@@ -100,7 +98,7 @@ export function AboutTeaser({
             </>
           ) : (
             <>
-              <h3 className="mt-10 label-mono text-ink-2">{linkedin.title}</h3>
+              <h3 className="mt-10 text-caption text-ink-2">{linkedin.title}</h3>
               <LinkedInCard linkedin={linkedin} location="about" className="mt-3 max-w-xl" />
             </>
           )}

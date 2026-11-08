@@ -60,7 +60,7 @@ export function CaseHero({
     <Section id={SECTION.hero} backdrop="grid" className="pt-24 pb-0 lg:pt-28 lg:pb-0">
       {/* "Work / Malone Road Belt" (plan §1); JSON-LD keeps the full Home › Work › client path */}
       <nav aria-label={breadcrumb.label}>
-        <ol className="flex flex-wrap items-center gap-x-2.5 label-mono text-ink-2">
+        <ol className="flex flex-wrap items-center gap-x-2.5 text-caption text-ink-2">
           <li>
             {/* The padding widens "Work" to a 44 px target without moving the trail */}
             <a
@@ -106,7 +106,7 @@ export function CaseHero({
             key={fact.label}
             className="min-w-0 lg:border-l lg:border-paper-3 lg:pl-5 lg:first:border-l-0 lg:first:pl-0"
           >
-            <dt className="label-mono text-ink-2">{fact.label}</dt>
+            <dt className="text-caption text-ink-2">{fact.label}</dt>
             <dd className="mt-2 leading-[1.35] font-semibold wrap-break-word">{fact.value}</dd>
           </div>
         ))}

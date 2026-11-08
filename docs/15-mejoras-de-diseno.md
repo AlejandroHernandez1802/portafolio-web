@@ -6,7 +6,7 @@ Auditoría del sitio publicado frente al skill `frontend-craft` (`.claude/skills
 |---|---|
 | Fecha | 8 de noviembre de 2026, un día después de la publicación (F1-10) y antes de la fase B (9 al 15 de noviembre) |
 | Método | Fases 0 a 3 del skill: lectura del repositorio y de los docs 05, 06, 11, 13 y 14; capturas de `alejandrodeveloper.com/es` y del caso MRB a 390 × 844, 768 × 1024 y 1440 × 900, tomadas con Chrome headless y la emulación de `scripts/lib/cdp.mjs`; búsquedas en el código contra el piso de calidad del skill |
-| Estado | **En curso.** El 8-nov se hicieron las tareas sin ADR: D-01, D-02, D-05 y D-07 (ver §6). Lo marcado con "ADR" cambia una decisión de [14](./14-decisiones.md) y sigue esperando tu aprobación (borrador en §7) |
+| Estado | **En curso.** El 8-nov se hicieron D-01, D-02, D-05 y D-07 y, con el [ADR-027](./14-decisiones.md#adr-027) aprobado ese día, D-03, D-04, D-06, D-08, D-09 y D-10 (ver §6). Quedan D-11 a D-14 |
 
 ---
 
@@ -216,14 +216,14 @@ Y estas **cambian** porque no pasan la prueba: índices sobre cada sección, cej
 |---|---|---|---|---|---|---|
 | D-01 | `theme-color` y `color-scheme: light` | H12 | 0,25 | — | **Hecho 8-nov** | — |
 | D-02 | `pnpm design:shots` con `cdp.mjs` + axe por CDP (`--axe`) | H16 | 1 | — | **Hecho 8-nov** | — |
-| D-03 | Decidir el ADR-027 (§7) | — | — (tu revisión) | Sí | **Antes del 12-nov (R-16)** | — |
-| D-04 | Reserva de mono, `text-caption`, sin índices de sección, preguntas ni pie numerados | H1, H2, H5 | 1,5 | ADR-027 | Fase B, antes de R-16 | D-02, D-03 |
+| D-03 | Decidir el ADR-027 (§7) | — | — (tu revisión) | Sí | **Aprobado 8-nov** | — |
+| D-04 | Reserva de mono, `text-caption`, sin índices de sección, preguntas ni pie numerados | H1, H2, H5 | 1,5 | ADR-027 | **Hecho 8-nov** | D-02, D-03 |
 | D-05 | Flechas solo donde se navega; chevron en las preguntas; viñetas del "Antes" | H3 | 0,5 | — | **Hecho 8-nov** | — |
-| D-06 | Sol reservado | H4 | 0,5 | ADR-027 | Con D-04 | D-03 |
+| D-06 | Sol reservado | H4 | 0,5 | ADR-027 | **Hecho 8-nov** | D-03 |
 | D-07 | Ritmo vertical por jerarquía | H6 | 0,5 | — | **Hecho 8-nov** | D-02 |
-| D-08 | R-16 recortado y nuevo orden de recorte de la fase B | H11 | −0,5 (ahorra) | ADR-027 | Fase B | D-03 |
-| D-09 | Trabajo en la home con la `CaseCard` de MRB | H7 | 1,5 | ADR-027 | Fase B o v1.1 | D-03 |
-| D-10 | Copy: cuarta cifra, etiquetas del bento, "a tu nombre" | H8, H9, H1 | 0,25 + tu revisión | — | Con D-04 | Tu copy |
+| D-08 | R-16 recortado y nuevo orden de recorte de la fase B | H11 | −0,5 (ahorra) | ADR-027 | **Hecho 8-nov** (en 13 §5.2) | D-03 |
+| D-09 | Trabajo en la home con la `CaseCard` de MRB | H7 | 1,5 | ADR-027 | **Hecho 8-nov** | D-03 |
+| D-10 | Copy: cuarta cifra, etiquetas del bento, "a tu nombre" | H8, H9, H1 | 0,25 + tu revisión | — | **Hecho 8-nov**: cuarta cifra "1 día hábil"; las etiquetas del bento bajan bajo el título sin cambiar su texto | Tu copy |
 | D-11 | Retrato (R-09) | H10 | 0,25 + la foto | — | En cuanto tengas la foto | Tu foto |
 | D-12 | Medir LCP sin mono en la primera pantalla | H15 | 0,5 | — | Después de D-04 | D-04 |
 | D-13 | `DESIGN.md`, línea en `CLAUDE.md` y una sola copia del skill | H17 | 0,25 | — | Al cerrar D-04 | D-04 |
@@ -237,7 +237,7 @@ Y estas **cambian** porque no pasan la prueba: índices sobre cada sección, cej
 - **D-02:** `scripts/design-shots.mjs` y `pnpm design:shots [base] [--axe]`. 48 capturas, sin scroll horizontal; con `--axe`, 0 violaciones en las 36 vistas a 390 y 1440 px.
 - **D-05:** la agenda lleva el calendario al inicio en el hero, en precios y en el menú; las preguntas llevan un chevron que se voltea; el panel "Antes" lleva guiones. Las flechas quedan en los enlaces que navegan, en la costura del antes y después y entre los pasos de "Cómo trabajo", que sí son una secuencia.
 - **D-07:** padding por tono en `Section` (`RHYTHM`): papel 64 → 96 px y bandas de color 80 → 112 px. El hero cierra con 64 px, así que el hueco con "Trabajo" bajó de 192 a 160 px a 1440.
-- Los números de las preguntas y del pie, y los índices de sección, siguen ahí: salen con D-04, que depende del ADR-027.
+- **Con el ADR-027 aprobado (8-nov):** D-04 (mono reservado, `text-caption`, sin índices ni numeración fuera de las secuencias, chips en Archivo), D-06 (sol reservado: fuera de cifras, viñetas, leyenda, "Pruébalo", panel "Después", íconos del proceso y pie), D-08 (R-16 recortado en 13 §5.2), D-09 (Trabajo en la home con la `CaseCard` de MRB y filas de 160 px; salen las categorías y las industrias) y D-10 (cuarta cifra "1 día hábil").
 
 **Orden recomendado:** D-01 y D-02 ya, porque no dependen de nada. Luego tu decisión sobre el ADR-027. Con el ADR aprobado, D-04 a D-08 entran en la fase B *antes* de R-16, para no animar elementos que después se quitan. D-09 puede esperar a la v1.1 si la semana no alcanza.
 
@@ -251,7 +251,7 @@ Y estas **cambian** porque no pasan la prueba: índices sobre cada sección, cej
 
 ## 7. Borrador: ADR-027 · Disciplina del sistema visual
 
-> Borrador para tu revisión. No está en [14](./14-decisiones.md) hasta que lo apruebes; si lo apruebas, se copia allá y se actualizan ADR-019, ADR-023, ADR-025, 06 §3 y 13 §5.2 en el mismo commit.
+> **Aprobado el 8-nov.** La versión vigente, con lo que se implementó, está en [14 · ADR-027](./14-decisiones.md#adr-027). Este borrador queda como registro.
 
 - **Contexto:** la auditoría del 8-nov con el skill `frontend-craft` (este doc) encontró que los recursos del "plano técnico" (mono, índices, flechas y sol) se aplican en casi todas las superficies, y que así pierden su significado y se parecen a plantillas genéricas. R-16 iba a animar dos de ellos.
 - **Decisión:**
